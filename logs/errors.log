@@ -1,0 +1,44 @@
+[6/13/2022 4:27:41 AM] [plugins/mysql] cache_get_value_name: field 'password' not found
+[6/13/2022 4:27:44 AM] [plugins/mysql] mysql_tquery: callback error: callback "checkCredentials" does not exist
+[6/13/2022 4:27:47 AM] [plugins/mysql] mysql_tquery: callback error: callback "checkCredentials" does not exist
+[6/13/2022 4:27:49 AM] [plugins/mysql] mysql_tquery: callback error: callback "checkCredentials" does not exist
+[6/13/2022 4:27:53 AM] [plugins/mysql] mysql_tquery: callback error: callback "checkCredentials" does not exist
+[6/13/2022 4:30:50 AM] [plugins/mysql] cache_get_value_name: field 'password' not found
+[6/13/2022 4:32:46 AM] [plugins/mysql] cache_get_value_name: field 'password' not found
+[6/13/2022 4:34:08 AM] [plugins/mysql] cache_get_value_name_int: field 'playerID' not found
+[6/13/2022 4:34:08 AM] [plugins/mysql] cache_get_value_name: field 'password' not found
+[6/13/2022 4:36:24 AM] [plugins/mysql] cache_get_value_name_int: field 'playerID' not found
+[6/13/2022 4:36:24 AM] [plugins/mysql] cache_get_value_name: field 'password' not found
+[6/13/2022 4:39:11 AM] [plugins/mysql] cache_get_value_name_int: field 'playerID' not found
+[6/13/2022 4:39:11 AM] [plugins/mysql] cache_get_value_name: field 'password' not found
+[6/13/2022 5:00:11 AM] [plugins/mysql] cache_get_value_name_int: field 'playerID' not found
+[6/13/2022 5:00:11 AM] [plugins/mysql] cache_get_value_name: field 'password' not found
+[6/13/2022 5:03:24 AM] [plugins/mysql] cache_get_value_name_int: field 'playerID' not found
+[6/13/2022 5:03:24 AM] [plugins/mysql] cache_get_value_name: field 'password' not found
+[6/13/2022 5:05:42 AM] [plugins/mysql] cache_get_value_name_int: field 'playerID' not found
+[6/13/2022 5:05:42 AM] [plugins/mysql] cache_get_value_name: field 'playerPassword' not found
+[6/13/2022 5:11:28 AM] [plugins/mysql] mysql_tquery: callback error: callback "checkCredentials" does not exist
+[6/13/2022 5:16:30 AM] [plugins/mysql] cache_get_value_name_int: value 'American' is not a number
+[6/13/2022 5:16:30 AM] [plugins/mysql] cache_get_value_name_int: value '(null)' is not a number
+[6/13/2022 5:16:30 AM] [plugins/mysql] cache_get_value_name_int: value '(null)' is not a number
+[6/13/2022 5:16:30 AM] [plugins/mysql] cache_get_value_name_int: value '(null)' is not a number
+[6/13/2022 5:18:48 AM] [plugins/mysql] cache_get_value_name_int: value 'American' is not a number
+[6/13/2022 5:18:48 AM] [plugins/mysql] cache_get_value_name_int: value '(null)' is not a number
+[6/13/2022 5:18:48 AM] [plugins/mysql] cache_get_value_name_int: value '(null)' is not a number
+[6/13/2022 5:18:48 AM] [plugins/mysql] cache_get_value_name_int: value '(null)' is not a number
+[6/13/2022 5:21:28 AM] [plugins/mysql] cache_get_value_name_int: value 'American' is not a number
+[6/13/2022 5:21:28 AM] [plugins/mysql] cache_get_value_name_int: value '(null)' is not a number
+[6/13/2022 5:21:28 AM] [plugins/mysql] cache_get_value_name_int: value '(null)' is not a number
+[6/13/2022 5:21:28 AM] [plugins/mysql] cache_get_value_name_int: value '(null)' is not a number
+[6/13/2022 5:24:08 AM] [plugins/mysql] cache_get_value_name_int: value 'American' is not a number
+[6/13/2022 5:24:08 AM] [plugins/mysql] cache_get_value_name_int: value '(null)' is not a number
+[6/13/2022 5:24:08 AM] [plugins/mysql] cache_get_value_name_int: value '(null)' is not a number
+[6/13/2022 5:24:08 AM] [plugins/mysql] cache_get_value_name_int: value '(null)' is not a number
+[6/13/2022 5:29:56 AM] [plugins/mysql] cache_get_value_name_int: value 'American' is not a number
+[6/13/2022 5:29:56 AM] [plugins/mysql] cache_get_value_name_int: value '(null)' is not a number
+[6/13/2022 5:29:56 AM] [plugins/mysql] cache_get_value_name_int: value '(null)' is not a number
+[6/13/2022 5:29:56 AM] [plugins/mysql] cache_get_value_name_int: value '(null)' is not a number
+[6/13/2022 5:32:37 AM] [plugins/mysql] cache_get_value_name_int: value 'American' is not a number
+[6/13/2022 5:32:37 AM] [plugins/mysql] cache_get_value_name_int: value '(null)' is not a number
+[6/13/2022 5:32:37 AM] [plugins/mysql] cache_get_value_name_int: value '(null)' is not a number
+[6/13/2022 5:32:37 AM] [plugins/mysql] cache_get_value_name_int: value '(null)' is not a number
