@@ -10,11 +10,9 @@ hook OnGameModeInit() {
         // mysql_log();
     #endif
 
-
     new MySQLOpt: option_id = mysql_init_options();
 
 	mysql_set_option(option_id, AUTO_RECONNECT, true); // it automatically reconnects when loosing connection to mysql server
-
     gSQL = mysql_connect("localhost", "root", "", "vortex", option_id); // AUTO_RECONNECT is enabled for this connection handle only
 
     if (gSQL == MYSQL_INVALID_HANDLE || mysql_errno(gSQL) != 0) {

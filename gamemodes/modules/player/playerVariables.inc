@@ -44,9 +44,9 @@ enum playervEnum {
 	pJob,
 	pRope,
 	pAccent[40],
-	pWarning1[32],
-	pWarning2[32],
-	pWarning3[32],
+	pWarning1,
+	pWarning2,
+	pWarning3,
 	pPhoneNumber,
 	pSkinCount,
 	pSeeOOC,
@@ -103,3 +103,5 @@ enum playervEnum {
 
 new playerVariables[MAX_PLAYERS][playervEnum],
     szPlayerName[MAX_PLAYER_NAME];
+
+new Iterator:Admin<MAX_PLAYERS>;

@@ -1533,3 +1533,1460 @@
 [2022-06-13T05:03:24Z] [Info] public OnPlayerConnect(0) has been called
 [2022-06-13T05:03:24Z] [Info] function checkAccountUsername(0) has been called
 [2022-06-13T05:03:24Z] [Info]  0 test
+[2022-06-13T05:05:29Z] [Info] hook OnGameModeExit()_sql has been called
+[2022-06-13T05:05:29Z] [Info] OnGameModeExit() has been called
+[2022-06-13T05:05:41Z] [Info]  
+[2022-06-13T05:05:41Z] [Info] *** fixes.inc info: Trying to unload RconCommand/ClientCheckResponse fix FS...
+[2022-06-13T05:05:41Z] [Info] ***                 Ignore any errors if the FS already unloaded.
+[2022-06-13T05:05:41Z] [Info]  
+[2022-06-13T05:05:41Z] [Info] Filterscript '../scriptfiles/callbackfix' unloaded.
+[2022-06-13T05:05:41Z] [Info] Filterscript '../scriptfiles/fs-count-A' loaded.
+[2022-06-13T05:05:41Z] [Info] Filterscript '../scriptfiles/fs-count-B' loaded.
+[2022-06-13T05:05:41Z] [Info] Filterscript '../scriptfiles/fs-count-C' loaded.
+[2022-06-13T05:05:41Z] [Info] Filterscript '../scriptfiles/fs-count-D' loaded.
+[2022-06-13T05:05:41Z] [Info] Filterscript '../scriptfiles/fs-count-E' loaded.
+[2022-06-13T05:05:41Z] [Info] Filterscript '../scriptfiles/fs-count-F' loaded.
+[2022-06-13T05:05:41Z] [Info] Filterscript '../scriptfiles/fs-count-G' loaded.
+[2022-06-13T05:05:41Z] [Info] Filterscript '../scriptfiles/fs-count-H' loaded.
+[2022-06-13T05:05:41Z] [Info] Filterscript '../scriptfiles/fs-count-I' loaded.
+[2022-06-13T05:05:41Z] [Info] Filterscript '../scriptfiles/fs-count-J' loaded.
+[2022-06-13T05:05:41Z] [Info] Filterscript '../scriptfiles/fs-count-K' loaded.
+[2022-06-13T05:05:41Z] [Info] Filterscript '../scriptfiles/fs-count-L' loaded.
+[2022-06-13T05:05:41Z] [Info] Filterscript '../scriptfiles/fs-count-M' loaded.
+[2022-06-13T05:05:41Z] [Info] Filterscript '../scriptfiles/fs-count-N' loaded.
+[2022-06-13T05:05:41Z] [Info] Filterscript '../scriptfiles/fs-count-O' loaded.
+[2022-06-13T05:05:41Z] [Info] Filterscript '../scriptfiles/fs-count-P' loaded.
+[2022-06-13T05:05:41Z] [Info] Filterscript '../scriptfiles/fs-count-P' unloaded.
+[2022-06-13T05:05:41Z] [Info] Filterscript '../scriptfiles/fs-count-O' unloaded.
+[2022-06-13T05:05:41Z] [Info] Filterscript '../scriptfiles/fs-count-N' unloaded.
+[2022-06-13T05:05:41Z] [Info] Filterscript '../scriptfiles/fs-count-M' unloaded.
+[2022-06-13T05:05:41Z] [Info] Filterscript '../scriptfiles/fs-count-L' unloaded.
+[2022-06-13T05:05:41Z] [Info] Filterscript '../scriptfiles/fs-count-K' unloaded.
+[2022-06-13T05:05:41Z] [Info] Filterscript '../scriptfiles/fs-count-J' unloaded.
+[2022-06-13T05:05:41Z] [Info] Filterscript '../scriptfiles/fs-count-I' unloaded.
+[2022-06-13T05:05:41Z] [Info] Filterscript '../scriptfiles/fs-count-H' unloaded.
+[2022-06-13T05:05:41Z] [Info] Filterscript '../scriptfiles/fs-count-G' unloaded.
+[2022-06-13T05:05:41Z] [Info] Filterscript '../scriptfiles/fs-count-F' unloaded.
+[2022-06-13T05:05:41Z] [Info] Filterscript '../scriptfiles/fs-count-E' unloaded.
+[2022-06-13T05:05:41Z] [Info] Filterscript '../scriptfiles/fs-count-D' unloaded.
+[2022-06-13T05:05:41Z] [Info] Filterscript '../scriptfiles/fs-count-C' unloaded.
+[2022-06-13T05:05:41Z] [Info] Filterscript '../scriptfiles/fs-count-B' unloaded.
+[2022-06-13T05:05:41Z] [Info] Filterscript '../scriptfiles/fs-count-A' unloaded.
+[2022-06-13T05:05:41Z] [Info]  
+[2022-06-13T05:05:41Z] [Info] *** fixes.inc info: Trying to load RconCommand/ClientCheckResponse fix FS...
+[2022-06-13T05:05:42Z] [Info] ***                 Ignore any errors if the FS already loaded.
+[2022-06-13T05:05:42Z] [Info]  
+[2022-06-13T05:05:42Z] [Info] Filterscript '../scriptfiles/callbackfix' loaded.
+[2022-06-13T05:05:42Z] [Info] FIXES Script ID: 1
+[2022-06-13T05:05:42Z] [Info]  
+[2022-06-13T05:05:42Z] [Info]  
+[2022-06-13T05:05:42Z] [Info]          ==============================================================
+[2022-06-13T05:05:42Z] [Info]          |                                                            |
+[2022-06-13T05:05:42Z] [Info]          |                                                            |
+[2022-06-13T05:05:42Z] [Info]          |    YYYYYYY       YYYYYYY    SSSSSSSSSSSSSSS  IIIIIIIIII    |
+[2022-06-13T05:05:42Z] [Info]          |    Y:::::Y       Y:::::Y  SS:::::::::::::::S I::::::::I    |
+[2022-06-13T05:05:42Z] [Info]          |    Y:::::Y       Y:::::Y S:::::SSSSSS::::::S I::::::::I    |
+[2022-06-13T05:05:42Z] [Info]          |    Y::::::Y     Y::::::Y S:::::S     SSSSSSS II::::::II    |
+[2022-06-13T05:05:42Z] [Info]          |    YYY:::::Y   Y:::::YYY S:::::S               I::::I      |
+[2022-06-13T05:05:42Z] [Info]          |       Y:::::Y Y:::::Y    S:::::S               I::::I      |
+[2022-06-13T05:05:42Z] [Info]          |        Y:::::Y:::::Y      S::::SSSS            I::::I      |
+[2022-06-13T05:05:42Z] [Info]          |         Y:::::::::Y        SS::::::SSSSS       I::::I      |
+[2022-06-13T05:05:42Z] [Info]          |          Y:::::::Y           SSS::::::::SS     I::::I      |
+[2022-06-13T05:05:42Z] [Info]          |           Y:::::Y               SSSSSS::::S    I::::I      |
+[2022-06-13T05:05:42Z] [Info]          |           Y:::::Y                    S:::::S   I::::I      |
+[2022-06-13T05:05:42Z] [Info]          |           Y:::::Y                    S:::::S   I::::I      |
+[2022-06-13T05:05:42Z] [Info]          |           Y:::::Y        SSSSSSS     S:::::S II::::::II    |
+[2022-06-13T05:05:42Z] [Info]          |        YYYY:::::YYYY     S::::::SSSSSS:::::S I::::::::I    |
+[2022-06-13T05:05:42Z] [Info]          |        Y:::::::::::Y     S:::::::::::::::SS  I::::::::I    |
+[2022-06-13T05:05:42Z] [Info]          |        YYYYYYYYYYYYY      SSSSSSSSSSSSSSS    IIIIIIIIII    |
+[2022-06-13T05:05:42Z] [Info]          |                                                            |
+[2022-06-13T05:05:42Z] [Info]          |                                                            |
+[2022-06-13T05:05:42Z] [Info]          |                      (c) 2021 MPL v1.1                     |
+[2022-06-13T05:05:42Z] [Info]          |            Alex "Y_Less" Cole and contributors.            |
+[2022-06-13T05:05:42Z] [Info]          |                                                            |
+[2022-06-13T05:05:42Z] [Info]          |                                                            |
+[2022-06-13T05:05:42Z] [Info]          ==============================================================
+[2022-06-13T05:05:42Z] [Info]  
+[2022-06-13T05:05:42Z] [Info]  
+[2022-06-13T05:05:42Z] [Info]  ========================================== 
+[2022-06-13T05:05:42Z] [Info]  |                                        | 
+[2022-06-13T05:05:42Z] [Info]  |  Missing YSI scriptfiles directories:  | 
+[2022-06-13T05:05:42Z] [Info]  |                                        | 
+[2022-06-13T05:05:42Z] [Info]  |      /scriptfiles/YSI/fixes/           | 
+[2022-06-13T05:05:42Z] [Info]  |      /scriptfiles/YSI/temp/            | 
+[2022-06-13T05:05:42Z] [Info]  |                                        | 
+[2022-06-13T05:05:42Z] [Info]  ========================================== 
+[2022-06-13T05:05:42Z] [Info]  |                                        | 
+[2022-06-13T05:05:42Z] [Info]  |   Generating code, this may take a     | 
+[2022-06-13T05:05:42Z] [Info]  |  little bit of time.  Note that this   | 
+[2022-06-13T05:05:42Z] [Info]  |  code generation works best with the   | 
+[2022-06-13T05:05:42Z] [Info]  |     JIT plugin, which you are not      | 
+[2022-06-13T05:05:42Z] [Info]  |     currently using.  Get it here:     | 
+[2022-06-13T05:05:42Z] [Info]  |                                        | 
+[2022-06-13T05:05:42Z] [Info]  |       https://git.io/jit-plugin        | 
+[2022-06-13T05:05:42Z] [Info]  |                                        | 
+[2022-06-13T05:05:42Z] [Info]  |             Please wait...             | 
+[2022-06-13T05:05:42Z] [Info]  |                                        | 
+[2022-06-13T05:05:42Z] [Info]  |                 Done!                  | 
+[2022-06-13T05:05:42Z] [Info]  |                                        | 
+[2022-06-13T05:05:42Z] [Info]  ========================================== 
+[2022-06-13T05:05:42Z] [Info]  |                                        | 
+[2022-06-13T05:05:42Z] [Info]  | Server:      0.3DL - Windows           | 
+[2022-06-13T05:05:42Z] [Info]  | Compiler:    3.10.10 - Windows         | 
+[2022-06-13T05:05:42Z] [Info]  | Codepage:    <none>                    | 
+[2022-06-13T05:05:42Z] [Info]  | YSI:         5.06.1932                 | 
+[2022-06-13T05:05:42Z] [Info]  | Started:     1655085942                | 
+[2022-06-13T05:05:42Z] [Info]  | JIT:         <none>                    | 
+[2022-06-13T05:05:42Z] [Info]  | Crashdetect: <none>                    | 
+[2022-06-13T05:05:42Z] [Info]  |                                        | 
+[2022-06-13T05:05:42Z] [Info]  ========================================== 
+[2022-06-13T05:05:42Z] [Info]  
+[2022-06-13T05:05:42Z] [Info]  
+[2022-06-13T05:05:42Z] [Info] hook OnGameModeInit()_sql has been called
+[2022-06-13T05:05:42Z] [Info] MySQL connection is successful.
+[2022-06-13T05:05:42Z] [Info] OnGameModeInit() has been called
+[2022-06-13T05:05:42Z] [Warning] Deprecated console variable "weburl", use "website" instead.
+[2022-06-13T05:05:42Z] [Info] -----------------------------------------------------------------
+[2022-06-13T05:05:42Z] [Info] Script: Vortex Roleplay 2 by Calgon and Brian.
+[2022-06-13T05:05:42Z] [Info] Script: Rewrited by Filiqp_ for open.mp
+[2022-06-13T05:05:42Z] [Info] Status: Loaded OnGameModeInit, running version 3.0.0 BETA
+[2022-06-13T05:05:42Z] [Info] -----------------------------------------------------------------
+[2022-06-13T05:05:42Z] [Info] -----------------------------------------------------------------
+[2022-06-13T05:05:42Z] [Info] WARNING: You are running a BETA version of the script.
+[2022-06-13T05:05:42Z] [Info] WARNING: This script is not optimized (or specifically built) for public usage yet.
+[2022-06-13T05:05:42Z] [Info] -----------------------------------------------------------------
+[2022-06-13T05:05:42Z] [Info] main() has been called
+[2022-06-13T05:05:42Z] [Info] hook OnPlayerConnect(0) has been called
+[2022-06-13T05:05:42Z] [Info] public OnPlayerConnect(0) has been called
+[2022-06-13T05:05:42Z] [Info] function checkAccountUsername(0) has been called
+[2022-06-13T05:05:42Z] [Info]  0 test
+[2022-06-13T05:06:58Z] [Info] hook OnGameModeExit()_sql has been called
+[2022-06-13T05:06:58Z] [Info] OnGameModeExit() has been called
+[2022-06-13T05:07:10Z] [Info]  
+[2022-06-13T05:07:10Z] [Info] *** fixes.inc info: Trying to unload RconCommand/ClientCheckResponse fix FS...
+[2022-06-13T05:07:10Z] [Info] ***                 Ignore any errors if the FS already unloaded.
+[2022-06-13T05:07:10Z] [Info]  
+[2022-06-13T05:07:10Z] [Info] Filterscript '../scriptfiles/callbackfix' unloaded.
+[2022-06-13T05:07:10Z] [Info] Filterscript '../scriptfiles/fs-count-A' loaded.
+[2022-06-13T05:07:10Z] [Info] Filterscript '../scriptfiles/fs-count-B' loaded.
+[2022-06-13T05:07:10Z] [Info] Filterscript '../scriptfiles/fs-count-C' loaded.
+[2022-06-13T05:07:10Z] [Info] Filterscript '../scriptfiles/fs-count-D' loaded.
+[2022-06-13T05:07:10Z] [Info] Filterscript '../scriptfiles/fs-count-E' loaded.
+[2022-06-13T05:07:10Z] [Info] Filterscript '../scriptfiles/fs-count-F' loaded.
+[2022-06-13T05:07:10Z] [Info] Filterscript '../scriptfiles/fs-count-G' loaded.
+[2022-06-13T05:07:10Z] [Info] Filterscript '../scriptfiles/fs-count-H' loaded.
+[2022-06-13T05:07:10Z] [Info] Filterscript '../scriptfiles/fs-count-I' loaded.
+[2022-06-13T05:07:10Z] [Info] Filterscript '../scriptfiles/fs-count-J' loaded.
+[2022-06-13T05:07:10Z] [Info] Filterscript '../scriptfiles/fs-count-K' loaded.
+[2022-06-13T05:07:10Z] [Info] Filterscript '../scriptfiles/fs-count-L' loaded.
+[2022-06-13T05:07:10Z] [Info] Filterscript '../scriptfiles/fs-count-M' loaded.
+[2022-06-13T05:07:10Z] [Info] Filterscript '../scriptfiles/fs-count-N' loaded.
+[2022-06-13T05:07:10Z] [Info] Filterscript '../scriptfiles/fs-count-O' loaded.
+[2022-06-13T05:07:10Z] [Info] Filterscript '../scriptfiles/fs-count-P' loaded.
+[2022-06-13T05:07:10Z] [Info] Filterscript '../scriptfiles/fs-count-P' unloaded.
+[2022-06-13T05:07:10Z] [Info] Filterscript '../scriptfiles/fs-count-O' unloaded.
+[2022-06-13T05:07:10Z] [Info] Filterscript '../scriptfiles/fs-count-N' unloaded.
+[2022-06-13T05:07:10Z] [Info] Filterscript '../scriptfiles/fs-count-M' unloaded.
+[2022-06-13T05:07:10Z] [Info] Filterscript '../scriptfiles/fs-count-L' unloaded.
+[2022-06-13T05:07:10Z] [Info] Filterscript '../scriptfiles/fs-count-K' unloaded.
+[2022-06-13T05:07:10Z] [Info] Filterscript '../scriptfiles/fs-count-J' unloaded.
+[2022-06-13T05:07:10Z] [Info] Filterscript '../scriptfiles/fs-count-I' unloaded.
+[2022-06-13T05:07:10Z] [Info] Filterscript '../scriptfiles/fs-count-H' unloaded.
+[2022-06-13T05:07:10Z] [Info] Filterscript '../scriptfiles/fs-count-G' unloaded.
+[2022-06-13T05:07:10Z] [Info] Filterscript '../scriptfiles/fs-count-F' unloaded.
+[2022-06-13T05:07:10Z] [Info] Filterscript '../scriptfiles/fs-count-E' unloaded.
+[2022-06-13T05:07:10Z] [Info] Filterscript '../scriptfiles/fs-count-D' unloaded.
+[2022-06-13T05:07:10Z] [Info] Filterscript '../scriptfiles/fs-count-C' unloaded.
+[2022-06-13T05:07:10Z] [Info] Filterscript '../scriptfiles/fs-count-B' unloaded.
+[2022-06-13T05:07:10Z] [Info] Filterscript '../scriptfiles/fs-count-A' unloaded.
+[2022-06-13T05:07:10Z] [Info]  
+[2022-06-13T05:07:10Z] [Info] *** fixes.inc info: Trying to load RconCommand/ClientCheckResponse fix FS...
+[2022-06-13T05:07:10Z] [Info] ***                 Ignore any errors if the FS already loaded.
+[2022-06-13T05:07:10Z] [Info]  
+[2022-06-13T05:07:10Z] [Info] Filterscript '../scriptfiles/callbackfix' loaded.
+[2022-06-13T05:07:10Z] [Info] FIXES Script ID: 1
+[2022-06-13T05:07:10Z] [Info]  
+[2022-06-13T05:07:10Z] [Info]  
+[2022-06-13T05:07:10Z] [Info]          ==============================================================
+[2022-06-13T05:07:10Z] [Info]          |                                                            |
+[2022-06-13T05:07:10Z] [Info]          |                                                            |
+[2022-06-13T05:07:10Z] [Info]          |    YYYYYYY       YYYYYYY    SSSSSSSSSSSSSSS  IIIIIIIIII    |
+[2022-06-13T05:07:10Z] [Info]          |    Y:::::Y       Y:::::Y  SS:::::::::::::::S I::::::::I    |
+[2022-06-13T05:07:11Z] [Info]          |    Y:::::Y       Y:::::Y S:::::SSSSSS::::::S I::::::::I    |
+[2022-06-13T05:07:11Z] [Info]          |    Y::::::Y     Y::::::Y S:::::S     SSSSSSS II::::::II    |
+[2022-06-13T05:07:11Z] [Info]          |    YYY:::::Y   Y:::::YYY S:::::S               I::::I      |
+[2022-06-13T05:07:11Z] [Info]          |       Y:::::Y Y:::::Y    S:::::S               I::::I      |
+[2022-06-13T05:07:11Z] [Info]          |        Y:::::Y:::::Y      S::::SSSS            I::::I      |
+[2022-06-13T05:07:11Z] [Info]          |         Y:::::::::Y        SS::::::SSSSS       I::::I      |
+[2022-06-13T05:07:11Z] [Info]          |          Y:::::::Y           SSS::::::::SS     I::::I      |
+[2022-06-13T05:07:11Z] [Info]          |           Y:::::Y               SSSSSS::::S    I::::I      |
+[2022-06-13T05:07:11Z] [Info]          |           Y:::::Y                    S:::::S   I::::I      |
+[2022-06-13T05:07:11Z] [Info]          |           Y:::::Y                    S:::::S   I::::I      |
+[2022-06-13T05:07:11Z] [Info]          |           Y:::::Y        SSSSSSS     S:::::S II::::::II    |
+[2022-06-13T05:07:11Z] [Info]          |        YYYY:::::YYYY     S::::::SSSSSS:::::S I::::::::I    |
+[2022-06-13T05:07:11Z] [Info]          |        Y:::::::::::Y     S:::::::::::::::SS  I::::::::I    |
+[2022-06-13T05:07:11Z] [Info]          |        YYYYYYYYYYYYY      SSSSSSSSSSSSSSS    IIIIIIIIII    |
+[2022-06-13T05:07:11Z] [Info]          |                                                            |
+[2022-06-13T05:07:11Z] [Info]          |                                                            |
+[2022-06-13T05:07:11Z] [Info]          |                      (c) 2021 MPL v1.1                     |
+[2022-06-13T05:07:11Z] [Info]          |            Alex "Y_Less" Cole and contributors.            |
+[2022-06-13T05:07:11Z] [Info]          |                                                            |
+[2022-06-13T05:07:11Z] [Info]          |                                                            |
+[2022-06-13T05:07:11Z] [Info]          ==============================================================
+[2022-06-13T05:07:11Z] [Info]  
+[2022-06-13T05:07:11Z] [Info]  
+[2022-06-13T05:07:11Z] [Info]  ========================================== 
+[2022-06-13T05:07:11Z] [Info]  |                                        | 
+[2022-06-13T05:07:11Z] [Info]  |  Missing YSI scriptfiles directories:  | 
+[2022-06-13T05:07:11Z] [Info]  |                                        | 
+[2022-06-13T05:07:11Z] [Info]  |      /scriptfiles/YSI/fixes/           | 
+[2022-06-13T05:07:11Z] [Info]  |      /scriptfiles/YSI/temp/            | 
+[2022-06-13T05:07:11Z] [Info]  |                                        | 
+[2022-06-13T05:07:11Z] [Info]  ========================================== 
+[2022-06-13T05:07:11Z] [Info]  |                                        | 
+[2022-06-13T05:07:11Z] [Info]  |   Generating code, this may take a     | 
+[2022-06-13T05:07:11Z] [Info]  |  little bit of time.  Note that this   | 
+[2022-06-13T05:07:11Z] [Info]  |  code generation works best with the   | 
+[2022-06-13T05:07:11Z] [Info]  |     JIT plugin, which you are not      | 
+[2022-06-13T05:07:11Z] [Info]  |     currently using.  Get it here:     | 
+[2022-06-13T05:07:11Z] [Info]  |                                        | 
+[2022-06-13T05:07:11Z] [Info]  |       https://git.io/jit-plugin        | 
+[2022-06-13T05:07:11Z] [Info]  |                                        | 
+[2022-06-13T05:07:11Z] [Info]  |             Please wait...             | 
+[2022-06-13T05:07:11Z] [Info]  |                                        | 
+[2022-06-13T05:07:11Z] [Info]  |                 Done!                  | 
+[2022-06-13T05:07:11Z] [Info]  |                                        | 
+[2022-06-13T05:07:11Z] [Info]  ========================================== 
+[2022-06-13T05:07:11Z] [Info]  |                                        | 
+[2022-06-13T05:07:11Z] [Info]  | Server:      0.3DL - Windows           | 
+[2022-06-13T05:07:11Z] [Info]  | Compiler:    3.10.10 - Windows         | 
+[2022-06-13T05:07:11Z] [Info]  | Codepage:    <none>                    | 
+[2022-06-13T05:07:11Z] [Info]  | YSI:         5.06.1932                 | 
+[2022-06-13T05:07:11Z] [Info]  | Started:     1655086030                | 
+[2022-06-13T05:07:11Z] [Info]  | JIT:         <none>                    | 
+[2022-06-13T05:07:11Z] [Info]  | Crashdetect: <none>                    | 
+[2022-06-13T05:07:11Z] [Info]  |                                        | 
+[2022-06-13T05:07:11Z] [Info]  ========================================== 
+[2022-06-13T05:07:11Z] [Info]  
+[2022-06-13T05:07:11Z] [Info]  
+[2022-06-13T05:07:11Z] [Info] hook OnGameModeInit()_sql has been called
+[2022-06-13T05:07:12Z] [Info] MySQL connection is successful.
+[2022-06-13T05:07:12Z] [Info] OnGameModeInit() has been called
+[2022-06-13T05:07:12Z] [Warning] Deprecated console variable "weburl", use "website" instead.
+[2022-06-13T05:07:12Z] [Info] -----------------------------------------------------------------
+[2022-06-13T05:07:12Z] [Info] Script: Vortex Roleplay 2 by Calgon and Brian.
+[2022-06-13T05:07:12Z] [Info] Script: Rewrited by Filiqp_ for open.mp
+[2022-06-13T05:07:12Z] [Info] Status: Loaded OnGameModeInit, running version 3.0.0 BETA
+[2022-06-13T05:07:12Z] [Info] -----------------------------------------------------------------
+[2022-06-13T05:07:12Z] [Info] -----------------------------------------------------------------
+[2022-06-13T05:07:12Z] [Info] WARNING: You are running a BETA version of the script.
+[2022-06-13T05:07:12Z] [Info] WARNING: This script is not optimized (or specifically built) for public usage yet.
+[2022-06-13T05:07:12Z] [Info] -----------------------------------------------------------------
+[2022-06-13T05:07:12Z] [Info] main() has been called
+[2022-06-13T05:07:12Z] [Info] hook OnPlayerConnect(0) has been called
+[2022-06-13T05:07:12Z] [Info] public OnPlayerConnect(0) has been called
+[2022-06-13T05:07:12Z] [Info] function checkAccountUsername(0) has been called
+[2022-06-13T05:07:12Z] [Info]  50 test
+[2022-06-13T05:08:41Z] [Info] hook OnGameModeExit()_sql has been called
+[2022-06-13T05:08:41Z] [Info] OnGameModeExit() has been called
+[2022-06-13T05:08:53Z] [Info]  
+[2022-06-13T05:08:53Z] [Info] *** fixes.inc info: Trying to unload RconCommand/ClientCheckResponse fix FS...
+[2022-06-13T05:08:53Z] [Info] ***                 Ignore any errors if the FS already unloaded.
+[2022-06-13T05:08:53Z] [Info]  
+[2022-06-13T05:08:53Z] [Info] Filterscript '../scriptfiles/callbackfix' unloaded.
+[2022-06-13T05:08:53Z] [Info] Filterscript '../scriptfiles/fs-count-A' loaded.
+[2022-06-13T05:08:53Z] [Info] Filterscript '../scriptfiles/fs-count-B' loaded.
+[2022-06-13T05:08:53Z] [Info] Filterscript '../scriptfiles/fs-count-C' loaded.
+[2022-06-13T05:08:53Z] [Info] Filterscript '../scriptfiles/fs-count-D' loaded.
+[2022-06-13T05:08:53Z] [Info] Filterscript '../scriptfiles/fs-count-E' loaded.
+[2022-06-13T05:08:53Z] [Info] Filterscript '../scriptfiles/fs-count-F' loaded.
+[2022-06-13T05:08:53Z] [Info] Filterscript '../scriptfiles/fs-count-G' loaded.
+[2022-06-13T05:08:53Z] [Info] Filterscript '../scriptfiles/fs-count-H' loaded.
+[2022-06-13T05:08:53Z] [Info] Filterscript '../scriptfiles/fs-count-I' loaded.
+[2022-06-13T05:08:53Z] [Info] Filterscript '../scriptfiles/fs-count-J' loaded.
+[2022-06-13T05:08:53Z] [Info] Filterscript '../scriptfiles/fs-count-K' loaded.
+[2022-06-13T05:08:53Z] [Info] Filterscript '../scriptfiles/fs-count-L' loaded.
+[2022-06-13T05:08:53Z] [Info] Filterscript '../scriptfiles/fs-count-M' loaded.
+[2022-06-13T05:08:53Z] [Info] Filterscript '../scriptfiles/fs-count-N' loaded.
+[2022-06-13T05:08:53Z] [Info] Filterscript '../scriptfiles/fs-count-O' loaded.
+[2022-06-13T05:08:53Z] [Info] Filterscript '../scriptfiles/fs-count-P' loaded.
+[2022-06-13T05:08:53Z] [Info] Filterscript '../scriptfiles/fs-count-P' unloaded.
+[2022-06-13T05:08:53Z] [Info] Filterscript '../scriptfiles/fs-count-O' unloaded.
+[2022-06-13T05:08:53Z] [Info] Filterscript '../scriptfiles/fs-count-N' unloaded.
+[2022-06-13T05:08:53Z] [Info] Filterscript '../scriptfiles/fs-count-M' unloaded.
+[2022-06-13T05:08:53Z] [Info] Filterscript '../scriptfiles/fs-count-L' unloaded.
+[2022-06-13T05:08:53Z] [Info] Filterscript '../scriptfiles/fs-count-K' unloaded.
+[2022-06-13T05:08:53Z] [Info] Filterscript '../scriptfiles/fs-count-J' unloaded.
+[2022-06-13T05:08:53Z] [Info] Filterscript '../scriptfiles/fs-count-I' unloaded.
+[2022-06-13T05:08:53Z] [Info] Filterscript '../scriptfiles/fs-count-H' unloaded.
+[2022-06-13T05:08:53Z] [Info] Filterscript '../scriptfiles/fs-count-G' unloaded.
+[2022-06-13T05:08:53Z] [Info] Filterscript '../scriptfiles/fs-count-F' unloaded.
+[2022-06-13T05:08:53Z] [Info] Filterscript '../scriptfiles/fs-count-E' unloaded.
+[2022-06-13T05:08:53Z] [Info] Filterscript '../scriptfiles/fs-count-D' unloaded.
+[2022-06-13T05:08:53Z] [Info] Filterscript '../scriptfiles/fs-count-C' unloaded.
+[2022-06-13T05:08:53Z] [Info] Filterscript '../scriptfiles/fs-count-B' unloaded.
+[2022-06-13T05:08:53Z] [Info] Filterscript '../scriptfiles/fs-count-A' unloaded.
+[2022-06-13T05:08:53Z] [Info]  
+[2022-06-13T05:08:53Z] [Info] *** fixes.inc info: Trying to load RconCommand/ClientCheckResponse fix FS...
+[2022-06-13T05:08:53Z] [Info] ***                 Ignore any errors if the FS already loaded.
+[2022-06-13T05:08:53Z] [Info]  
+[2022-06-13T05:08:53Z] [Info] Filterscript '../scriptfiles/callbackfix' loaded.
+[2022-06-13T05:08:53Z] [Info] FIXES Script ID: 1
+[2022-06-13T05:08:53Z] [Info]  
+[2022-06-13T05:08:53Z] [Info]  
+[2022-06-13T05:08:53Z] [Info]          ==============================================================
+[2022-06-13T05:08:53Z] [Info]          |                                                            |
+[2022-06-13T05:08:53Z] [Info]          |                                                            |
+[2022-06-13T05:08:53Z] [Info]          |    YYYYYYY       YYYYYYY    SSSSSSSSSSSSSSS  IIIIIIIIII    |
+[2022-06-13T05:08:53Z] [Info]          |    Y:::::Y       Y:::::Y  SS:::::::::::::::S I::::::::I    |
+[2022-06-13T05:08:53Z] [Info]          |    Y:::::Y       Y:::::Y S:::::SSSSSS::::::S I::::::::I    |
+[2022-06-13T05:08:53Z] [Info]          |    Y::::::Y     Y::::::Y S:::::S     SSSSSSS II::::::II    |
+[2022-06-13T05:08:53Z] [Info]          |    YYY:::::Y   Y:::::YYY S:::::S               I::::I      |
+[2022-06-13T05:08:53Z] [Info]          |       Y:::::Y Y:::::Y    S:::::S               I::::I      |
+[2022-06-13T05:08:53Z] [Info]          |        Y:::::Y:::::Y      S::::SSSS            I::::I      |
+[2022-06-13T05:08:53Z] [Info]          |         Y:::::::::Y        SS::::::SSSSS       I::::I      |
+[2022-06-13T05:08:53Z] [Info]          |          Y:::::::Y           SSS::::::::SS     I::::I      |
+[2022-06-13T05:08:53Z] [Info]          |           Y:::::Y               SSSSSS::::S    I::::I      |
+[2022-06-13T05:08:53Z] [Info]          |           Y:::::Y                    S:::::S   I::::I      |
+[2022-06-13T05:08:53Z] [Info]          |           Y:::::Y                    S:::::S   I::::I      |
+[2022-06-13T05:08:53Z] [Info]          |           Y:::::Y        SSSSSSS     S:::::S II::::::II    |
+[2022-06-13T05:08:53Z] [Info]          |        YYYY:::::YYYY     S::::::SSSSSS:::::S I::::::::I    |
+[2022-06-13T05:08:53Z] [Info]          |        Y:::::::::::Y     S:::::::::::::::SS  I::::::::I    |
+[2022-06-13T05:08:53Z] [Info]          |        YYYYYYYYYYYYY      SSSSSSSSSSSSSSS    IIIIIIIIII    |
+[2022-06-13T05:08:53Z] [Info]          |                                                            |
+[2022-06-13T05:08:53Z] [Info]          |                                                            |
+[2022-06-13T05:08:53Z] [Info]          |                      (c) 2021 MPL v1.1                     |
+[2022-06-13T05:08:53Z] [Info]          |            Alex "Y_Less" Cole and contributors.            |
+[2022-06-13T05:08:53Z] [Info]          |                                                            |
+[2022-06-13T05:08:53Z] [Info]          |                                                            |
+[2022-06-13T05:08:53Z] [Info]          ==============================================================
+[2022-06-13T05:08:53Z] [Info]  
+[2022-06-13T05:08:53Z] [Info]  
+[2022-06-13T05:08:53Z] [Info]  ========================================== 
+[2022-06-13T05:08:53Z] [Info]  |                                        | 
+[2022-06-13T05:08:53Z] [Info]  |  Missing YSI scriptfiles directories:  | 
+[2022-06-13T05:08:53Z] [Info]  |                                        | 
+[2022-06-13T05:08:53Z] [Info]  |      /scriptfiles/YSI/fixes/           | 
+[2022-06-13T05:08:53Z] [Info]  |      /scriptfiles/YSI/temp/            | 
+[2022-06-13T05:08:53Z] [Info]  |                                        | 
+[2022-06-13T05:08:53Z] [Info]  ========================================== 
+[2022-06-13T05:08:53Z] [Info]  |                                        | 
+[2022-06-13T05:08:53Z] [Info]  |   Generating code, this may take a     | 
+[2022-06-13T05:08:53Z] [Info]  |  little bit of time.  Note that this   | 
+[2022-06-13T05:08:53Z] [Info]  |  code generation works best with the   | 
+[2022-06-13T05:08:53Z] [Info]  |     JIT plugin, which you are not      | 
+[2022-06-13T05:08:54Z] [Info]  |     currently using.  Get it here:     | 
+[2022-06-13T05:08:54Z] [Info]  |                                        | 
+[2022-06-13T05:08:54Z] [Info]  |       https://git.io/jit-plugin        | 
+[2022-06-13T05:08:54Z] [Info]  |                                        | 
+[2022-06-13T05:08:54Z] [Info]  |             Please wait...             | 
+[2022-06-13T05:08:54Z] [Info]  |                                        | 
+[2022-06-13T05:08:54Z] [Info]  |                 Done!                  | 
+[2022-06-13T05:08:54Z] [Info]  |                                        | 
+[2022-06-13T05:08:54Z] [Info]  ========================================== 
+[2022-06-13T05:08:54Z] [Info]  |                                        | 
+[2022-06-13T05:08:54Z] [Info]  | Server:      0.3DL - Windows           | 
+[2022-06-13T05:08:54Z] [Info]  | Compiler:    3.10.10 - Windows         | 
+[2022-06-13T05:08:54Z] [Info]  | Codepage:    <none>                    | 
+[2022-06-13T05:08:54Z] [Info]  | YSI:         5.06.1932                 | 
+[2022-06-13T05:08:54Z] [Info]  | Started:     1655086133                | 
+[2022-06-13T05:08:54Z] [Info]  | JIT:         <none>                    | 
+[2022-06-13T05:08:54Z] [Info]  | Crashdetect: <none>                    | 
+[2022-06-13T05:08:54Z] [Info]  |                                        | 
+[2022-06-13T05:08:54Z] [Info]  ========================================== 
+[2022-06-13T05:08:54Z] [Info]  
+[2022-06-13T05:08:54Z] [Info]  
+[2022-06-13T05:08:54Z] [Info] hook OnGameModeInit()_sql has been called
+[2022-06-13T05:08:54Z] [Info] MySQL connection is successful.
+[2022-06-13T05:08:54Z] [Info] OnGameModeInit() has been called
+[2022-06-13T05:08:54Z] [Warning] Deprecated console variable "weburl", use "website" instead.
+[2022-06-13T05:08:54Z] [Info] -----------------------------------------------------------------
+[2022-06-13T05:08:54Z] [Info] Script: Vortex Roleplay 2 by Calgon and Brian.
+[2022-06-13T05:08:54Z] [Info] Script: Rewrited by Filiqp_ for open.mp
+[2022-06-13T05:08:54Z] [Info] Status: Loaded OnGameModeInit, running version 3.0.0 BETA
+[2022-06-13T05:08:54Z] [Info] -----------------------------------------------------------------
+[2022-06-13T05:08:54Z] [Info] -----------------------------------------------------------------
+[2022-06-13T05:08:54Z] [Info] WARNING: You are running a BETA version of the script.
+[2022-06-13T05:08:54Z] [Info] WARNING: This script is not optimized (or specifically built) for public usage yet.
+[2022-06-13T05:08:54Z] [Info] -----------------------------------------------------------------
+[2022-06-13T05:08:54Z] [Info] main() has been called
+[2022-06-13T05:08:54Z] [Info] hook OnPlayerConnect(0) has been called
+[2022-06-13T05:08:54Z] [Info] public OnPlayerConnect(0) has been called
+[2022-06-13T05:08:54Z] [Info] function checkBanPlayer(0) has been called
+[2022-06-13T05:08:54Z] [Info] function checkAccountUsername(0) has been called
+[2022-06-13T05:08:54Z] [Info] 2 2F9959B230A44678DD2DC29F037BA1159F233AA9AB183CE3A0678EAAE002E5AA6F27F47144A1A4365116D3DB1B58EC47896623B92D85CB2F191705DAF11858B test
+[2022-06-13T05:09:27Z] [Info] [part] hustler4ever has left the server (0:2)
+[2022-06-13T05:11:26Z] [Info] [connection] incoming connection: 192.168.1.165:64782 id: 0
+[2022-06-13T05:11:26Z] [Info] [join] test has joined the server (0:192.168.1.165)
+[2022-06-13T05:11:26Z] [Info] hook OnPlayerConnect(0) has been called
+[2022-06-13T05:11:26Z] [Info] public OnPlayerConnect(0) has been called
+[2022-06-13T05:11:26Z] [Info] function checkBanPlayer(0) has been called
+[2022-06-13T05:11:26Z] [Info] function checkAccountUsername(0) has been called
+[2022-06-13T05:13:32Z] [Info] hook OnGameModeExit()_sql has been called
+[2022-06-13T05:13:32Z] [Info] OnGameModeExit() has been called
+[2022-06-13T05:13:44Z] [Info]  
+[2022-06-13T05:13:44Z] [Info] *** fixes.inc info: Trying to unload RconCommand/ClientCheckResponse fix FS...
+[2022-06-13T05:13:44Z] [Info] ***                 Ignore any errors if the FS already unloaded.
+[2022-06-13T05:13:44Z] [Info]  
+[2022-06-13T05:13:44Z] [Info] Filterscript '../scriptfiles/callbackfix' unloaded.
+[2022-06-13T05:13:44Z] [Info] Filterscript '../scriptfiles/fs-count-A' loaded.
+[2022-06-13T05:13:44Z] [Info] Filterscript '../scriptfiles/fs-count-B' loaded.
+[2022-06-13T05:13:44Z] [Info] Filterscript '../scriptfiles/fs-count-C' loaded.
+[2022-06-13T05:13:44Z] [Info] Filterscript '../scriptfiles/fs-count-D' loaded.
+[2022-06-13T05:13:44Z] [Info] Filterscript '../scriptfiles/fs-count-E' loaded.
+[2022-06-13T05:13:44Z] [Info] Filterscript '../scriptfiles/fs-count-F' loaded.
+[2022-06-13T05:13:44Z] [Info] Filterscript '../scriptfiles/fs-count-G' loaded.
+[2022-06-13T05:13:44Z] [Info] Filterscript '../scriptfiles/fs-count-H' loaded.
+[2022-06-13T05:13:44Z] [Info] Filterscript '../scriptfiles/fs-count-I' loaded.
+[2022-06-13T05:13:44Z] [Info] Filterscript '../scriptfiles/fs-count-J' loaded.
+[2022-06-13T05:13:44Z] [Info] Filterscript '../scriptfiles/fs-count-K' loaded.
+[2022-06-13T05:13:44Z] [Info] Filterscript '../scriptfiles/fs-count-L' loaded.
+[2022-06-13T05:13:44Z] [Info] Filterscript '../scriptfiles/fs-count-M' loaded.
+[2022-06-13T05:13:44Z] [Info] Filterscript '../scriptfiles/fs-count-N' loaded.
+[2022-06-13T05:13:44Z] [Info] Filterscript '../scriptfiles/fs-count-O' loaded.
+[2022-06-13T05:13:45Z] [Info] Filterscript '../scriptfiles/fs-count-P' loaded.
+[2022-06-13T05:13:45Z] [Info] Filterscript '../scriptfiles/fs-count-P' unloaded.
+[2022-06-13T05:13:45Z] [Info] Filterscript '../scriptfiles/fs-count-O' unloaded.
+[2022-06-13T05:13:45Z] [Info] Filterscript '../scriptfiles/fs-count-N' unloaded.
+[2022-06-13T05:13:45Z] [Info] Filterscript '../scriptfiles/fs-count-M' unloaded.
+[2022-06-13T05:13:45Z] [Info] Filterscript '../scriptfiles/fs-count-L' unloaded.
+[2022-06-13T05:13:45Z] [Info] Filterscript '../scriptfiles/fs-count-K' unloaded.
+[2022-06-13T05:13:45Z] [Info] Filterscript '../scriptfiles/fs-count-J' unloaded.
+[2022-06-13T05:13:45Z] [Info] Filterscript '../scriptfiles/fs-count-I' unloaded.
+[2022-06-13T05:13:45Z] [Info] Filterscript '../scriptfiles/fs-count-H' unloaded.
+[2022-06-13T05:13:45Z] [Info] Filterscript '../scriptfiles/fs-count-G' unloaded.
+[2022-06-13T05:13:45Z] [Info] Filterscript '../scriptfiles/fs-count-F' unloaded.
+[2022-06-13T05:13:45Z] [Info] Filterscript '../scriptfiles/fs-count-E' unloaded.
+[2022-06-13T05:13:45Z] [Info] Filterscript '../scriptfiles/fs-count-D' unloaded.
+[2022-06-13T05:13:45Z] [Info] Filterscript '../scriptfiles/fs-count-C' unloaded.
+[2022-06-13T05:13:45Z] [Info] Filterscript '../scriptfiles/fs-count-B' unloaded.
+[2022-06-13T05:13:45Z] [Info] Filterscript '../scriptfiles/fs-count-A' unloaded.
+[2022-06-13T05:13:45Z] [Info]  
+[2022-06-13T05:13:45Z] [Info] *** fixes.inc info: Trying to load RconCommand/ClientCheckResponse fix FS...
+[2022-06-13T05:13:45Z] [Info] ***                 Ignore any errors if the FS already loaded.
+[2022-06-13T05:13:45Z] [Info]  
+[2022-06-13T05:13:45Z] [Info] Filterscript '../scriptfiles/callbackfix' loaded.
+[2022-06-13T05:13:45Z] [Info] FIXES Script ID: 1
+[2022-06-13T05:13:45Z] [Info]  
+[2022-06-13T05:13:45Z] [Info]  
+[2022-06-13T05:13:45Z] [Info]          ==============================================================
+[2022-06-13T05:13:45Z] [Info]          |                                                            |
+[2022-06-13T05:13:45Z] [Info]          |                                                            |
+[2022-06-13T05:13:45Z] [Info]          |    YYYYYYY       YYYYYYY    SSSSSSSSSSSSSSS  IIIIIIIIII    |
+[2022-06-13T05:13:45Z] [Info]          |    Y:::::Y       Y:::::Y  SS:::::::::::::::S I::::::::I    |
+[2022-06-13T05:13:45Z] [Info]          |    Y:::::Y       Y:::::Y S:::::SSSSSS::::::S I::::::::I    |
+[2022-06-13T05:13:45Z] [Info]          |    Y::::::Y     Y::::::Y S:::::S     SSSSSSS II::::::II    |
+[2022-06-13T05:13:45Z] [Info]          |    YYY:::::Y   Y:::::YYY S:::::S               I::::I      |
+[2022-06-13T05:13:45Z] [Info]          |       Y:::::Y Y:::::Y    S:::::S               I::::I      |
+[2022-06-13T05:13:45Z] [Info]          |        Y:::::Y:::::Y      S::::SSSS            I::::I      |
+[2022-06-13T05:13:45Z] [Info]          |         Y:::::::::Y        SS::::::SSSSS       I::::I      |
+[2022-06-13T05:13:45Z] [Info]          |          Y:::::::Y           SSS::::::::SS     I::::I      |
+[2022-06-13T05:13:45Z] [Info]          |           Y:::::Y               SSSSSS::::S    I::::I      |
+[2022-06-13T05:13:45Z] [Info]          |           Y:::::Y                    S:::::S   I::::I      |
+[2022-06-13T05:13:45Z] [Info]          |           Y:::::Y                    S:::::S   I::::I      |
+[2022-06-13T05:13:45Z] [Info]          |           Y:::::Y        SSSSSSS     S:::::S II::::::II    |
+[2022-06-13T05:13:45Z] [Info]          |        YYYY:::::YYYY     S::::::SSSSSS:::::S I::::::::I    |
+[2022-06-13T05:13:45Z] [Info]          |        Y:::::::::::Y     S:::::::::::::::SS  I::::::::I    |
+[2022-06-13T05:13:45Z] [Info]          |        YYYYYYYYYYYYY      SSSSSSSSSSSSSSS    IIIIIIIIII    |
+[2022-06-13T05:13:45Z] [Info]          |                                                            |
+[2022-06-13T05:13:45Z] [Info]          |                                                            |
+[2022-06-13T05:13:45Z] [Info]          |                      (c) 2021 MPL v1.1                     |
+[2022-06-13T05:13:45Z] [Info]          |            Alex "Y_Less" Cole and contributors.            |
+[2022-06-13T05:13:45Z] [Info]          |                                                            |
+[2022-06-13T05:13:45Z] [Info]          |                                                            |
+[2022-06-13T05:13:45Z] [Info]          ==============================================================
+[2022-06-13T05:13:45Z] [Info]  
+[2022-06-13T05:13:45Z] [Info]  
+[2022-06-13T05:13:45Z] [Info]  ========================================== 
+[2022-06-13T05:13:45Z] [Info]  |                                        | 
+[2022-06-13T05:13:45Z] [Info]  |  Missing YSI scriptfiles directories:  | 
+[2022-06-13T05:13:45Z] [Info]  |                                        | 
+[2022-06-13T05:13:45Z] [Info]  |      /scriptfiles/YSI/fixes/           | 
+[2022-06-13T05:13:45Z] [Info]  |      /scriptfiles/YSI/temp/            | 
+[2022-06-13T05:13:45Z] [Info]  |                                        | 
+[2022-06-13T05:13:45Z] [Info]  ========================================== 
+[2022-06-13T05:13:45Z] [Info]  |                                        | 
+[2022-06-13T05:13:45Z] [Info]  |   Generating code, this may take a     | 
+[2022-06-13T05:13:45Z] [Info]  |  little bit of time.  Note that this   | 
+[2022-06-13T05:13:45Z] [Info]  |  code generation works best with the   | 
+[2022-06-13T05:13:45Z] [Info]  |     JIT plugin, which you are not      | 
+[2022-06-13T05:13:45Z] [Info]  |     currently using.  Get it here:     | 
+[2022-06-13T05:13:45Z] [Info]  |                                        | 
+[2022-06-13T05:13:45Z] [Info]  |       https://git.io/jit-plugin        | 
+[2022-06-13T05:13:45Z] [Info]  |                                        | 
+[2022-06-13T05:13:45Z] [Info]  |             Please wait...             | 
+[2022-06-13T05:13:45Z] [Info]  |                                        | 
+[2022-06-13T05:13:45Z] [Info]  |                 Done!                  | 
+[2022-06-13T05:13:45Z] [Info]  |                                        | 
+[2022-06-13T05:13:45Z] [Info]  ========================================== 
+[2022-06-13T05:13:45Z] [Info]  |                                        | 
+[2022-06-13T05:13:45Z] [Info]  | Server:      0.3DL - Windows           | 
+[2022-06-13T05:13:45Z] [Info]  | Compiler:    3.10.10 - Windows         | 
+[2022-06-13T05:13:45Z] [Info]  | Codepage:    <none>                    | 
+[2022-06-13T05:13:45Z] [Info]  | YSI:         5.06.1932                 | 
+[2022-06-13T05:13:45Z] [Info]  | Started:     1655086425                | 
+[2022-06-13T05:13:45Z] [Info]  | JIT:         <none>                    | 
+[2022-06-13T05:13:45Z] [Info]  | Crashdetect: <none>                    | 
+[2022-06-13T05:13:45Z] [Info]  |                                        | 
+[2022-06-13T05:13:45Z] [Info]  ========================================== 
+[2022-06-13T05:13:45Z] [Info]  
+[2022-06-13T05:13:45Z] [Info]  
+[2022-06-13T05:13:45Z] [Info] hook OnGameModeInit()_sql has been called
+[2022-06-13T05:13:45Z] [Info] MySQL connection is successful.
+[2022-06-13T05:13:45Z] [Info] OnGameModeInit() has been called
+[2022-06-13T05:13:45Z] [Warning] Deprecated console variable "weburl", use "website" instead.
+[2022-06-13T05:13:45Z] [Info] -----------------------------------------------------------------
+[2022-06-13T05:13:45Z] [Info] Script: Vortex Roleplay 2 by Calgon and Brian.
+[2022-06-13T05:13:45Z] [Info] Script: Rewrited by Filiqp_ for open.mp
+[2022-06-13T05:13:45Z] [Info] Status: Loaded OnGameModeInit, running version 3.0.0 BETA
+[2022-06-13T05:13:45Z] [Info] -----------------------------------------------------------------
+[2022-06-13T05:13:45Z] [Info] -----------------------------------------------------------------
+[2022-06-13T05:13:45Z] [Info] WARNING: You are running a BETA version of the script.
+[2022-06-13T05:13:45Z] [Info] WARNING: This script is not optimized (or specifically built) for public usage yet.
+[2022-06-13T05:13:45Z] [Info] -----------------------------------------------------------------
+[2022-06-13T05:13:45Z] [Info] main() has been called
+[2022-06-13T05:13:45Z] [Info] hook OnPlayerConnect(0) has been called
+[2022-06-13T05:13:45Z] [Info] public OnPlayerConnect(0) has been called
+[2022-06-13T05:13:45Z] [Info] function checkBanPlayer(0) has been called
+[2022-06-13T05:13:45Z] [Info] function checkAccountUsername(0) has been called
+[2022-06-13T05:13:45Z] [Info] 3 FD9D94340DBD72C11B37EBB0D2A19B4D05E00FD78E4E2CE8923B9EA3A54E900DF181CFB112A8A73228D1F3551680E2AD9701A4FCFB248FA7FA77B95180628BB test
+[2022-06-13T05:16:13Z] [Info] hook OnGameModeExit()_sql has been called
+[2022-06-13T05:16:13Z] [Info] OnGameModeExit() has been called
+[2022-06-13T05:16:25Z] [Info]  
+[2022-06-13T05:16:25Z] [Info] *** fixes.inc info: Trying to unload RconCommand/ClientCheckResponse fix FS...
+[2022-06-13T05:16:25Z] [Info] ***                 Ignore any errors if the FS already unloaded.
+[2022-06-13T05:16:25Z] [Info]  
+[2022-06-13T05:16:25Z] [Info] Filterscript '../scriptfiles/callbackfix' unloaded.
+[2022-06-13T05:16:25Z] [Info] Filterscript '../scriptfiles/fs-count-A' loaded.
+[2022-06-13T05:16:25Z] [Info] Filterscript '../scriptfiles/fs-count-B' loaded.
+[2022-06-13T05:16:25Z] [Info] Filterscript '../scriptfiles/fs-count-C' loaded.
+[2022-06-13T05:16:25Z] [Info] Filterscript '../scriptfiles/fs-count-D' loaded.
+[2022-06-13T05:16:25Z] [Info] Filterscript '../scriptfiles/fs-count-E' loaded.
+[2022-06-13T05:16:25Z] [Info] Filterscript '../scriptfiles/fs-count-F' loaded.
+[2022-06-13T05:16:25Z] [Info] Filterscript '../scriptfiles/fs-count-G' loaded.
+[2022-06-13T05:16:25Z] [Info] Filterscript '../scriptfiles/fs-count-H' loaded.
+[2022-06-13T05:16:25Z] [Info] Filterscript '../scriptfiles/fs-count-I' loaded.
+[2022-06-13T05:16:25Z] [Info] Filterscript '../scriptfiles/fs-count-J' loaded.
+[2022-06-13T05:16:25Z] [Info] Filterscript '../scriptfiles/fs-count-K' loaded.
+[2022-06-13T05:16:25Z] [Info] Filterscript '../scriptfiles/fs-count-L' loaded.
+[2022-06-13T05:16:25Z] [Info] Filterscript '../scriptfiles/fs-count-M' loaded.
+[2022-06-13T05:16:25Z] [Info] Filterscript '../scriptfiles/fs-count-N' loaded.
+[2022-06-13T05:16:25Z] [Info] Filterscript '../scriptfiles/fs-count-O' loaded.
+[2022-06-13T05:16:25Z] [Info] Filterscript '../scriptfiles/fs-count-P' loaded.
+[2022-06-13T05:16:25Z] [Info] Filterscript '../scriptfiles/fs-count-P' unloaded.
+[2022-06-13T05:16:25Z] [Info] Filterscript '../scriptfiles/fs-count-O' unloaded.
+[2022-06-13T05:16:25Z] [Info] Filterscript '../scriptfiles/fs-count-N' unloaded.
+[2022-06-13T05:16:25Z] [Info] Filterscript '../scriptfiles/fs-count-M' unloaded.
+[2022-06-13T05:16:25Z] [Info] Filterscript '../scriptfiles/fs-count-L' unloaded.
+[2022-06-13T05:16:25Z] [Info] Filterscript '../scriptfiles/fs-count-K' unloaded.
+[2022-06-13T05:16:25Z] [Info] Filterscript '../scriptfiles/fs-count-J' unloaded.
+[2022-06-13T05:16:25Z] [Info] Filterscript '../scriptfiles/fs-count-I' unloaded.
+[2022-06-13T05:16:25Z] [Info] Filterscript '../scriptfiles/fs-count-H' unloaded.
+[2022-06-13T05:16:25Z] [Info] Filterscript '../scriptfiles/fs-count-G' unloaded.
+[2022-06-13T05:16:25Z] [Info] Filterscript '../scriptfiles/fs-count-F' unloaded.
+[2022-06-13T05:16:25Z] [Info] Filterscript '../scriptfiles/fs-count-E' unloaded.
+[2022-06-13T05:16:25Z] [Info] Filterscript '../scriptfiles/fs-count-D' unloaded.
+[2022-06-13T05:16:25Z] [Info] Filterscript '../scriptfiles/fs-count-C' unloaded.
+[2022-06-13T05:16:25Z] [Info] Filterscript '../scriptfiles/fs-count-B' unloaded.
+[2022-06-13T05:16:25Z] [Info] Filterscript '../scriptfiles/fs-count-A' unloaded.
+[2022-06-13T05:16:25Z] [Info]  
+[2022-06-13T05:16:25Z] [Info] *** fixes.inc info: Trying to load RconCommand/ClientCheckResponse fix FS...
+[2022-06-13T05:16:25Z] [Info] ***                 Ignore any errors if the FS already loaded.
+[2022-06-13T05:16:26Z] [Info]  
+[2022-06-13T05:16:26Z] [Info] Filterscript '../scriptfiles/callbackfix' loaded.
+[2022-06-13T05:16:26Z] [Info] FIXES Script ID: 1
+[2022-06-13T05:16:26Z] [Info]  
+[2022-06-13T05:16:26Z] [Info]  
+[2022-06-13T05:16:26Z] [Info]          ==============================================================
+[2022-06-13T05:16:26Z] [Info]          |                                                            |
+[2022-06-13T05:16:26Z] [Info]          |                                                            |
+[2022-06-13T05:16:26Z] [Info]          |    YYYYYYY       YYYYYYY    SSSSSSSSSSSSSSS  IIIIIIIIII    |
+[2022-06-13T05:16:26Z] [Info]          |    Y:::::Y       Y:::::Y  SS:::::::::::::::S I::::::::I    |
+[2022-06-13T05:16:26Z] [Info]          |    Y:::::Y       Y:::::Y S:::::SSSSSS::::::S I::::::::I    |
+[2022-06-13T05:16:26Z] [Info]          |    Y::::::Y     Y::::::Y S:::::S     SSSSSSS II::::::II    |
+[2022-06-13T05:16:26Z] [Info]          |    YYY:::::Y   Y:::::YYY S:::::S               I::::I      |
+[2022-06-13T05:16:26Z] [Info]          |       Y:::::Y Y:::::Y    S:::::S               I::::I      |
+[2022-06-13T05:16:26Z] [Info]          |        Y:::::Y:::::Y      S::::SSSS            I::::I      |
+[2022-06-13T05:16:26Z] [Info]          |         Y:::::::::Y        SS::::::SSSSS       I::::I      |
+[2022-06-13T05:16:26Z] [Info]          |          Y:::::::Y           SSS::::::::SS     I::::I      |
+[2022-06-13T05:16:26Z] [Info]          |           Y:::::Y               SSSSSS::::S    I::::I      |
+[2022-06-13T05:16:26Z] [Info]          |           Y:::::Y                    S:::::S   I::::I      |
+[2022-06-13T05:16:26Z] [Info]          |           Y:::::Y                    S:::::S   I::::I      |
+[2022-06-13T05:16:26Z] [Info]          |           Y:::::Y        SSSSSSS     S:::::S II::::::II    |
+[2022-06-13T05:16:26Z] [Info]          |        YYYY:::::YYYY     S::::::SSSSSS:::::S I::::::::I    |
+[2022-06-13T05:16:26Z] [Info]          |        Y:::::::::::Y     S:::::::::::::::SS  I::::::::I    |
+[2022-06-13T05:16:26Z] [Info]          |        YYYYYYYYYYYYY      SSSSSSSSSSSSSSS    IIIIIIIIII    |
+[2022-06-13T05:16:26Z] [Info]          |                                                            |
+[2022-06-13T05:16:26Z] [Info]          |                                                            |
+[2022-06-13T05:16:26Z] [Info]          |                      (c) 2021 MPL v1.1                     |
+[2022-06-13T05:16:26Z] [Info]          |            Alex "Y_Less" Cole and contributors.            |
+[2022-06-13T05:16:26Z] [Info]          |                                                            |
+[2022-06-13T05:16:26Z] [Info]          |                                                            |
+[2022-06-13T05:16:26Z] [Info]          ==============================================================
+[2022-06-13T05:16:26Z] [Info]  
+[2022-06-13T05:16:26Z] [Info]  
+[2022-06-13T05:16:26Z] [Info]  ========================================== 
+[2022-06-13T05:16:26Z] [Info]  |                                        | 
+[2022-06-13T05:16:26Z] [Info]  |  Missing YSI scriptfiles directories:  | 
+[2022-06-13T05:16:26Z] [Info]  |                                        | 
+[2022-06-13T05:16:26Z] [Info]  |      /scriptfiles/YSI/fixes/           | 
+[2022-06-13T05:16:26Z] [Info]  |      /scriptfiles/YSI/temp/            | 
+[2022-06-13T05:16:26Z] [Info]  |                                        | 
+[2022-06-13T05:16:26Z] [Info]  ========================================== 
+[2022-06-13T05:16:26Z] [Info]  |                                        | 
+[2022-06-13T05:16:26Z] [Info]  |   Generating code, this may take a     | 
+[2022-06-13T05:16:26Z] [Info]  |  little bit of time.  Note that this   | 
+[2022-06-13T05:16:26Z] [Info]  |  code generation works best with the   | 
+[2022-06-13T05:16:26Z] [Info]  |     JIT plugin, which you are not      | 
+[2022-06-13T05:16:26Z] [Info]  |     currently using.  Get it here:     | 
+[2022-06-13T05:16:26Z] [Info]  |                                        | 
+[2022-06-13T05:16:26Z] [Info]  |       https://git.io/jit-plugin        | 
+[2022-06-13T05:16:26Z] [Info]  |                                        | 
+[2022-06-13T05:16:26Z] [Info]  |             Please wait...             | 
+[2022-06-13T05:16:26Z] [Info]  |                                        | 
+[2022-06-13T05:16:26Z] [Info]  |                 Done!                  | 
+[2022-06-13T05:16:26Z] [Info]  |                                        | 
+[2022-06-13T05:16:26Z] [Info]  ========================================== 
+[2022-06-13T05:16:26Z] [Info]  |                                        | 
+[2022-06-13T05:16:26Z] [Info]  | Server:      0.3DL - Windows           | 
+[2022-06-13T05:16:26Z] [Info]  | Compiler:    3.10.10 - Windows         | 
+[2022-06-13T05:16:26Z] [Info]  | Codepage:    <none>                    | 
+[2022-06-13T05:16:26Z] [Info]  | YSI:         5.06.1932                 | 
+[2022-06-13T05:16:26Z] [Info]  | Started:     1655086586                | 
+[2022-06-13T05:16:26Z] [Info]  | JIT:         <none>                    | 
+[2022-06-13T05:16:26Z] [Info]  | Crashdetect: <none>                    | 
+[2022-06-13T05:16:26Z] [Info]  |                                        | 
+[2022-06-13T05:16:26Z] [Info]  ========================================== 
+[2022-06-13T05:16:26Z] [Info]  
+[2022-06-13T05:16:26Z] [Info]  
+[2022-06-13T05:16:26Z] [Info] hook OnGameModeInit()_sql has been called
+[2022-06-13T05:16:26Z] [Info] MySQL connection is successful.
+[2022-06-13T05:16:26Z] [Info] OnGameModeInit() has been called
+[2022-06-13T05:16:26Z] [Warning] Deprecated console variable "weburl", use "website" instead.
+[2022-06-13T05:16:26Z] [Info] -----------------------------------------------------------------
+[2022-06-13T05:16:26Z] [Info] Script: Vortex Roleplay 2 by Calgon and Brian.
+[2022-06-13T05:16:26Z] [Info] Script: Rewrited by Filiqp_ for open.mp
+[2022-06-13T05:16:26Z] [Info] Status: Loaded OnGameModeInit, running version 3.0.0 BETA
+[2022-06-13T05:16:26Z] [Info] -----------------------------------------------------------------
+[2022-06-13T05:16:26Z] [Info] -----------------------------------------------------------------
+[2022-06-13T05:16:26Z] [Info] WARNING: You are running a BETA version of the script.
+[2022-06-13T05:16:26Z] [Info] WARNING: This script is not optimized (or specifically built) for public usage yet.
+[2022-06-13T05:16:26Z] [Info] -----------------------------------------------------------------
+[2022-06-13T05:16:26Z] [Info] main() has been called
+[2022-06-13T05:16:26Z] [Info] hook OnPlayerConnect(0) has been called
+[2022-06-13T05:16:26Z] [Info] public OnPlayerConnect(0) has been called
+[2022-06-13T05:16:26Z] [Info] function checkBanPlayer(0) has been called
+[2022-06-13T05:16:26Z] [Info] function checkAccountUsername(0) has been called
+[2022-06-13T05:16:26Z] [Info] 3 FD9D94340DBD72C11B37EBB0D2A19B4D05E00FD78E4E2CE8923B9EA3A54E900DF181CFB112A8A73228D1F3551680E2AD9701A4FCFB248FA7FA77B95180628BB2 test
+[2022-06-13T05:16:30Z] [Info] function checkCredentials(0) has been called
+[2022-06-13T05:18:32Z] [Info] hook OnGameModeExit()_sql has been called
+[2022-06-13T05:18:33Z] [Info] OnGameModeExit() has been called
+[2022-06-13T05:18:45Z] [Info]  
+[2022-06-13T05:18:45Z] [Info] *** fixes.inc info: Trying to unload RconCommand/ClientCheckResponse fix FS...
+[2022-06-13T05:18:45Z] [Info] ***                 Ignore any errors if the FS already unloaded.
+[2022-06-13T05:18:45Z] [Info]  
+[2022-06-13T05:18:45Z] [Info] Filterscript '../scriptfiles/callbackfix' unloaded.
+[2022-06-13T05:18:45Z] [Info] Filterscript '../scriptfiles/fs-count-A' loaded.
+[2022-06-13T05:18:45Z] [Info] Filterscript '../scriptfiles/fs-count-B' loaded.
+[2022-06-13T05:18:45Z] [Info] Filterscript '../scriptfiles/fs-count-C' loaded.
+[2022-06-13T05:18:45Z] [Info] Filterscript '../scriptfiles/fs-count-D' loaded.
+[2022-06-13T05:18:45Z] [Info] Filterscript '../scriptfiles/fs-count-E' loaded.
+[2022-06-13T05:18:45Z] [Info] Filterscript '../scriptfiles/fs-count-F' loaded.
+[2022-06-13T05:18:45Z] [Info] Filterscript '../scriptfiles/fs-count-G' loaded.
+[2022-06-13T05:18:45Z] [Info] Filterscript '../scriptfiles/fs-count-H' loaded.
+[2022-06-13T05:18:45Z] [Info] Filterscript '../scriptfiles/fs-count-I' loaded.
+[2022-06-13T05:18:45Z] [Info] Filterscript '../scriptfiles/fs-count-J' loaded.
+[2022-06-13T05:18:45Z] [Info] Filterscript '../scriptfiles/fs-count-K' loaded.
+[2022-06-13T05:18:45Z] [Info] Filterscript '../scriptfiles/fs-count-L' loaded.
+[2022-06-13T05:18:45Z] [Info] Filterscript '../scriptfiles/fs-count-M' loaded.
+[2022-06-13T05:18:45Z] [Info] Filterscript '../scriptfiles/fs-count-N' loaded.
+[2022-06-13T05:18:45Z] [Info] Filterscript '../scriptfiles/fs-count-O' loaded.
+[2022-06-13T05:18:45Z] [Info] Filterscript '../scriptfiles/fs-count-P' loaded.
+[2022-06-13T05:18:45Z] [Info] Filterscript '../scriptfiles/fs-count-P' unloaded.
+[2022-06-13T05:18:45Z] [Info] Filterscript '../scriptfiles/fs-count-O' unloaded.
+[2022-06-13T05:18:45Z] [Info] Filterscript '../scriptfiles/fs-count-N' unloaded.
+[2022-06-13T05:18:45Z] [Info] Filterscript '../scriptfiles/fs-count-M' unloaded.
+[2022-06-13T05:18:45Z] [Info] Filterscript '../scriptfiles/fs-count-L' unloaded.
+[2022-06-13T05:18:45Z] [Info] Filterscript '../scriptfiles/fs-count-K' unloaded.
+[2022-06-13T05:18:45Z] [Info] Filterscript '../scriptfiles/fs-count-J' unloaded.
+[2022-06-13T05:18:45Z] [Info] Filterscript '../scriptfiles/fs-count-I' unloaded.
+[2022-06-13T05:18:45Z] [Info] Filterscript '../scriptfiles/fs-count-H' unloaded.
+[2022-06-13T05:18:45Z] [Info] Filterscript '../scriptfiles/fs-count-G' unloaded.
+[2022-06-13T05:18:45Z] [Info] Filterscript '../scriptfiles/fs-count-F' unloaded.
+[2022-06-13T05:18:45Z] [Info] Filterscript '../scriptfiles/fs-count-E' unloaded.
+[2022-06-13T05:18:45Z] [Info] Filterscript '../scriptfiles/fs-count-D' unloaded.
+[2022-06-13T05:18:45Z] [Info] Filterscript '../scriptfiles/fs-count-C' unloaded.
+[2022-06-13T05:18:45Z] [Info] Filterscript '../scriptfiles/fs-count-B' unloaded.
+[2022-06-13T05:18:45Z] [Info] Filterscript '../scriptfiles/fs-count-A' unloaded.
+[2022-06-13T05:18:45Z] [Info]  
+[2022-06-13T05:18:45Z] [Info] *** fixes.inc info: Trying to load RconCommand/ClientCheckResponse fix FS...
+[2022-06-13T05:18:45Z] [Info] ***                 Ignore any errors if the FS already loaded.
+[2022-06-13T05:18:45Z] [Info]  
+[2022-06-13T05:18:45Z] [Info] Filterscript '../scriptfiles/callbackfix' loaded.
+[2022-06-13T05:18:45Z] [Info] FIXES Script ID: 1
+[2022-06-13T05:18:45Z] [Info]  
+[2022-06-13T05:18:45Z] [Info]  
+[2022-06-13T05:18:45Z] [Info]          ==============================================================
+[2022-06-13T05:18:45Z] [Info]          |                                                            |
+[2022-06-13T05:18:45Z] [Info]          |                                                            |
+[2022-06-13T05:18:45Z] [Info]          |    YYYYYYY       YYYYYYY    SSSSSSSSSSSSSSS  IIIIIIIIII    |
+[2022-06-13T05:18:45Z] [Info]          |    Y:::::Y       Y:::::Y  SS:::::::::::::::S I::::::::I    |
+[2022-06-13T05:18:45Z] [Info]          |    Y:::::Y       Y:::::Y S:::::SSSSSS::::::S I::::::::I    |
+[2022-06-13T05:18:45Z] [Info]          |    Y::::::Y     Y::::::Y S:::::S     SSSSSSS II::::::II    |
+[2022-06-13T05:18:45Z] [Info]          |    YYY:::::Y   Y:::::YYY S:::::S               I::::I      |
+[2022-06-13T05:18:45Z] [Info]          |       Y:::::Y Y:::::Y    S:::::S               I::::I      |
+[2022-06-13T05:18:45Z] [Info]          |        Y:::::Y:::::Y      S::::SSSS            I::::I      |
+[2022-06-13T05:18:45Z] [Info]          |         Y:::::::::Y        SS::::::SSSSS       I::::I      |
+[2022-06-13T05:18:45Z] [Info]          |          Y:::::::Y           SSS::::::::SS     I::::I      |
+[2022-06-13T05:18:45Z] [Info]          |           Y:::::Y               SSSSSS::::S    I::::I      |
+[2022-06-13T05:18:45Z] [Info]          |           Y:::::Y                    S:::::S   I::::I      |
+[2022-06-13T05:18:45Z] [Info]          |           Y:::::Y                    S:::::S   I::::I      |
+[2022-06-13T05:18:45Z] [Info]          |           Y:::::Y        SSSSSSS     S:::::S II::::::II    |
+[2022-06-13T05:18:45Z] [Info]          |        YYYY:::::YYYY     S::::::SSSSSS:::::S I::::::::I    |
+[2022-06-13T05:18:45Z] [Info]          |        Y:::::::::::Y     S:::::::::::::::SS  I::::::::I    |
+[2022-06-13T05:18:46Z] [Info]          |        YYYYYYYYYYYYY      SSSSSSSSSSSSSSS    IIIIIIIIII    |
+[2022-06-13T05:18:46Z] [Info]          |                                                            |
+[2022-06-13T05:18:46Z] [Info]          |                                                            |
+[2022-06-13T05:18:46Z] [Info]          |                      (c) 2021 MPL v1.1                     |
+[2022-06-13T05:18:46Z] [Info]          |            Alex "Y_Less" Cole and contributors.            |
+[2022-06-13T05:18:46Z] [Info]          |                                                            |
+[2022-06-13T05:18:46Z] [Info]          |                                                            |
+[2022-06-13T05:18:46Z] [Info]          ==============================================================
+[2022-06-13T05:18:46Z] [Info]  
+[2022-06-13T05:18:46Z] [Info]  
+[2022-06-13T05:18:46Z] [Info]  ========================================== 
+[2022-06-13T05:18:46Z] [Info]  |                                        | 
+[2022-06-13T05:18:46Z] [Info]  |  Missing YSI scriptfiles directories:  | 
+[2022-06-13T05:18:46Z] [Info]  |                                        | 
+[2022-06-13T05:18:46Z] [Info]  |      /scriptfiles/YSI/fixes/           | 
+[2022-06-13T05:18:46Z] [Info]  |      /scriptfiles/YSI/temp/            | 
+[2022-06-13T05:18:46Z] [Info]  |                                        | 
+[2022-06-13T05:18:46Z] [Info]  ========================================== 
+[2022-06-13T05:18:46Z] [Info]  |                                        | 
+[2022-06-13T05:18:46Z] [Info]  |   Generating code, this may take a     | 
+[2022-06-13T05:18:46Z] [Info]  |  little bit of time.  Note that this   | 
+[2022-06-13T05:18:46Z] [Info]  |  code generation works best with the   | 
+[2022-06-13T05:18:46Z] [Info]  |     JIT plugin, which you are not      | 
+[2022-06-13T05:18:46Z] [Info]  |     currently using.  Get it here:     | 
+[2022-06-13T05:18:46Z] [Info]  |                                        | 
+[2022-06-13T05:18:46Z] [Info]  |       https://git.io/jit-plugin        | 
+[2022-06-13T05:18:46Z] [Info]  |                                        | 
+[2022-06-13T05:18:46Z] [Info]  |             Please wait...             | 
+[2022-06-13T05:18:46Z] [Info]  |                                        | 
+[2022-06-13T05:18:46Z] [Info]  |                 Done!                  | 
+[2022-06-13T05:18:46Z] [Info]  |                                        | 
+[2022-06-13T05:18:46Z] [Info]  ========================================== 
+[2022-06-13T05:18:46Z] [Info]  |                                        | 
+[2022-06-13T05:18:46Z] [Info]  | Server:      0.3DL - Windows           | 
+[2022-06-13T05:18:46Z] [Info]  | Compiler:    3.10.10 - Windows         | 
+[2022-06-13T05:18:46Z] [Info]  | Codepage:    <none>                    | 
+[2022-06-13T05:18:46Z] [Info]  | YSI:         5.06.1932                 | 
+[2022-06-13T05:18:46Z] [Info]  | Started:     1655086725                | 
+[2022-06-13T05:18:46Z] [Info]  | JIT:         <none>                    | 
+[2022-06-13T05:18:46Z] [Info]  | Crashdetect: <none>                    | 
+[2022-06-13T05:18:46Z] [Info]  |                                        | 
+[2022-06-13T05:18:46Z] [Info]  ========================================== 
+[2022-06-13T05:18:46Z] [Info]  
+[2022-06-13T05:18:46Z] [Info]  
+[2022-06-13T05:18:46Z] [Info] hook OnGameModeInit()_sql has been called
+[2022-06-13T05:18:46Z] [Info] MySQL connection is successful.
+[2022-06-13T05:18:46Z] [Info] OnGameModeInit() has been called
+[2022-06-13T05:18:46Z] [Warning] Deprecated console variable "weburl", use "website" instead.
+[2022-06-13T05:18:46Z] [Info] -----------------------------------------------------------------
+[2022-06-13T05:18:46Z] [Info] Script: Vortex Roleplay 2 by Calgon and Brian.
+[2022-06-13T05:18:46Z] [Info] Script: Rewrited by Filiqp_ for open.mp
+[2022-06-13T05:18:46Z] [Info] Status: Loaded OnGameModeInit, running version 3.0.0 BETA
+[2022-06-13T05:18:46Z] [Info] -----------------------------------------------------------------
+[2022-06-13T05:18:46Z] [Info] -----------------------------------------------------------------
+[2022-06-13T05:18:46Z] [Info] WARNING: You are running a BETA version of the script.
+[2022-06-13T05:18:46Z] [Info] WARNING: This script is not optimized (or specifically built) for public usage yet.
+[2022-06-13T05:18:46Z] [Info] -----------------------------------------------------------------
+[2022-06-13T05:18:46Z] [Info] main() has been called
+[2022-06-13T05:18:46Z] [Info] hook OnPlayerConnect(0) has been called
+[2022-06-13T05:18:46Z] [Info] public OnPlayerConnect(0) has been called
+[2022-06-13T05:18:46Z] [Info] function checkBanPlayer(0) has been called
+[2022-06-13T05:18:46Z] [Info] function checkAccountUsername(0) has been called
+[2022-06-13T05:18:46Z] [Info] 3 FD9D94340DBD72C11B37EBB0D2A19B4D05E00FD78E4E2CE8923B9EA3A54E900DF181CFB112A8A73228D1F3551680E2AD9701A4FCFB248FA7FA77B95180628BB2 test
+[2022-06-13T05:18:48Z] [Info] function checkCredentials(0) has been called
+[2022-06-13T05:21:08Z] [Info] hook OnGameModeExit()_sql has been called
+[2022-06-13T05:21:08Z] [Info] OnGameModeExit() has been called
+[2022-06-13T05:21:20Z] [Info]  
+[2022-06-13T05:21:20Z] [Info] *** fixes.inc info: Trying to unload RconCommand/ClientCheckResponse fix FS...
+[2022-06-13T05:21:20Z] [Info] ***                 Ignore any errors if the FS already unloaded.
+[2022-06-13T05:21:20Z] [Info]  
+[2022-06-13T05:21:20Z] [Info] Filterscript '../scriptfiles/callbackfix' unloaded.
+[2022-06-13T05:21:20Z] [Info] Filterscript '../scriptfiles/fs-count-A' loaded.
+[2022-06-13T05:21:20Z] [Info] Filterscript '../scriptfiles/fs-count-B' loaded.
+[2022-06-13T05:21:20Z] [Info] Filterscript '../scriptfiles/fs-count-C' loaded.
+[2022-06-13T05:21:20Z] [Info] Filterscript '../scriptfiles/fs-count-D' loaded.
+[2022-06-13T05:21:20Z] [Info] Filterscript '../scriptfiles/fs-count-E' loaded.
+[2022-06-13T05:21:20Z] [Info] Filterscript '../scriptfiles/fs-count-F' loaded.
+[2022-06-13T05:21:20Z] [Info] Filterscript '../scriptfiles/fs-count-G' loaded.
+[2022-06-13T05:21:20Z] [Info] Filterscript '../scriptfiles/fs-count-H' loaded.
+[2022-06-13T05:21:20Z] [Info] Filterscript '../scriptfiles/fs-count-I' loaded.
+[2022-06-13T05:21:20Z] [Info] Filterscript '../scriptfiles/fs-count-J' loaded.
+[2022-06-13T05:21:20Z] [Info] Filterscript '../scriptfiles/fs-count-K' loaded.
+[2022-06-13T05:21:21Z] [Info] Filterscript '../scriptfiles/fs-count-L' loaded.
+[2022-06-13T05:21:21Z] [Info] Filterscript '../scriptfiles/fs-count-M' loaded.
+[2022-06-13T05:21:21Z] [Info] Filterscript '../scriptfiles/fs-count-N' loaded.
+[2022-06-13T05:21:21Z] [Info] Filterscript '../scriptfiles/fs-count-O' loaded.
+[2022-06-13T05:21:21Z] [Info] Filterscript '../scriptfiles/fs-count-P' loaded.
+[2022-06-13T05:21:21Z] [Info] Filterscript '../scriptfiles/fs-count-P' unloaded.
+[2022-06-13T05:21:21Z] [Info] Filterscript '../scriptfiles/fs-count-O' unloaded.
+[2022-06-13T05:21:21Z] [Info] Filterscript '../scriptfiles/fs-count-N' unloaded.
+[2022-06-13T05:21:21Z] [Info] Filterscript '../scriptfiles/fs-count-M' unloaded.
+[2022-06-13T05:21:21Z] [Info] Filterscript '../scriptfiles/fs-count-L' unloaded.
+[2022-06-13T05:21:21Z] [Info] Filterscript '../scriptfiles/fs-count-K' unloaded.
+[2022-06-13T05:21:21Z] [Info] Filterscript '../scriptfiles/fs-count-J' unloaded.
+[2022-06-13T05:21:21Z] [Info] Filterscript '../scriptfiles/fs-count-I' unloaded.
+[2022-06-13T05:21:21Z] [Info] Filterscript '../scriptfiles/fs-count-H' unloaded.
+[2022-06-13T05:21:21Z] [Info] Filterscript '../scriptfiles/fs-count-G' unloaded.
+[2022-06-13T05:21:21Z] [Info] Filterscript '../scriptfiles/fs-count-F' unloaded.
+[2022-06-13T05:21:21Z] [Info] Filterscript '../scriptfiles/fs-count-E' unloaded.
+[2022-06-13T05:21:21Z] [Info] Filterscript '../scriptfiles/fs-count-D' unloaded.
+[2022-06-13T05:21:21Z] [Info] Filterscript '../scriptfiles/fs-count-C' unloaded.
+[2022-06-13T05:21:21Z] [Info] Filterscript '../scriptfiles/fs-count-B' unloaded.
+[2022-06-13T05:21:21Z] [Info] Filterscript '../scriptfiles/fs-count-A' unloaded.
+[2022-06-13T05:21:21Z] [Info]  
+[2022-06-13T05:21:21Z] [Info] *** fixes.inc info: Trying to load RconCommand/ClientCheckResponse fix FS...
+[2022-06-13T05:21:21Z] [Info] ***                 Ignore any errors if the FS already loaded.
+[2022-06-13T05:21:21Z] [Info]  
+[2022-06-13T05:21:21Z] [Info] Filterscript '../scriptfiles/callbackfix' loaded.
+[2022-06-13T05:21:21Z] [Info] FIXES Script ID: 1
+[2022-06-13T05:21:21Z] [Info]  
+[2022-06-13T05:21:21Z] [Info]  
+[2022-06-13T05:21:21Z] [Info]          ==============================================================
+[2022-06-13T05:21:22Z] [Info]          |                                                            |
+[2022-06-13T05:21:22Z] [Info]          |                                                            |
+[2022-06-13T05:21:22Z] [Info]          |    YYYYYYY       YYYYYYY    SSSSSSSSSSSSSSS  IIIIIIIIII    |
+[2022-06-13T05:21:22Z] [Info]          |    Y:::::Y       Y:::::Y  SS:::::::::::::::S I::::::::I    |
+[2022-06-13T05:21:22Z] [Info]          |    Y:::::Y       Y:::::Y S:::::SSSSSS::::::S I::::::::I    |
+[2022-06-13T05:21:22Z] [Info]          |    Y::::::Y     Y::::::Y S:::::S     SSSSSSS II::::::II    |
+[2022-06-13T05:21:22Z] [Info]          |    YYY:::::Y   Y:::::YYY S:::::S               I::::I      |
+[2022-06-13T05:21:22Z] [Info]          |       Y:::::Y Y:::::Y    S:::::S               I::::I      |
+[2022-06-13T05:21:22Z] [Info]          |        Y:::::Y:::::Y      S::::SSSS            I::::I      |
+[2022-06-13T05:21:22Z] [Info]          |         Y:::::::::Y        SS::::::SSSSS       I::::I      |
+[2022-06-13T05:21:22Z] [Info]          |          Y:::::::Y           SSS::::::::SS     I::::I      |
+[2022-06-13T05:21:22Z] [Info]          |           Y:::::Y               SSSSSS::::S    I::::I      |
+[2022-06-13T05:21:22Z] [Info]          |           Y:::::Y                    S:::::S   I::::I      |
+[2022-06-13T05:21:22Z] [Info]          |           Y:::::Y                    S:::::S   I::::I      |
+[2022-06-13T05:21:22Z] [Info]          |           Y:::::Y        SSSSSSS     S:::::S II::::::II    |
+[2022-06-13T05:21:22Z] [Info]          |        YYYY:::::YYYY     S::::::SSSSSS:::::S I::::::::I    |
+[2022-06-13T05:21:22Z] [Info]          |        Y:::::::::::Y     S:::::::::::::::SS  I::::::::I    |
+[2022-06-13T05:21:22Z] [Info]          |        YYYYYYYYYYYYY      SSSSSSSSSSSSSSS    IIIIIIIIII    |
+[2022-06-13T05:21:23Z] [Info]          |                                                            |
+[2022-06-13T05:21:23Z] [Info]          |                                                            |
+[2022-06-13T05:21:23Z] [Info]          |                      (c) 2021 MPL v1.1                     |
+[2022-06-13T05:21:23Z] [Info]          |            Alex "Y_Less" Cole and contributors.            |
+[2022-06-13T05:21:23Z] [Info]          |                                                            |
+[2022-06-13T05:21:23Z] [Info]          |                                                            |
+[2022-06-13T05:21:23Z] [Info]          ==============================================================
+[2022-06-13T05:21:23Z] [Info]  
+[2022-06-13T05:21:23Z] [Info]  
+[2022-06-13T05:21:23Z] [Info]  ========================================== 
+[2022-06-13T05:21:23Z] [Info]  |                                        | 
+[2022-06-13T05:21:23Z] [Info]  |  Missing YSI scriptfiles directories:  | 
+[2022-06-13T05:21:23Z] [Info]  |                                        | 
+[2022-06-13T05:21:23Z] [Info]  |      /scriptfiles/YSI/fixes/           | 
+[2022-06-13T05:21:23Z] [Info]  |      /scriptfiles/YSI/temp/            | 
+[2022-06-13T05:21:23Z] [Info]  |                                        | 
+[2022-06-13T05:21:23Z] [Info]  ========================================== 
+[2022-06-13T05:21:23Z] [Info]  |                                        | 
+[2022-06-13T05:21:23Z] [Info]  |   Generating code, this may take a     | 
+[2022-06-13T05:21:23Z] [Info]  |  little bit of time.  Note that this   | 
+[2022-06-13T05:21:23Z] [Info]  |  code generation works best with the   | 
+[2022-06-13T05:21:24Z] [Info]  |     JIT plugin, which you are not      | 
+[2022-06-13T05:21:24Z] [Info]  |     currently using.  Get it here:     | 
+[2022-06-13T05:21:24Z] [Info]  |                                        | 
+[2022-06-13T05:21:24Z] [Info]  |       https://git.io/jit-plugin        | 
+[2022-06-13T05:21:24Z] [Info]  |                                        | 
+[2022-06-13T05:21:24Z] [Info]  |             Please wait...             | 
+[2022-06-13T05:21:24Z] [Info]  |                                        | 
+[2022-06-13T05:21:24Z] [Info]  |                 Done!                  | 
+[2022-06-13T05:21:24Z] [Info]  |                                        | 
+[2022-06-13T05:21:24Z] [Info]  ========================================== 
+[2022-06-13T05:21:24Z] [Info]  |                                        | 
+[2022-06-13T05:21:24Z] [Info]  | Server:      0.3DL - Windows           | 
+[2022-06-13T05:21:24Z] [Info]  | Compiler:    3.10.10 - Windows         | 
+[2022-06-13T05:21:24Z] [Info]  | Codepage:    <none>                    | 
+[2022-06-13T05:21:24Z] [Info]  | YSI:         5.06.1932                 | 
+[2022-06-13T05:21:24Z] [Info]  | Started:     1655086881                | 
+[2022-06-13T05:21:24Z] [Info]  | JIT:         <none>                    | 
+[2022-06-13T05:21:24Z] [Info]  | Crashdetect: <none>                    | 
+[2022-06-13T05:21:24Z] [Info]  |                                        | 
+[2022-06-13T05:21:24Z] [Info]  ========================================== 
+[2022-06-13T05:21:24Z] [Info]  
+[2022-06-13T05:21:24Z] [Info]  
+[2022-06-13T05:21:24Z] [Info] hook OnGameModeInit()_sql has been called
+[2022-06-13T05:21:24Z] [Info] MySQL connection is successful.
+[2022-06-13T05:21:24Z] [Info] OnGameModeInit() has been called
+[2022-06-13T05:21:25Z] [Warning] Deprecated console variable "weburl", use "website" instead.
+[2022-06-13T05:21:25Z] [Info] -----------------------------------------------------------------
+[2022-06-13T05:21:25Z] [Info] Script: Vortex Roleplay 2 by Calgon and Brian.
+[2022-06-13T05:21:25Z] [Info] Script: Rewrited by Filiqp_ for open.mp
+[2022-06-13T05:21:25Z] [Info] Status: Loaded OnGameModeInit, running version 3.0.0 BETA
+[2022-06-13T05:21:25Z] [Info] -----------------------------------------------------------------
+[2022-06-13T05:21:25Z] [Info] -----------------------------------------------------------------
+[2022-06-13T05:21:25Z] [Info] WARNING: You are running a BETA version of the script.
+[2022-06-13T05:21:25Z] [Info] WARNING: This script is not optimized (or specifically built) for public usage yet.
+[2022-06-13T05:21:25Z] [Info] -----------------------------------------------------------------
+[2022-06-13T05:21:25Z] [Info] main() has been called
+[2022-06-13T05:21:25Z] [Info] hook OnPlayerConnect(0) has been called
+[2022-06-13T05:21:25Z] [Info] public OnPlayerConnect(0) has been called
+[2022-06-13T05:21:25Z] [Info] function checkBanPlayer(0) has been called
+[2022-06-13T05:21:25Z] [Info] function checkAccountUsername(0) has been called
+[2022-06-13T05:21:25Z] [Info] 3 FD9D94340DBD72C11B37EBB0D2A19B4D05E00FD78E4E2CE8923B9EA3A54E900DF181CFB112A8A73228D1F3551680E2AD9701A4FCFB248FA7FA77B95180628BB2 test
+[2022-06-13T05:21:28Z] [Info] function checkCredentials(0) has been called
+[2022-06-13T05:23:52Z] [Info] hook OnGameModeExit()_sql has been called
+[2022-06-13T05:23:52Z] [Info] OnGameModeExit() has been called
+[2022-06-13T05:24:04Z] [Info]  
+[2022-06-13T05:24:04Z] [Info] *** fixes.inc info: Trying to unload RconCommand/ClientCheckResponse fix FS...
+[2022-06-13T05:24:04Z] [Info] ***                 Ignore any errors if the FS already unloaded.
+[2022-06-13T05:24:04Z] [Info]  
+[2022-06-13T05:24:04Z] [Info] Filterscript '../scriptfiles/callbackfix' unloaded.
+[2022-06-13T05:24:04Z] [Info] Filterscript '../scriptfiles/fs-count-A' loaded.
+[2022-06-13T05:24:04Z] [Info] Filterscript '../scriptfiles/fs-count-B' loaded.
+[2022-06-13T05:24:04Z] [Info] Filterscript '../scriptfiles/fs-count-C' loaded.
+[2022-06-13T05:24:04Z] [Info] Filterscript '../scriptfiles/fs-count-D' loaded.
+[2022-06-13T05:24:04Z] [Info] Filterscript '../scriptfiles/fs-count-E' loaded.
+[2022-06-13T05:24:04Z] [Info] Filterscript '../scriptfiles/fs-count-F' loaded.
+[2022-06-13T05:24:04Z] [Info] Filterscript '../scriptfiles/fs-count-G' loaded.
+[2022-06-13T05:24:04Z] [Info] Filterscript '../scriptfiles/fs-count-H' loaded.
+[2022-06-13T05:24:04Z] [Info] Filterscript '../scriptfiles/fs-count-I' loaded.
+[2022-06-13T05:24:04Z] [Info] Filterscript '../scriptfiles/fs-count-J' loaded.
+[2022-06-13T05:24:04Z] [Info] Filterscript '../scriptfiles/fs-count-K' loaded.
+[2022-06-13T05:24:04Z] [Info] Filterscript '../scriptfiles/fs-count-L' loaded.
+[2022-06-13T05:24:04Z] [Info] Filterscript '../scriptfiles/fs-count-M' loaded.
+[2022-06-13T05:24:04Z] [Info] Filterscript '../scriptfiles/fs-count-N' loaded.
+[2022-06-13T05:24:04Z] [Info] Filterscript '../scriptfiles/fs-count-O' loaded.
+[2022-06-13T05:24:04Z] [Info] Filterscript '../scriptfiles/fs-count-P' loaded.
+[2022-06-13T05:24:04Z] [Info] Filterscript '../scriptfiles/fs-count-P' unloaded.
+[2022-06-13T05:24:04Z] [Info] Filterscript '../scriptfiles/fs-count-O' unloaded.
+[2022-06-13T05:24:04Z] [Info] Filterscript '../scriptfiles/fs-count-N' unloaded.
+[2022-06-13T05:24:04Z] [Info] Filterscript '../scriptfiles/fs-count-M' unloaded.
+[2022-06-13T05:24:04Z] [Info] Filterscript '../scriptfiles/fs-count-L' unloaded.
+[2022-06-13T05:24:04Z] [Info] Filterscript '../scriptfiles/fs-count-K' unloaded.
+[2022-06-13T05:24:04Z] [Info] Filterscript '../scriptfiles/fs-count-J' unloaded.
+[2022-06-13T05:24:04Z] [Info] Filterscript '../scriptfiles/fs-count-I' unloaded.
+[2022-06-13T05:24:05Z] [Info] Filterscript '../scriptfiles/fs-count-H' unloaded.
+[2022-06-13T05:24:05Z] [Info] Filterscript '../scriptfiles/fs-count-G' unloaded.
+[2022-06-13T05:24:05Z] [Info] Filterscript '../scriptfiles/fs-count-F' unloaded.
+[2022-06-13T05:24:05Z] [Info] Filterscript '../scriptfiles/fs-count-E' unloaded.
+[2022-06-13T05:24:05Z] [Info] Filterscript '../scriptfiles/fs-count-D' unloaded.
+[2022-06-13T05:24:05Z] [Info] Filterscript '../scriptfiles/fs-count-C' unloaded.
+[2022-06-13T05:24:05Z] [Info] Filterscript '../scriptfiles/fs-count-B' unloaded.
+[2022-06-13T05:24:05Z] [Info] Filterscript '../scriptfiles/fs-count-A' unloaded.
+[2022-06-13T05:24:05Z] [Info]  
+[2022-06-13T05:24:05Z] [Info] *** fixes.inc info: Trying to load RconCommand/ClientCheckResponse fix FS...
+[2022-06-13T05:24:05Z] [Info] ***                 Ignore any errors if the FS already loaded.
+[2022-06-13T05:24:05Z] [Info]  
+[2022-06-13T05:24:05Z] [Info] Filterscript '../scriptfiles/callbackfix' loaded.
+[2022-06-13T05:24:05Z] [Info] FIXES Script ID: 1
+[2022-06-13T05:24:05Z] [Info]  
+[2022-06-13T05:24:05Z] [Info]  
+[2022-06-13T05:24:05Z] [Info]          ==============================================================
+[2022-06-13T05:24:05Z] [Info]          |                                                            |
+[2022-06-13T05:24:05Z] [Info]          |                                                            |
+[2022-06-13T05:24:05Z] [Info]          |    YYYYYYY       YYYYYYY    SSSSSSSSSSSSSSS  IIIIIIIIII    |
+[2022-06-13T05:24:05Z] [Info]          |    Y:::::Y       Y:::::Y  SS:::::::::::::::S I::::::::I    |
+[2022-06-13T05:24:05Z] [Info]          |    Y:::::Y       Y:::::Y S:::::SSSSSS::::::S I::::::::I    |
+[2022-06-13T05:24:05Z] [Info]          |    Y::::::Y     Y::::::Y S:::::S     SSSSSSS II::::::II    |
+[2022-06-13T05:24:05Z] [Info]          |    YYY:::::Y   Y:::::YYY S:::::S               I::::I      |
+[2022-06-13T05:24:05Z] [Info]          |       Y:::::Y Y:::::Y    S:::::S               I::::I      |
+[2022-06-13T05:24:05Z] [Info]          |        Y:::::Y:::::Y      S::::SSSS            I::::I      |
+[2022-06-13T05:24:05Z] [Info]          |         Y:::::::::Y        SS::::::SSSSS       I::::I      |
+[2022-06-13T05:24:05Z] [Info]          |          Y:::::::Y           SSS::::::::SS     I::::I      |
+[2022-06-13T05:24:05Z] [Info]          |           Y:::::Y               SSSSSS::::S    I::::I      |
+[2022-06-13T05:24:05Z] [Info]          |           Y:::::Y                    S:::::S   I::::I      |
+[2022-06-13T05:24:05Z] [Info]          |           Y:::::Y                    S:::::S   I::::I      |
+[2022-06-13T05:24:05Z] [Info]          |           Y:::::Y        SSSSSSS     S:::::S II::::::II    |
+[2022-06-13T05:24:05Z] [Info]          |        YYYY:::::YYYY     S::::::SSSSSS:::::S I::::::::I    |
+[2022-06-13T05:24:05Z] [Info]          |        Y:::::::::::Y     S:::::::::::::::SS  I::::::::I    |
+[2022-06-13T05:24:05Z] [Info]          |        YYYYYYYYYYYYY      SSSSSSSSSSSSSSS    IIIIIIIIII    |
+[2022-06-13T05:24:05Z] [Info]          |                                                            |
+[2022-06-13T05:24:05Z] [Info]          |                                                            |
+[2022-06-13T05:24:05Z] [Info]          |                      (c) 2021 MPL v1.1                     |
+[2022-06-13T05:24:05Z] [Info]          |            Alex "Y_Less" Cole and contributors.            |
+[2022-06-13T05:24:05Z] [Info]          |                                                            |
+[2022-06-13T05:24:05Z] [Info]          |                                                            |
+[2022-06-13T05:24:05Z] [Info]          ==============================================================
+[2022-06-13T05:24:05Z] [Info]  
+[2022-06-13T05:24:05Z] [Info]  
+[2022-06-13T05:24:05Z] [Info]  ========================================== 
+[2022-06-13T05:24:05Z] [Info]  |                                        | 
+[2022-06-13T05:24:05Z] [Info]  |  Missing YSI scriptfiles directories:  | 
+[2022-06-13T05:24:05Z] [Info]  |                                        | 
+[2022-06-13T05:24:05Z] [Info]  |      /scriptfiles/YSI/fixes/           | 
+[2022-06-13T05:24:05Z] [Info]  |      /scriptfiles/YSI/temp/            | 
+[2022-06-13T05:24:05Z] [Info]  |                                        | 
+[2022-06-13T05:24:05Z] [Info]  ========================================== 
+[2022-06-13T05:24:05Z] [Info]  |                                        | 
+[2022-06-13T05:24:05Z] [Info]  |   Generating code, this may take a     | 
+[2022-06-13T05:24:05Z] [Info]  |  little bit of time.  Note that this   | 
+[2022-06-13T05:24:05Z] [Info]  |  code generation works best with the   | 
+[2022-06-13T05:24:05Z] [Info]  |     JIT plugin, which you are not      | 
+[2022-06-13T05:24:05Z] [Info]  |     currently using.  Get it here:     | 
+[2022-06-13T05:24:05Z] [Info]  |                                        | 
+[2022-06-13T05:24:05Z] [Info]  |       https://git.io/jit-plugin        | 
+[2022-06-13T05:24:05Z] [Info]  |                                        | 
+[2022-06-13T05:24:05Z] [Info]  |             Please wait...             | 
+[2022-06-13T05:24:05Z] [Info]  |                                        | 
+[2022-06-13T05:24:05Z] [Info]  |                 Done!                  | 
+[2022-06-13T05:24:05Z] [Info]  |                                        | 
+[2022-06-13T05:24:05Z] [Info]  ========================================== 
+[2022-06-13T05:24:05Z] [Info]  |                                        | 
+[2022-06-13T05:24:05Z] [Info]  | Server:      0.3DL - Windows           | 
+[2022-06-13T05:24:05Z] [Info]  | Compiler:    3.10.10 - Windows         | 
+[2022-06-13T05:24:05Z] [Info]  | Codepage:    <none>                    | 
+[2022-06-13T05:24:05Z] [Info]  | YSI:         5.06.1932                 | 
+[2022-06-13T05:24:05Z] [Info]  | Started:     1655087045                | 
+[2022-06-13T05:24:05Z] [Info]  | JIT:         <none>                    | 
+[2022-06-13T05:24:05Z] [Info]  | Crashdetect: <none>                    | 
+[2022-06-13T05:24:05Z] [Info]  |                                        | 
+[2022-06-13T05:24:05Z] [Info]  ========================================== 
+[2022-06-13T05:24:05Z] [Info]  
+[2022-06-13T05:24:05Z] [Info]  
+[2022-06-13T05:24:05Z] [Info] hook OnGameModeInit()_sql has been called
+[2022-06-13T05:24:05Z] [Info] MySQL connection is successful.
+[2022-06-13T05:24:05Z] [Info] OnGameModeInit() has been called
+[2022-06-13T05:24:05Z] [Warning] Deprecated console variable "weburl", use "website" instead.
+[2022-06-13T05:24:05Z] [Info] -----------------------------------------------------------------
+[2022-06-13T05:24:05Z] [Info] Script: Vortex Roleplay 2 by Calgon and Brian.
+[2022-06-13T05:24:05Z] [Info] Script: Rewrited by Filiqp_ for open.mp
+[2022-06-13T05:24:05Z] [Info] Status: Loaded OnGameModeInit, running version 3.0.0 BETA
+[2022-06-13T05:24:05Z] [Info] -----------------------------------------------------------------
+[2022-06-13T05:24:05Z] [Info] -----------------------------------------------------------------
+[2022-06-13T05:24:05Z] [Info] WARNING: You are running a BETA version of the script.
+[2022-06-13T05:24:05Z] [Info] WARNING: This script is not optimized (or specifically built) for public usage yet.
+[2022-06-13T05:24:05Z] [Info] -----------------------------------------------------------------
+[2022-06-13T05:24:05Z] [Info] main() has been called
+[2022-06-13T05:24:05Z] [Info] hook OnPlayerConnect(0) has been called
+[2022-06-13T05:24:05Z] [Info] public OnPlayerConnect(0) has been called
+[2022-06-13T05:24:05Z] [Info] function checkBanPlayer(0) has been called
+[2022-06-13T05:24:05Z] [Info] function checkAccountUsername(0) has been called
+[2022-06-13T05:24:05Z] [Info] 3 FD9D94340DBD72C11B37EBB0D2A19B4D05E00FD78E4E2CE8923B9EA3A54E900DF181CFB112A8A73228D1F3551680E2AD9701A4FCFB248FA7FA77B95180628BB2 test
+[2022-06-13T05:24:08Z] [Info] function checkCredentials(0) has been called
+[2022-06-13T05:29:40Z] [Info] hook OnGameModeExit()_sql has been called
+[2022-06-13T05:29:40Z] [Info] OnGameModeExit() has been called
+[2022-06-13T05:29:52Z] [Info]  
+[2022-06-13T05:29:52Z] [Info] *** fixes.inc info: Trying to unload RconCommand/ClientCheckResponse fix FS...
+[2022-06-13T05:29:52Z] [Info] ***                 Ignore any errors if the FS already unloaded.
+[2022-06-13T05:29:52Z] [Info]  
+[2022-06-13T05:29:52Z] [Info] Filterscript '../scriptfiles/callbackfix' unloaded.
+[2022-06-13T05:29:52Z] [Info] Filterscript '../scriptfiles/fs-count-A' loaded.
+[2022-06-13T05:29:52Z] [Info] Filterscript '../scriptfiles/fs-count-B' loaded.
+[2022-06-13T05:29:52Z] [Info] Filterscript '../scriptfiles/fs-count-C' loaded.
+[2022-06-13T05:29:52Z] [Info] Filterscript '../scriptfiles/fs-count-D' loaded.
+[2022-06-13T05:29:52Z] [Info] Filterscript '../scriptfiles/fs-count-E' loaded.
+[2022-06-13T05:29:52Z] [Info] Filterscript '../scriptfiles/fs-count-F' loaded.
+[2022-06-13T05:29:52Z] [Info] Filterscript '../scriptfiles/fs-count-G' loaded.
+[2022-06-13T05:29:52Z] [Info] Filterscript '../scriptfiles/fs-count-H' loaded.
+[2022-06-13T05:29:53Z] [Info] Filterscript '../scriptfiles/fs-count-I' loaded.
+[2022-06-13T05:29:53Z] [Info] Filterscript '../scriptfiles/fs-count-J' loaded.
+[2022-06-13T05:29:53Z] [Info] Filterscript '../scriptfiles/fs-count-K' loaded.
+[2022-06-13T05:29:53Z] [Info] Filterscript '../scriptfiles/fs-count-L' loaded.
+[2022-06-13T05:29:53Z] [Info] Filterscript '../scriptfiles/fs-count-M' loaded.
+[2022-06-13T05:29:53Z] [Info] Filterscript '../scriptfiles/fs-count-N' loaded.
+[2022-06-13T05:29:53Z] [Info] Filterscript '../scriptfiles/fs-count-O' loaded.
+[2022-06-13T05:29:53Z] [Info] Filterscript '../scriptfiles/fs-count-P' loaded.
+[2022-06-13T05:29:53Z] [Info] Filterscript '../scriptfiles/fs-count-P' unloaded.
+[2022-06-13T05:29:53Z] [Info] Filterscript '../scriptfiles/fs-count-O' unloaded.
+[2022-06-13T05:29:53Z] [Info] Filterscript '../scriptfiles/fs-count-N' unloaded.
+[2022-06-13T05:29:53Z] [Info] Filterscript '../scriptfiles/fs-count-M' unloaded.
+[2022-06-13T05:29:53Z] [Info] Filterscript '../scriptfiles/fs-count-L' unloaded.
+[2022-06-13T05:29:53Z] [Info] Filterscript '../scriptfiles/fs-count-K' unloaded.
+[2022-06-13T05:29:53Z] [Info] Filterscript '../scriptfiles/fs-count-J' unloaded.
+[2022-06-13T05:29:53Z] [Info] Filterscript '../scriptfiles/fs-count-I' unloaded.
+[2022-06-13T05:29:53Z] [Info] Filterscript '../scriptfiles/fs-count-H' unloaded.
+[2022-06-13T05:29:53Z] [Info] Filterscript '../scriptfiles/fs-count-G' unloaded.
+[2022-06-13T05:29:53Z] [Info] Filterscript '../scriptfiles/fs-count-F' unloaded.
+[2022-06-13T05:29:53Z] [Info] Filterscript '../scriptfiles/fs-count-E' unloaded.
+[2022-06-13T05:29:53Z] [Info] Filterscript '../scriptfiles/fs-count-D' unloaded.
+[2022-06-13T05:29:53Z] [Info] Filterscript '../scriptfiles/fs-count-C' unloaded.
+[2022-06-13T05:29:53Z] [Info] Filterscript '../scriptfiles/fs-count-B' unloaded.
+[2022-06-13T05:29:53Z] [Info] Filterscript '../scriptfiles/fs-count-A' unloaded.
+[2022-06-13T05:29:53Z] [Info]  
+[2022-06-13T05:29:53Z] [Info] *** fixes.inc info: Trying to load RconCommand/ClientCheckResponse fix FS...
+[2022-06-13T05:29:53Z] [Info] ***                 Ignore any errors if the FS already loaded.
+[2022-06-13T05:29:53Z] [Info]  
+[2022-06-13T05:29:53Z] [Info] Filterscript '../scriptfiles/callbackfix' loaded.
+[2022-06-13T05:29:53Z] [Info] FIXES Script ID: 1
+[2022-06-13T05:29:53Z] [Info]  
+[2022-06-13T05:29:53Z] [Info]  
+[2022-06-13T05:29:53Z] [Info]          ==============================================================
+[2022-06-13T05:29:53Z] [Info]          |                                                            |
+[2022-06-13T05:29:53Z] [Info]          |                                                            |
+[2022-06-13T05:29:53Z] [Info]          |    YYYYYYY       YYYYYYY    SSSSSSSSSSSSSSS  IIIIIIIIII    |
+[2022-06-13T05:29:53Z] [Info]          |    Y:::::Y       Y:::::Y  SS:::::::::::::::S I::::::::I    |
+[2022-06-13T05:29:53Z] [Info]          |    Y:::::Y       Y:::::Y S:::::SSSSSS::::::S I::::::::I    |
+[2022-06-13T05:29:53Z] [Info]          |    Y::::::Y     Y::::::Y S:::::S     SSSSSSS II::::::II    |
+[2022-06-13T05:29:53Z] [Info]          |    YYY:::::Y   Y:::::YYY S:::::S               I::::I      |
+[2022-06-13T05:29:53Z] [Info]          |       Y:::::Y Y:::::Y    S:::::S               I::::I      |
+[2022-06-13T05:29:53Z] [Info]          |        Y:::::Y:::::Y      S::::SSSS            I::::I      |
+[2022-06-13T05:29:53Z] [Info]          |         Y:::::::::Y        SS::::::SSSSS       I::::I      |
+[2022-06-13T05:29:53Z] [Info]          |          Y:::::::Y           SSS::::::::SS     I::::I      |
+[2022-06-13T05:29:53Z] [Info]          |           Y:::::Y               SSSSSS::::S    I::::I      |
+[2022-06-13T05:29:53Z] [Info]          |           Y:::::Y                    S:::::S   I::::I      |
+[2022-06-13T05:29:53Z] [Info]          |           Y:::::Y                    S:::::S   I::::I      |
+[2022-06-13T05:29:53Z] [Info]          |           Y:::::Y        SSSSSSS     S:::::S II::::::II    |
+[2022-06-13T05:29:53Z] [Info]          |        YYYY:::::YYYY     S::::::SSSSSS:::::S I::::::::I    |
+[2022-06-13T05:29:53Z] [Info]          |        Y:::::::::::Y     S:::::::::::::::SS  I::::::::I    |
+[2022-06-13T05:29:53Z] [Info]          |        YYYYYYYYYYYYY      SSSSSSSSSSSSSSS    IIIIIIIIII    |
+[2022-06-13T05:29:53Z] [Info]          |                                                            |
+[2022-06-13T05:29:53Z] [Info]          |                                                            |
+[2022-06-13T05:29:53Z] [Info]          |                      (c) 2021 MPL v1.1                     |
+[2022-06-13T05:29:53Z] [Info]          |            Alex "Y_Less" Cole and contributors.            |
+[2022-06-13T05:29:53Z] [Info]          |                                                            |
+[2022-06-13T05:29:53Z] [Info]          |                                                            |
+[2022-06-13T05:29:53Z] [Info]          ==============================================================
+[2022-06-13T05:29:53Z] [Info]  
+[2022-06-13T05:29:53Z] [Info]  
+[2022-06-13T05:29:53Z] [Info]  ========================================== 
+[2022-06-13T05:29:53Z] [Info]  |                                        | 
+[2022-06-13T05:29:53Z] [Info]  |  Missing YSI scriptfiles directories:  | 
+[2022-06-13T05:29:53Z] [Info]  |                                        | 
+[2022-06-13T05:29:53Z] [Info]  |      /scriptfiles/YSI/fixes/           | 
+[2022-06-13T05:29:53Z] [Info]  |      /scriptfiles/YSI/temp/            | 
+[2022-06-13T05:29:53Z] [Info]  |                                        | 
+[2022-06-13T05:29:53Z] [Info]  ========================================== 
+[2022-06-13T05:29:53Z] [Info]  |                                        | 
+[2022-06-13T05:29:53Z] [Info]  |   Generating code, this may take a     | 
+[2022-06-13T05:29:53Z] [Info]  |  little bit of time.  Note that this   | 
+[2022-06-13T05:29:53Z] [Info]  |  code generation works best with the   | 
+[2022-06-13T05:29:53Z] [Info]  |     JIT plugin, which you are not      | 
+[2022-06-13T05:29:53Z] [Info]  |     currently using.  Get it here:     | 
+[2022-06-13T05:29:53Z] [Info]  |                                        | 
+[2022-06-13T05:29:53Z] [Info]  |       https://git.io/jit-plugin        | 
+[2022-06-13T05:29:53Z] [Info]  |                                        | 
+[2022-06-13T05:29:53Z] [Info]  |             Please wait...             | 
+[2022-06-13T05:29:53Z] [Info]  |                                        | 
+[2022-06-13T05:29:53Z] [Info]  |                 Done!                  | 
+[2022-06-13T05:29:53Z] [Info]  |                                        | 
+[2022-06-13T05:29:53Z] [Info]  ========================================== 
+[2022-06-13T05:29:53Z] [Info]  |                                        | 
+[2022-06-13T05:29:53Z] [Info]  | Server:      0.3DL - Windows           | 
+[2022-06-13T05:29:53Z] [Info]  | Compiler:    3.10.10 - Windows         | 
+[2022-06-13T05:29:53Z] [Info]  | Codepage:    <none>                    | 
+[2022-06-13T05:29:53Z] [Info]  | YSI:         5.06.1932                 | 
+[2022-06-13T05:29:53Z] [Info]  | Started:     1655087393                | 
+[2022-06-13T05:29:53Z] [Info]  | JIT:         <none>                    | 
+[2022-06-13T05:29:53Z] [Info]  | Crashdetect: <none>                    | 
+[2022-06-13T05:29:53Z] [Info]  |                                        | 
+[2022-06-13T05:29:53Z] [Info]  ========================================== 
+[2022-06-13T05:29:53Z] [Info]  
+[2022-06-13T05:29:53Z] [Info]  
+[2022-06-13T05:29:53Z] [Info] hook OnGameModeInit()_sql has been called
+[2022-06-13T05:29:54Z] [Info] MySQL connection is successful.
+[2022-06-13T05:29:54Z] [Info] OnGameModeInit() has been called
+[2022-06-13T05:29:54Z] [Warning] Deprecated console variable "weburl", use "website" instead.
+[2022-06-13T05:29:54Z] [Info] -----------------------------------------------------------------
+[2022-06-13T05:29:54Z] [Info] Script: Vortex Roleplay 2 by Calgon and Brian.
+[2022-06-13T05:29:54Z] [Info] Script: Rewrited by Filiqp_ for open.mp
+[2022-06-13T05:29:54Z] [Info] Status: Loaded OnGameModeInit, running version 3.0.0 BETA
+[2022-06-13T05:29:54Z] [Info] -----------------------------------------------------------------
+[2022-06-13T05:29:54Z] [Info] -----------------------------------------------------------------
+[2022-06-13T05:29:54Z] [Info] WARNING: You are running a BETA version of the script.
+[2022-06-13T05:29:54Z] [Info] WARNING: This script is not optimized (or specifically built) for public usage yet.
+[2022-06-13T05:29:54Z] [Info] -----------------------------------------------------------------
+[2022-06-13T05:29:54Z] [Info] main() has been called
+[2022-06-13T05:29:54Z] [Info] hook OnPlayerConnect(0) has been called
+[2022-06-13T05:29:54Z] [Info] public OnPlayerConnect(0) has been called
+[2022-06-13T05:29:54Z] [Info] function checkBanPlayer(0) has been called
+[2022-06-13T05:29:54Z] [Info] function checkAccountUsername(0) has been called
+[2022-06-13T05:29:54Z] [Info] 3 FD9D94340DBD72C11B37EBB0D2A19B4D05E00FD78E4E2CE8923B9EA3A54E900DF181CFB112A8A73228D1F3551680E2AD9701A4FCFB248FA7FA77B95180628BB2 test
+[2022-06-13T05:29:56Z] [Info] function checkCredentials(0) has been called
+[2022-06-13T05:30:27Z] [Info] [chat] [test]: asd
+[2022-06-13T05:32:21Z] [Info] hook OnGameModeExit()_sql has been called
+[2022-06-13T05:32:21Z] [Info] OnGameModeExit() has been called
+[2022-06-13T05:32:33Z] [Info]  
+[2022-06-13T05:32:33Z] [Info] *** fixes.inc info: Trying to unload RconCommand/ClientCheckResponse fix FS...
+[2022-06-13T05:32:33Z] [Info] ***                 Ignore any errors if the FS already unloaded.
+[2022-06-13T05:32:33Z] [Info]  
+[2022-06-13T05:32:33Z] [Info] Filterscript '../scriptfiles/callbackfix' unloaded.
+[2022-06-13T05:32:33Z] [Info] Filterscript '../scriptfiles/fs-count-A' loaded.
+[2022-06-13T05:32:33Z] [Info] Filterscript '../scriptfiles/fs-count-B' loaded.
+[2022-06-13T05:32:33Z] [Info] Filterscript '../scriptfiles/fs-count-C' loaded.
+[2022-06-13T05:32:33Z] [Info] Filterscript '../scriptfiles/fs-count-D' loaded.
+[2022-06-13T05:32:33Z] [Info] Filterscript '../scriptfiles/fs-count-E' loaded.
+[2022-06-13T05:32:33Z] [Info] Filterscript '../scriptfiles/fs-count-F' loaded.
+[2022-06-13T05:32:33Z] [Info] Filterscript '../scriptfiles/fs-count-G' loaded.
+[2022-06-13T05:32:33Z] [Info] Filterscript '../scriptfiles/fs-count-H' loaded.
+[2022-06-13T05:32:33Z] [Info] Filterscript '../scriptfiles/fs-count-I' loaded.
+[2022-06-13T05:32:33Z] [Info] Filterscript '../scriptfiles/fs-count-J' loaded.
+[2022-06-13T05:32:33Z] [Info] Filterscript '../scriptfiles/fs-count-K' loaded.
+[2022-06-13T05:32:33Z] [Info] Filterscript '../scriptfiles/fs-count-L' loaded.
+[2022-06-13T05:32:33Z] [Info] Filterscript '../scriptfiles/fs-count-M' loaded.
+[2022-06-13T05:32:33Z] [Info] Filterscript '../scriptfiles/fs-count-N' loaded.
+[2022-06-13T05:32:33Z] [Info] Filterscript '../scriptfiles/fs-count-O' loaded.
+[2022-06-13T05:32:33Z] [Info] Filterscript '../scriptfiles/fs-count-P' loaded.
+[2022-06-13T05:32:34Z] [Info] Filterscript '../scriptfiles/fs-count-P' unloaded.
+[2022-06-13T05:32:34Z] [Info] Filterscript '../scriptfiles/fs-count-O' unloaded.
+[2022-06-13T05:32:34Z] [Info] Filterscript '../scriptfiles/fs-count-N' unloaded.
+[2022-06-13T05:32:34Z] [Info] Filterscript '../scriptfiles/fs-count-M' unloaded.
+[2022-06-13T05:32:34Z] [Info] Filterscript '../scriptfiles/fs-count-L' unloaded.
+[2022-06-13T05:32:34Z] [Info] Filterscript '../scriptfiles/fs-count-K' unloaded.
+[2022-06-13T05:32:34Z] [Info] Filterscript '../scriptfiles/fs-count-J' unloaded.
+[2022-06-13T05:32:34Z] [Info] Filterscript '../scriptfiles/fs-count-I' unloaded.
+[2022-06-13T05:32:34Z] [Info] Filterscript '../scriptfiles/fs-count-H' unloaded.
+[2022-06-13T05:32:34Z] [Info] Filterscript '../scriptfiles/fs-count-G' unloaded.
+[2022-06-13T05:32:34Z] [Info] Filterscript '../scriptfiles/fs-count-F' unloaded.
+[2022-06-13T05:32:34Z] [Info] Filterscript '../scriptfiles/fs-count-E' unloaded.
+[2022-06-13T05:32:34Z] [Info] Filterscript '../scriptfiles/fs-count-D' unloaded.
+[2022-06-13T05:32:34Z] [Info] Filterscript '../scriptfiles/fs-count-C' unloaded.
+[2022-06-13T05:32:34Z] [Info] Filterscript '../scriptfiles/fs-count-B' unloaded.
+[2022-06-13T05:32:34Z] [Info] Filterscript '../scriptfiles/fs-count-A' unloaded.
+[2022-06-13T05:32:34Z] [Info]  
+[2022-06-13T05:32:34Z] [Info] *** fixes.inc info: Trying to load RconCommand/ClientCheckResponse fix FS...
+[2022-06-13T05:32:34Z] [Info] ***                 Ignore any errors if the FS already loaded.
+[2022-06-13T05:32:34Z] [Info]  
+[2022-06-13T05:32:34Z] [Info] Filterscript '../scriptfiles/callbackfix' loaded.
+[2022-06-13T05:32:34Z] [Info] FIXES Script ID: 1
+[2022-06-13T05:32:34Z] [Info]  
+[2022-06-13T05:32:34Z] [Info]  
+[2022-06-13T05:32:34Z] [Info]          ==============================================================
+[2022-06-13T05:32:34Z] [Info]          |                                                            |
+[2022-06-13T05:32:34Z] [Info]          |                                                            |
+[2022-06-13T05:32:34Z] [Info]          |    YYYYYYY       YYYYYYY    SSSSSSSSSSSSSSS  IIIIIIIIII    |
+[2022-06-13T05:32:34Z] [Info]          |    Y:::::Y       Y:::::Y  SS:::::::::::::::S I::::::::I    |
+[2022-06-13T05:32:34Z] [Info]          |    Y:::::Y       Y:::::Y S:::::SSSSSS::::::S I::::::::I    |
+[2022-06-13T05:32:34Z] [Info]          |    Y::::::Y     Y::::::Y S:::::S     SSSSSSS II::::::II    |
+[2022-06-13T05:32:34Z] [Info]          |    YYY:::::Y   Y:::::YYY S:::::S               I::::I      |
+[2022-06-13T05:32:34Z] [Info]          |       Y:::::Y Y:::::Y    S:::::S               I::::I      |
+[2022-06-13T05:32:34Z] [Info]          |        Y:::::Y:::::Y      S::::SSSS            I::::I      |
+[2022-06-13T05:32:34Z] [Info]          |         Y:::::::::Y        SS::::::SSSSS       I::::I      |
+[2022-06-13T05:32:34Z] [Info]          |          Y:::::::Y           SSS::::::::SS     I::::I      |
+[2022-06-13T05:32:34Z] [Info]          |           Y:::::Y               SSSSSS::::S    I::::I      |
+[2022-06-13T05:32:34Z] [Info]          |           Y:::::Y                    S:::::S   I::::I      |
+[2022-06-13T05:32:34Z] [Info]          |           Y:::::Y                    S:::::S   I::::I      |
+[2022-06-13T05:32:34Z] [Info]          |           Y:::::Y        SSSSSSS     S:::::S II::::::II    |
+[2022-06-13T05:32:34Z] [Info]          |        YYYY:::::YYYY     S::::::SSSSSS:::::S I::::::::I    |
+[2022-06-13T05:32:34Z] [Info]          |        Y:::::::::::Y     S:::::::::::::::SS  I::::::::I    |
+[2022-06-13T05:32:34Z] [Info]          |        YYYYYYYYYYYYY      SSSSSSSSSSSSSSS    IIIIIIIIII    |
+[2022-06-13T05:32:34Z] [Info]          |                                                            |
+[2022-06-13T05:32:34Z] [Info]          |                                                            |
+[2022-06-13T05:32:34Z] [Info]          |                      (c) 2021 MPL v1.1                     |
+[2022-06-13T05:32:34Z] [Info]          |            Alex "Y_Less" Cole and contributors.            |
+[2022-06-13T05:32:34Z] [Info]          |                                                            |
+[2022-06-13T05:32:34Z] [Info]          |                                                            |
+[2022-06-13T05:32:34Z] [Info]          ==============================================================
+[2022-06-13T05:32:34Z] [Info]  
+[2022-06-13T05:32:34Z] [Info]  
+[2022-06-13T05:32:34Z] [Info]  ========================================== 
+[2022-06-13T05:32:34Z] [Info]  |                                        | 
+[2022-06-13T05:32:34Z] [Info]  |  Missing YSI scriptfiles directories:  | 
+[2022-06-13T05:32:34Z] [Info]  |                                        | 
+[2022-06-13T05:32:34Z] [Info]  |      /scriptfiles/YSI/fixes/           | 
+[2022-06-13T05:32:34Z] [Info]  |      /scriptfiles/YSI/temp/            | 
+[2022-06-13T05:32:34Z] [Info]  |                                        | 
+[2022-06-13T05:32:34Z] [Info]  ========================================== 
+[2022-06-13T05:32:34Z] [Info]  |                                        | 
+[2022-06-13T05:32:34Z] [Info]  |   Generating code, this may take a     | 
+[2022-06-13T05:32:34Z] [Info]  |  little bit of time.  Note that this   | 
+[2022-06-13T05:32:34Z] [Info]  |  code generation works best with the   | 
+[2022-06-13T05:32:34Z] [Info]  |     JIT plugin, which you are not      | 
+[2022-06-13T05:32:34Z] [Info]  |     currently using.  Get it here:     | 
+[2022-06-13T05:32:34Z] [Info]  |                                        | 
+[2022-06-13T05:32:34Z] [Info]  |       https://git.io/jit-plugin        | 
+[2022-06-13T05:32:34Z] [Info]  |                                        | 
+[2022-06-13T05:32:34Z] [Info]  |             Please wait...             | 
+[2022-06-13T05:32:34Z] [Info]  |                                        | 
+[2022-06-13T05:32:34Z] [Info]  |                 Done!                  | 
+[2022-06-13T05:32:34Z] [Info]  |                                        | 
+[2022-06-13T05:32:34Z] [Info]  ========================================== 
+[2022-06-13T05:32:34Z] [Info]  |                                        | 
+[2022-06-13T05:32:34Z] [Info]  | Server:      0.3DL - Windows           | 
+[2022-06-13T05:32:34Z] [Info]  | Compiler:    3.10.10 - Windows         | 
+[2022-06-13T05:32:34Z] [Info]  | Codepage:    <none>                    | 
+[2022-06-13T05:32:34Z] [Info]  | YSI:         5.06.1932                 | 
+[2022-06-13T05:32:34Z] [Info]  | Started:     1655087554                | 
+[2022-06-13T05:32:34Z] [Info]  | JIT:         <none>                    | 
+[2022-06-13T05:32:34Z] [Info]  | Crashdetect: <none>                    | 
+[2022-06-13T05:32:34Z] [Info]  |                                        | 
+[2022-06-13T05:32:35Z] [Info]  ========================================== 
+[2022-06-13T05:32:35Z] [Info]  
+[2022-06-13T05:32:35Z] [Info]  
+[2022-06-13T05:32:35Z] [Info] hook OnGameModeInit()_sql has been called
+[2022-06-13T05:32:35Z] [Info] MySQL connection is successful.
+[2022-06-13T05:32:35Z] [Info] OnGameModeInit() has been called
+[2022-06-13T05:32:35Z] [Warning] Deprecated console variable "weburl", use "website" instead.
+[2022-06-13T05:32:35Z] [Info] -----------------------------------------------------------------
+[2022-06-13T05:32:35Z] [Info] Script: Vortex Roleplay 2 by Calgon and Brian.
+[2022-06-13T05:32:35Z] [Info] Script: Rewrited by Filiqp_ for open.mp
+[2022-06-13T05:32:35Z] [Info] Status: Loaded OnGameModeInit, running version 3.0.0 BETA
+[2022-06-13T05:32:35Z] [Info] -----------------------------------------------------------------
+[2022-06-13T05:32:35Z] [Info] -----------------------------------------------------------------
+[2022-06-13T05:32:35Z] [Info] WARNING: You are running a BETA version of the script.
+[2022-06-13T05:32:35Z] [Info] WARNING: This script is not optimized (or specifically built) for public usage yet.
+[2022-06-13T05:32:35Z] [Info] -----------------------------------------------------------------
+[2022-06-13T05:32:35Z] [Info] main() has been called
+[2022-06-13T05:32:35Z] [Info] hook OnPlayerConnect(0) has been called
+[2022-06-13T05:32:35Z] [Info] public OnPlayerConnect(0) has been called
+[2022-06-13T05:32:35Z] [Info] function checkBanPlayer(0) has been called
+[2022-06-13T05:32:35Z] [Info] function checkAccountUsername(0) has been called
+[2022-06-13T05:32:35Z] [Info] 3 FD9D94340DBD72C11B37EBB0D2A19B4D05E00FD78E4E2CE8923B9EA3A54E900DF181CFB112A8A73228D1F3551680E2AD9701A4FCFB248FA7FA77B95180628BB2 test
+[2022-06-13T05:32:37Z] [Info] function checkCredentials(0) has been called
+[2022-06-13T05:35:16Z] [Info] [part] test has left the server (0:1)
+[2022-06-13T06:31:33Z] [Info] hook OnGameModeExit()_sql has been called
+[2022-06-13T06:31:33Z] [Info] OnGameModeExit() has been called
+[2022-06-13T06:31:33Z] [Info]  
+[2022-06-13T06:31:33Z] [Info]  ====================
+[2022-06-13T06:31:33Z] [Info]  
+[2022-06-13T06:31:33Z] [Info]   Whirlpool unloaded
+[2022-06-13T06:31:33Z] [Info]  
+[2022-06-13T06:31:33Z] [Info]  ====================
+[2022-06-13T06:31:33Z] [Info]  
+[2022-06-13T06:31:33Z] [Info] plugin.mysql: Unloading plugin...
+[2022-06-13T06:31:33Z] [Info] plugin.mysql: Plugin unloaded.
+[2022-06-13T06:31:37Z] [Info] Loading plugin: mysql
+[2022-06-13T06:31:37Z] [Info]  >> plugin.mysql: R41-4 successfully loaded.
+[2022-06-13T06:31:37Z] [Info] Loading plugin: wp
+[2022-06-13T06:31:37Z] [Info]  
+[2022-06-13T06:31:37Z] [Info]  ==================
+[2022-06-13T06:31:37Z] [Info]  
+[2022-06-13T06:31:37Z] [Info]   Whirlpool loaded
+[2022-06-13T06:31:37Z] [Info]  
+[2022-06-13T06:31:37Z] [Info]  ==================
+[2022-06-13T06:31:37Z] [Info]  
+[2022-06-13T06:31:37Z] [Info]  
+[2022-06-13T06:31:37Z] [Info] *** fixes.inc info: Trying to unload RconCommand/ClientCheckResponse fix FS...
+[2022-06-13T06:31:37Z] [Info] ***                 Ignore any errors if the FS already unloaded.
+[2022-06-13T06:31:37Z] [Info]  
+[2022-06-13T06:31:37Z] [Info] Filterscript '../scriptfiles/fs-count-A' loaded.
+[2022-06-13T06:31:37Z] [Info] Filterscript '../scriptfiles/fs-count-B' loaded.
+[2022-06-13T06:31:37Z] [Info] Filterscript '../scriptfiles/fs-count-C' loaded.
+[2022-06-13T06:31:37Z] [Info] Filterscript '../scriptfiles/fs-count-D' loaded.
+[2022-06-13T06:31:37Z] [Info] Filterscript '../scriptfiles/fs-count-E' loaded.
+[2022-06-13T06:31:37Z] [Info] Filterscript '../scriptfiles/fs-count-F' loaded.
+[2022-06-13T06:31:37Z] [Info] Filterscript '../scriptfiles/fs-count-G' loaded.
+[2022-06-13T06:31:37Z] [Info] Filterscript '../scriptfiles/fs-count-H' loaded.
+[2022-06-13T06:31:37Z] [Info] Filterscript '../scriptfiles/fs-count-I' loaded.
+[2022-06-13T06:31:37Z] [Info] Filterscript '../scriptfiles/fs-count-J' loaded.
+[2022-06-13T06:31:38Z] [Info] Filterscript '../scriptfiles/fs-count-K' loaded.
+[2022-06-13T06:31:38Z] [Info] Filterscript '../scriptfiles/fs-count-L' loaded.
+[2022-06-13T06:31:38Z] [Info] Filterscript '../scriptfiles/fs-count-M' loaded.
+[2022-06-13T06:31:38Z] [Info] Filterscript '../scriptfiles/fs-count-N' loaded.
+[2022-06-13T06:31:38Z] [Info] Filterscript '../scriptfiles/fs-count-O' loaded.
+[2022-06-13T06:31:38Z] [Info] Filterscript '../scriptfiles/fs-count-P' loaded.
+[2022-06-13T06:31:38Z] [Info] Filterscript '../scriptfiles/fs-count-P' unloaded.
+[2022-06-13T06:31:38Z] [Info] Filterscript '../scriptfiles/fs-count-O' unloaded.
+[2022-06-13T06:31:38Z] [Info] Filterscript '../scriptfiles/fs-count-N' unloaded.
+[2022-06-13T06:31:38Z] [Info] Filterscript '../scriptfiles/fs-count-M' unloaded.
+[2022-06-13T06:31:38Z] [Info] Filterscript '../scriptfiles/fs-count-L' unloaded.
+[2022-06-13T06:31:38Z] [Info] Filterscript '../scriptfiles/fs-count-K' unloaded.
+[2022-06-13T06:31:38Z] [Info] Filterscript '../scriptfiles/fs-count-J' unloaded.
+[2022-06-13T06:31:38Z] [Info] Filterscript '../scriptfiles/fs-count-I' unloaded.
+[2022-06-13T06:31:38Z] [Info] Filterscript '../scriptfiles/fs-count-H' unloaded.
+[2022-06-13T06:31:38Z] [Info] Filterscript '../scriptfiles/fs-count-G' unloaded.
+[2022-06-13T06:31:38Z] [Info] Filterscript '../scriptfiles/fs-count-F' unloaded.
+[2022-06-13T06:31:38Z] [Info] Filterscript '../scriptfiles/fs-count-E' unloaded.
+[2022-06-13T06:31:38Z] [Info] Filterscript '../scriptfiles/fs-count-D' unloaded.
+[2022-06-13T06:31:38Z] [Info] Filterscript '../scriptfiles/fs-count-C' unloaded.
+[2022-06-13T06:31:38Z] [Info] Filterscript '../scriptfiles/fs-count-B' unloaded.
+[2022-06-13T06:31:38Z] [Info] Filterscript '../scriptfiles/fs-count-A' unloaded.
+[2022-06-13T06:31:38Z] [Info]  
+[2022-06-13T06:31:38Z] [Info] *** fixes.inc info: Trying to load RconCommand/ClientCheckResponse fix FS...
+[2022-06-13T06:31:38Z] [Info] ***                 Ignore any errors if the FS already loaded.
+[2022-06-13T06:31:38Z] [Info]  
+[2022-06-13T06:31:38Z] [Info] Filterscript '../scriptfiles/callbackfix' loaded.
+[2022-06-13T06:31:38Z] [Info] FIXES Script ID: 1
+[2022-06-13T06:31:38Z] [Info]  
+[2022-06-13T06:31:38Z] [Info]  
+[2022-06-13T06:31:38Z] [Info]          ==============================================================
+[2022-06-13T06:31:38Z] [Info]          |                                                            |
+[2022-06-13T06:31:38Z] [Info]          |                                                            |
+[2022-06-13T06:31:38Z] [Info]          |    YYYYYYY       YYYYYYY    SSSSSSSSSSSSSSS  IIIIIIIIII    |
+[2022-06-13T06:31:38Z] [Info]          |    Y:::::Y       Y:::::Y  SS:::::::::::::::S I::::::::I    |
+[2022-06-13T06:31:38Z] [Info]          |    Y:::::Y       Y:::::Y S:::::SSSSSS::::::S I::::::::I    |
+[2022-06-13T06:31:38Z] [Info]          |    Y::::::Y     Y::::::Y S:::::S     SSSSSSS II::::::II    |
+[2022-06-13T06:31:38Z] [Info]          |    YYY:::::Y   Y:::::YYY S:::::S               I::::I      |
+[2022-06-13T06:31:38Z] [Info]          |       Y:::::Y Y:::::Y    S:::::S               I::::I      |
+[2022-06-13T06:31:38Z] [Info]          |        Y:::::Y:::::Y      S::::SSSS            I::::I      |
+[2022-06-13T06:31:38Z] [Info]          |         Y:::::::::Y        SS::::::SSSSS       I::::I      |
+[2022-06-13T06:31:38Z] [Info]          |          Y:::::::Y           SSS::::::::SS     I::::I      |
+[2022-06-13T06:31:38Z] [Info]          |           Y:::::Y               SSSSSS::::S    I::::I      |
+[2022-06-13T06:31:38Z] [Info]          |           Y:::::Y                    S:::::S   I::::I      |
+[2022-06-13T06:31:38Z] [Info]          |           Y:::::Y                    S:::::S   I::::I      |
+[2022-06-13T06:31:38Z] [Info]          |           Y:::::Y        SSSSSSS     S:::::S II::::::II    |
+[2022-06-13T06:31:38Z] [Info]          |        YYYY:::::YYYY     S::::::SSSSSS:::::S I::::::::I    |
+[2022-06-13T06:31:38Z] [Info]          |        Y:::::::::::Y     S:::::::::::::::SS  I::::::::I    |
+[2022-06-13T06:31:38Z] [Info]          |        YYYYYYYYYYYYY      SSSSSSSSSSSSSSS    IIIIIIIIII    |
+[2022-06-13T06:31:38Z] [Info]          |                                                            |
+[2022-06-13T06:31:38Z] [Info]          |                                                            |
+[2022-06-13T06:31:38Z] [Info]          |                      (c) 2021 MPL v1.1                     |
+[2022-06-13T06:31:38Z] [Info]          |            Alex "Y_Less" Cole and contributors.            |
+[2022-06-13T06:31:38Z] [Info]          |                                                            |
+[2022-06-13T06:31:38Z] [Info]          |                                                            |
+[2022-06-13T06:31:38Z] [Info]          ==============================================================
+[2022-06-13T06:31:38Z] [Info]  
+[2022-06-13T06:31:38Z] [Info]  
+[2022-06-13T06:31:38Z] [Info]  ========================================== 
+[2022-06-13T06:31:38Z] [Info]  |                                        | 
+[2022-06-13T06:31:38Z] [Info]  |  Missing YSI scriptfiles directories:  | 
+[2022-06-13T06:31:38Z] [Info]  |                                        | 
+[2022-06-13T06:31:38Z] [Info]  |      /scriptfiles/YSI/fixes/           | 
+[2022-06-13T06:31:38Z] [Info]  |      /scriptfiles/YSI/temp/            | 
+[2022-06-13T06:31:38Z] [Info]  |                                        | 
+[2022-06-13T06:31:38Z] [Info]  ========================================== 
+[2022-06-13T06:31:38Z] [Info]  |                                        | 
+[2022-06-13T06:31:38Z] [Info]  |   Generating code, this may take a     | 
+[2022-06-13T06:31:38Z] [Info]  |  little bit of time.  Note that this   | 
+[2022-06-13T06:31:38Z] [Info]  |  code generation works best with the   | 
+[2022-06-13T06:31:38Z] [Info]  |     JIT plugin, which you are not      | 
+[2022-06-13T06:31:39Z] [Info]  |     currently using.  Get it here:     | 
+[2022-06-13T06:31:39Z] [Info]  |                                        | 
+[2022-06-13T06:31:39Z] [Info]  |       https://git.io/jit-plugin        | 
+[2022-06-13T06:31:39Z] [Info]  |                                        | 
+[2022-06-13T06:31:39Z] [Info]  |             Please wait...             | 
+[2022-06-13T06:31:39Z] [Info]  |                                        | 
+[2022-06-13T06:31:39Z] [Info]  |                 Done!                  | 
+[2022-06-13T06:31:39Z] [Info]  |                                        | 
+[2022-06-13T06:31:39Z] [Info]  ========================================== 
+[2022-06-13T06:31:39Z] [Info]  |                                        | 
+[2022-06-13T06:31:39Z] [Info]  | Server:      0.3DL - Windows           | 
+[2022-06-13T06:31:39Z] [Info]  | Compiler:    3.10.10 - Windows         | 
+[2022-06-13T06:31:39Z] [Info]  | Codepage:    <none>                    | 
+[2022-06-13T06:31:39Z] [Info]  | YSI:         5.06.1932                 | 
+[2022-06-13T06:31:39Z] [Info]  | Started:     1655091098                | 
+[2022-06-13T06:31:39Z] [Info]  | JIT:         <none>                    | 
+[2022-06-13T06:31:39Z] [Info]  | Crashdetect: <none>                    | 
+[2022-06-13T06:31:39Z] [Info]  |                                        | 
+[2022-06-13T06:31:39Z] [Info]  ========================================== 
+[2022-06-13T06:31:39Z] [Info]  
+[2022-06-13T06:31:39Z] [Info]  
+[2022-06-13T06:31:39Z] [Info] hook OnGameModeInit()_sql has been called
+[2022-06-13T06:31:39Z] [Info] MySQL connection is successful.
+[2022-06-13T06:31:39Z] [Info] OnGameModeInit() has been called
+[2022-06-13T06:31:39Z] [Warning] Deprecated console variable "weburl", use "website" instead.
+[2022-06-13T06:31:39Z] [Info] -----------------------------------------------------------------
+[2022-06-13T06:31:39Z] [Info] Script: Vortex Roleplay 2 by Calgon and Brian.
+[2022-06-13T06:31:39Z] [Info] Script: Rewrited by Filiqp_ for open.mp
+[2022-06-13T06:31:39Z] [Info] Status: Loaded OnGameModeInit, running version 3.0.0 BETA
+[2022-06-13T06:31:39Z] [Info] -----------------------------------------------------------------
+[2022-06-13T06:31:39Z] [Info] -----------------------------------------------------------------
+[2022-06-13T06:31:39Z] [Info] WARNING: You are running a BETA version of the script.
+[2022-06-13T06:31:39Z] [Info] WARNING: This script is not optimized (or specifically built) for public usage yet.
+[2022-06-13T06:31:39Z] [Info] -----------------------------------------------------------------
+[2022-06-13T06:31:39Z] [Info] main() has been called
+[2022-06-13T06:31:39Z] [Info] Legacy Network started on port 7777
+[2022-06-13T06:31:39Z] [Info] Failed to announce legacy network to open.mp list
+[2022-06-13T06:32:38Z] [Info] [connection] incoming connection: 192.168.1.165:64270 id: 0
+[2022-06-13T06:32:38Z] [Info] [join] test has joined the server (0:192.168.1.165)
+[2022-06-13T06:32:38Z] [Warning] Invalid dialog ID -1 used.  Use `HidePlayerDialog()`.
+[2022-06-13T06:32:38Z] [Info] hook OnPlayerConnect(0) has been called
+[2022-06-13T06:32:38Z] [Info] public OnPlayerConnect(0) has been called
+[2022-06-13T06:32:38Z] [Info] inline checkBanPlayer(0) has been called
+[2022-06-13T06:32:38Z] [Info] function checkAccountUsername(0) has been called
+[2022-06-13T06:32:38Z] [Info] 3 FD9D94340DBD72C11B37EBB0D2A19B4D05E00FD78E4E2CE8923B9EA3A54E900DF181CFB112A8A73228D1F3551680E2AD9701A4FCFB248FA7FA77B95180628BB2 test
+[2022-06-13T06:32:40Z] [Info] function checkCredentials(0) has been called
+[2022-06-13T07:17:36Z] [Info] [part] test has left the server (0:1)
+[2022-06-13T07:20:55Z] [Info] hook OnGameModeExit()_sql has been called
+[2022-06-13T07:20:55Z] [Info] OnGameModeExit() has been called
+[2022-06-13T07:20:55Z] [Info]  
+[2022-06-13T07:20:55Z] [Info]  ====================
+[2022-06-13T07:20:55Z] [Info]  
+[2022-06-13T07:20:55Z] [Info]   Whirlpool unloaded
+[2022-06-13T07:20:55Z] [Info]  
+[2022-06-13T07:20:55Z] [Info]  ====================
+[2022-06-13T07:20:55Z] [Info]  
+[2022-06-13T07:20:55Z] [Info] plugin.mysql: Unloading plugin...
+[2022-06-13T07:20:55Z] [Info] plugin.mysql: Plugin unloaded.

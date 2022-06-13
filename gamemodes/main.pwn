@@ -85,13 +85,7 @@
 				5 - Car Dealership
 				6 - Gym
 				7 - Restaurant
-*/
-
-#define YSI_YES_HEAP_MALLOC
-
-#define DEBUG 
-#define SERVER_VERSION  "3.0.0 BETA"
-#define SERVER_NAME     "VX-RP" // Would be nice if you kept it as this, so I can see which servers are using this mode easily
+*/  
 
 #include "modules/core/init.inc"
 
@@ -104,8 +98,7 @@ main() {
 public OnGameModeInit() {
     #if defined DEBUG
         print("OnGameModeInit() has been called");
-    #endif 
- 
+    #endif
 
     SetGameModeText(SERVER_NAME" "SERVER_VERSION);
 	GetConsoleVarAsString("weburl", szServerWebsite, sizeof(szServerWebsite));
@@ -162,8 +155,7 @@ public OnPlayerConnect(playerid) {
 
 	// There are some trees on the outside of the mall which poke through one of the interiors
 	RemoveBuildingForPlayer(playerid, 762, 1175.3594, -1420.1875, 19.8828, 0.25);
-	RemoveBuildingForPlayer(playerid, 615, 1166.3516, -1417.6953, 13.9531, 0.25);
-
+	RemoveBuildingForPlayer(playerid, 615, 1166.3516, -1417.6953, 13.9531, 0.25); 
 
     return true;
 }

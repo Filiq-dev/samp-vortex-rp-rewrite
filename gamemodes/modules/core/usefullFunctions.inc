@@ -1,5 +1,5 @@
 /*
-    if somebody wants to have roleplay names can enable this
+    if somebody wants to have roleplay names can enable this and use it in login.inc
 function invalidNameChange(playerid) {
 	// Anti-spam mechanism to confirm the feature isn't being spammed
     if(gettime()-GetPVarInt(playerid, "namet") < 3) {
@@ -25,4 +25,9 @@ function IsKeyJustDown(key, newkeys, oldkeys) {
 		return true;
 
 	return false;
+}
+
+function clearScreen(playerid) {
+    for(new i = 0; i < 40; i++)
+        SendClientMessage(playerid, COLOR_WHITE, " ");
 }
