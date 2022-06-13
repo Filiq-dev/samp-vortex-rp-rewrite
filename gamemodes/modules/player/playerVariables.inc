@@ -101,7 +101,6 @@ enum playervEnum {
 	pBackup,
 }
 
-new playerVariables[MAX_PLAYERS][playervEnum],
-    szPlayerName[MAX_PLAYER_NAME];
+new playerVariables[MAX_PLAYERS][playervEnum];
 
 new Iterator:Admin<MAX_PLAYERS>;

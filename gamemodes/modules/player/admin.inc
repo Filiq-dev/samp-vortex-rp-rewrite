@@ -5,8 +5,10 @@ hook OnPlayerDisconnect(playerid) {
         printf("hook OnPlayerDisconnect(%d)_admin has been called", playerid);
     #endif 
 
-    if(Iter_Contains(Admin, playerid))
+    if(Iter_Contains(Admin, playerid)) {
         Iter_Remove(Admin, playerid);
+        SetPlayerName(playerid, playerVariables[playerid][pNormalName]); // in case he is reconnecting somehow when is duty need to be set
+    }
 }
 
 function adminSecurity(playerid) {
@@ -72,7 +74,7 @@ Dialog:DIALOG_ADMIN_PIN(playerid, response, listitem, inputtext[]) {
 
         if(GetPVarInt(playerid, "LA") > MAX_LOGIN_ATTEMPTS) {
             SendClientMessage(playerid, COLOR_RED, "You have used all available login attempts.");
-            submitToAdmins(COLOR_HOTORANGE, "AdmWarn: {FFFFFF}Admin %s has been banned (%d failed 3 admin PIN attempts).", szPlayerName, MAX_LOGIN_ATTEMPTS);
+            submitToAdmins(COLOR_HOTORANGE, "AdmWarn: {FFFFFF}Admin %s has been banned (%d failed 3 admin PIN attempts).", getName(playerid), MAX_LOGIN_ATTEMPTS);
 
             // scriptBan(playerid, "Maximum admin PIN attempts exceeded.");
             return true;

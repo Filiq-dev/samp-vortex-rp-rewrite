@@ -31,3 +31,24 @@ function clearScreen(playerid) {
     for(new i = 0; i < 40; i++)
         SendClientMessage(playerid, COLOR_WHITE, " ");
 }
+
+stock nearByMessage(playerid, color, const string[], Float: Distance = 12.0) {
+	new Float: nbCoords[3];
+	GetPlayerPos(playerid, nbCoords[0], nbCoords[1], nbCoords[2]);
+
+	foreach(new i : Player) {
+	    if(playerVariables[i][pStatus] >= 1) {
+	        if(IsPlayerInRangeOfPoint(i, Distance, nbCoords[0], nbCoords[1], nbCoords[2]) && (GetPlayerVirtualWorld(i) == GetPlayerVirtualWorld(playerid))) {
+				SendClientMessage(i, color, string);
+			}
+	    }
+	}
+
+	return true;
+}
+
+stock getName(playerid) {
+	new name[MAX_PLAYER_NAME];
+	GetPlayerName(playerid, name, MAX_PLAYER_NAME);
+	return name;
+}

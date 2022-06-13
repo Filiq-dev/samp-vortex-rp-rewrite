@@ -353,7 +353,7 @@ function initiateTutorial(playerid) {
     Dialog_Close(playerid); 
  
     SendClientMessage(playerid, COLOR_TEAL, "----------------------------------------------------------------------------");
-	va_SendClientMessage(playerid, COLOR_YELLOW, "Welcome to "SERVER_NAME", %s.", szPlayerName);
+	va_SendClientMessage(playerid, COLOR_YELLOW, "Welcome to "SERVER_NAME", %s.", getName(playerid));
 	SendClientMessage(playerid, COLOR_WHITE, "Please select your style of clothing from the selection below.");
 
 	playerVariables[playerid][pTutorial] = 1;

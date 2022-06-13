@@ -9,8 +9,7 @@ hook OnPlayerConnect(playerid) {
 	static const empty_player[playervEnum];
 	playerVariables[playerid] = empty_player;
  
-    GetPlayerIp(playerid, playerVariables[playerid][pConnectionIP], 16); 
-    GetPlayerName(playerid, szPlayerName, MAX_PLAYER_NAME);  
+    GetPlayerIp(playerid, playerVariables[playerid][pConnectionIP], 16);  
 
     inline checkBanPlayer() {
         #if defined DEBUG
@@ -20,11 +19,10 @@ hook OnPlayerConnect(playerid) {
         if(cache_num_rows() >= 1) {
             SendClientMessage(playerid, COLOR_RED, "You're banned from this server.");
             Kick(playerid);
-        } else {  
-            GetPlayerName(playerid, szPlayerName, MAX_PLAYER_NAME);  
+        } else {   
  
             gQuery[0] = (EOS);
-            mysql_format(gSQL, gQuery, sizeof(gQuery), "SELECT * FROM `playeraccounts` WHERE `playerName` = '%e' LIMIT 1", szPlayerName);
+            mysql_format(gSQL, gQuery, sizeof(gQuery), "SELECT * FROM `playeraccounts` WHERE `playerName` = '%e' LIMIT 1", getName(playerid));
             mysql_tquery(gSQL, gQuery, "checkAccountUsername", "d", playerid); 
         }
     }
@@ -52,10 +50,10 @@ function checkAccountUsername(playerid) {
             new
                 charCounts[5];
 
-            GetPlayerName(playerid, szPlayerName, MAX_PLAYER_NAME);
+            GetPlayerName(playerid, getName(playerid), MAX_PLAYER_NAME);
 
             for(new n; n < MAX_PLAYER_NAME; n++) {
-                switch(szPlayerName[n]) {
+                switch(getName(playerid)[n]) {
                     case '[', ']', '.', '$', '(', ')', '@', '=': charCounts[1]++;
                     case '_': charCounts[0]++;
                     case '0' .. '9': charCounts[2]++;
@@ -75,11 +73,11 @@ function checkAccountUsername(playerid) {
                 SendClientMessage(playerid, COLOR_GREY, "Your name is not valid, as it contains numbers. {FFFFFF}Please use a roleplay name.");
                 invalidNameChange(playerid);
             }
-            else if(charCounts[3] == strlen(szPlayerName) - 1) {
+            else if(charCounts[3] == strlen(getName(playerid)) - 1) {
                 SendClientMessage(playerid, COLOR_GREY, "Your name is not valid, as it is lower case. {FFFFFF}Please use a roleplay name (i.e. Dave_Meniketti).");
                 invalidNameChange(playerid);
             }
-            else if(charCounts[4] == strlen(szPlayerName) - 1) {
+            else if(charCounts[4] == strlen(getName(playerid)) - 1) {
                 SendClientMessage(playerid, COLOR_GREY, "Your name is not valid, as it is upper case. {FFFFFF}Please use a roleplay name (i.e. Dave_Jones).");
                 invalidNameChange(playerid);
             }
@@ -130,11 +128,11 @@ function finishLogin(playerid) {
         new timestamp[50];
         cache_get_value(0, "conTS", timestamp); 
 
-        va_SendClientMessage(playerid, COLOR_GENANNOUNCE, "SERVER:"EMBED_WHITE" Welcome back %s, you last visited us on %s.", szPlayerName, timestamp);
+        va_SendClientMessage(playerid, COLOR_GENANNOUNCE, "SERVER:"EMBED_WHITE" Welcome back %s, you last visited us on %s.", getName(playerid), timestamp);
         
         if(playerVariables[playerid][pGroup] >= 1) {
             // gString[0] = (EOS);
-            // format(gString, sizeof(gString), "(Group) "EMBED_WHITE"%s from your group has just logged in.", szPlayerName);
+            // format(gString, sizeof(gString), "(Group) "EMBED_WHITE"%s from your group has just logged in.", getName(playerid));
             // SendToGroup(playerVariables[playerid][pGroup], COLOR_GENANNOUNCE, gString);
 
             // gString[0] = (EOS);
@@ -193,10 +191,10 @@ Dialog:DIALOG_REGISTER(const playerid, const response, const listitem, inputtext
         #endif 
         playerVariables[playerid][pInternalID] = cache_insert_id();
     } 
-    MySQL_TQueryInline(gSQL, using inline setUserID, "INSERT INTO playeraccounts (playerName, playerPassword) VALUES('%e', '%s')", szPlayerName, wpHash);
+    MySQL_TQueryInline(gSQL, using inline setUserID, "INSERT INTO playeraccounts (playerName, playerPassword) VALUES('%e', '%s')", getName(playerid), wpHash);
 
     SendClientMessage(playerid, COLOR_WHITE, "SERVER: Your account is now registered!"); 
-    submitToAdmins(COLOR_HOTORANGE, "AdmWarn: {FFFFFF}%s just registered.", szPlayerName);
+    submitToAdmins(COLOR_HOTORANGE, "AdmWarn: {FFFFFF}%s just registered.", getName(playerid));
 
     finishLogin(playerid); 
 
@@ -223,7 +221,7 @@ Dialog:DIALOG_LOGIN(playerid, response, listitem, inputtext[]) {
 
         if(GetPVarInt(playerid, "LA") > MAX_LOGIN_ATTEMPTS) {
             SendClientMessage(playerid, COLOR_RED, "You have used all available login attempts.");  
-            submitToAdmins(COLOR_HOTORANGE, "AdmWarn: {FFFFFF}IP %s has been banned (%d failed 3 attempts on account %s).", playerVariables[playerid][pConnectionIP], MAX_LOGIN_ATTEMPTS, szPlayerName);
+            submitToAdmins(COLOR_HOTORANGE, "AdmWarn: {FFFFFF}IP %s has been banned (%d failed 3 attempts on account %s).", playerVariables[playerid][pConnectionIP], MAX_LOGIN_ATTEMPTS, getName(playerid));
 
             // #if defined IPBan 
             //     IPBan(playerVariables[playerid][pConnectionIP], "Exceeded maximum login attempts."); activate after make bans
@@ -252,9 +250,9 @@ function getPlayerData(playerid) {
     if(is_banned) { 
 
         SendClientMessage(playerid, COLOR_RED, "You are banned from this server.");  
-        submitToAdmins(COLOR_HOTORANGE, "AdmWarn: {FFFFFF}%s has attempted to evade their account ban (using IP %s).", szPlayerName, playerVariables[playerid][pConnectionIP]);
+        submitToAdmins(COLOR_HOTORANGE, "AdmWarn: {FFFFFF}%s has attempted to evade their account ban (using IP %s).", getName(playerid), playerVariables[playerid][pConnectionIP]);
 
-        // format(gString, sizeof(gString), "Attempted ban evasion (%s).", szPlayerName); 
+        // format(gString, sizeof(gString), "Attempted ban evasion (%s).", getName(playerid)); 
         // IPBan(playerIP, gString); comeback
 
         Kick(playerid);
@@ -266,6 +264,7 @@ function getPlayerData(playerid) {
     cache_get_value(0, "playerEmail", playerVariables[playerid][pEmail]);
     cache_get_value(0, "playerAdminName", playerVariables[playerid][pAdminName]);
     cache_get_value(0, "playerAccent", playerVariables[playerid][pAccent]);
+    cache_get_value(0, "playerName", playerVariables[playerid][pNormalName]);
 
     cache_get_value_int(0, "playerSkin", playerVariables[playerid][pSkin]);
     cache_get_value_int(0, "playerMoney", playerVariables[playerid][pMoney]);
