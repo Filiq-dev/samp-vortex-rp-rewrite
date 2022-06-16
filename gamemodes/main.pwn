@@ -171,13 +171,845 @@ public OnPlayerDisconnect(playerid, reason) {
 
 	if(!Iter_Contains(Admin, playerid)) {
 		switch(reason) {
-			case 1: format(gString, sizeof(gString), "%s has left the server.", playerVariables[playerid][pNormalName]);
-			case 2:	format(gString, sizeof(gString), "%s has been kicked or banned from the server.", playerVariables[playerid][pNormalName]);
-			default: format(gString, sizeof(gString), "%s has timed out from the server.", playerVariables[playerid][pNormalName]);
+			case 1: nearByMessage(playerid, COLOR_GENANNOUNCE, 12.0, "%s has left the server.", playerVariables[playerid][pNormalName]);
+			case 2:	nearByMessage(playerid, COLOR_GENANNOUNCE, 12.0, "%s has been kicked or banned from the server.", playerVariables[playerid][pNormalName]);
+			default: nearByMessage(playerid, COLOR_GENANNOUNCE, 12.0, "%s has timed out from the server.", playerVariables[playerid][pNormalName]);
 		}
-		nearByMessage(playerid, COLOR_GENANNOUNCE, gString);
+	}
+
+	if(playerVariables[playerid][pFreezeType] >= 1 && playerVariables[playerid][pFreezeType] <= 4) {
+		playerVariables[playerid][pPrisonTime] = 900;
+		playerVariables[playerid][pPrisonID] = 2;
+	}
+	if(playerVariables[playerid][pDrag] != -1) {
+		SendClientMessage(playerVariables[playerid][pDrag], COLOR_WHITE, "The person you were dragging has disconnected.");
+		playerVariables[playerVariables[playerid][pDrag]][pDrag] = -1; // Kills off any disconnections.
+	}
+	if(playerVariables[playerid][pPhoneCall] != -1 && playerVariables[playerid][pPhoneCall] < MAX_PLAYERS) {
+
+		SendClientMessage(playerVariables[playerid][pPhoneCall], COLOR_WHITE, "Your call has been terminated by the other party.");
+
+		if(GetPlayerSpecialAction(playerVariables[playerid][pPhoneCall]) == SPECIAL_ACTION_USECELLPHONE) {
+			SetPlayerSpecialAction(playerVariables[playerid][pPhoneCall], SPECIAL_ACTION_STOPUSECELLPHONE);
+		}
+
+		playerVariables[playerVariables[playerid][pPhoneCall]][pPhoneCall] = -1;
+	} 
+	if(playerVariables[playerid][pCarModel] >= 1) {
+		DestroyVehicle(playerVariables[playerid][pCarID]);
+		systemVariables[vehicleCounts][1]--;
+		playerVariables[playerid][pCarID] = -1;
 	}
 }
+
+public OnPlayerKeyStateChange(playerid, newkeys, oldkeys) {
+	#if defined DEBUG
+        printf("public OnPlayerKeyStateChange(%d, %d, %d) has been called", playerid, newkeys, oldkeys);
+    #endif  
+	// Disregard any key state changes if the player is frozen and prevent any further code from being executed
+
+	if(playerVariables[playerid][pFreezeType] != 0 && playerVariables[playerid][pFreezeTime] != 0)
+	    return false;
+	
+	return true;
+}
+
+public OnPlayerStateChange(playerid, newstate, oldstate) {
+	#if defined DEBUG
+	    printf("[debug] OnPlayerStateChange(%d, %d, %d)", playerid, newstate, oldstate);
+	#endif
+	
+	if(newstate == 3) {
+		if(IsAPlane(GetPlayerVehicleID(playerid))) {
+			givePlayerValidWeapon(playerid, 46);
+		}
+	}
+	else if(newstate == 2) { // Removed the passenger check, as it caused weapons to bug.
+		if(playerVariables[playerid][pEvent] == 0) {
+			ResetPlayerWeapons(playerid);
+			givePlayerWeapons(playerid);
+		}
+		if(IsAPlane(GetPlayerVehicleID(playerid))) {
+			givePlayerValidWeapon(playerid, 46);
+		}
+
+		for(new i = 0; i < MAX_VEHICLES; i++) {
+		    if(vehicleVariables[i][vVehicleScriptID] == GetPlayerVehicleID(playerid) && vehicleVariables[i][vVehicleGroup] != 0 && vehicleVariables[i][vVehicleGroup] != playerVariables[playerid][pGroup]) {
+
+				if(playerVariables[playerid][pAdminLevel] >= 1 && playerVariables[playerid][pAdminDuty] >= 1) {
+					format(szMessage, sizeof(szMessage), "This %s (model %d, ID %d) is locked to group %s (%d).", VehicleNames[GetVehicleModel(i) - 400], GetVehicleModel(i), i, groupVariables[vehicleVariables[i][vVehicleGroup]][gGroupName], vehicleVariables[i][vVehicleGroup]);
+					SendClientMessage(playerid, COLOR_GREY, szMessage);
+					return 1;
+				}
+				else {
+					SendClientMessage(playerid, COLOR_GREY, "This vehicle is locked.");
+					RemovePlayerFromVehicle(playerid);
+					return 1;
+				}
+			}
+        }
+		foreach(Player, x) {
+			if(playerVariables[x][pCarID] == GetPlayerVehicleID(playerid)) {
+				if(playerVariables[playerid][pAdminLevel] >= 1 && playerVariables[playerid][pAdminDuty] >= 1) {
+
+					GetPlayerName(x, szPlayerName, MAX_PLAYER_NAME);
+					format(szMessage, sizeof(szMessage), "This %s (model %d, ID %d) is owned by %s.", VehicleNames[playerVariables[x][pCarModel] - 400], playerVariables[x][pCarModel], playerVariables[x][pCarID], szPlayerName);
+					SendClientMessage(playerid, COLOR_GREY, szMessage);
+				}
+				else if(playerVariables[x][pCarLock] == 1) {
+					RemovePlayerFromVehicle(playerid);
+					SendClientMessage(playerid, COLOR_GREY, "This vehicle is locked.");
+				}
+			}
+		}
+		
+
+		// Confirm the old state was on foot and if they should be frozen, then remove them
+		if(oldstate == 1 && playerVariables[playerid][pFreezeType] != 0 && playerVariables[playerid][pFreezeTime] != 0)
+  			RemovePlayerFromVehicle(playerid);
+    }
+
+	foreach(Player, x) {
+		if(playerVariables[x][pSpectating] != INVALID_PLAYER_ID && playerVariables[x][pSpectating] == playerid) {
+			if(newstate == 2 && oldstate == 1 || newstate == 3 && oldstate == 1) {
+				PlayerSpectateVehicle(x, GetPlayerVehicleID(playerid));
+			}
+			else {
+				PlayerSpectatePlayer(x, playerid);
+			}
+		}
+	}
+	
+	return 1;
+}  
+
+static charCount[MAX_PLAYERS][3]; // if we create in the function, everytime when a player text something in chat, we will create this var and its not optim for server
+public e_COMMAND_ERRORS:OnPlayerCommandReceived(playerid, cmdtext[], e_COMMAND_ERRORS:success) {
+	#if defined DEBUG
+	    printf("OnPlayerCommandReceived(%d, %s) has been called", playerid, cmdtext);
+		printf("[server] [cmd] %s (ID %d): %s", getName(playerid), playerid, cmdtext);
+	#endif
+	
+	if(GetPVarInt(playerid, "pAdminFrozen") == 1) Kick(playerid); 
+	if(playerVariables[playerid][pStatus] != 1) return COMMAND_DISABLED;  
+	if(playerVariables[playerid][pMuted] > 0) {
+		SendClientMessage(playerid, COLOR_GREY, "You cannot submit any commands or text at the moment, as you have been muted.");
+		return COMMAND_ZERO_RET;
+	}
+
+	playerVariables[playerid][pSpamCount]++;
+
+	for(new i; i < strlen(cmdtext); i++) switch(cmdtext[i]) {
+		case '0' .. '9': charCount[playerid][0]++;
+		case '.': charCount[playerid][1]++;
+		case ':': charCount[playerid][2]++;
+	}
+
+	if(charCount[playerid][0] > 8 && charCount[playerid][1] >= 3 && charCount[playerid][2] >= 1 && playerVariables[playerid][pAdminLevel] < 1) { 
+		submitToAdmins(COLOR_HOTORANGE, "Warning: {FFFFFF}%s may be server advertising: '%s'.", getName(playerid), cmdtext);
+
+		return COMMAND_ZERO_RET;
+	}
+	return COMMAND_OK;
+}
+
+static iRetStr[MAX_PLAYERS];
+public OnPlayerText(playerid, text[]) {
+	#if defined DEBUG
+	    printf("OnPlayerText(%d, %s) has been called", playerid, text);
+	#endif
+
+	if(playerVariables[playerid][pStatus] >= 1 && playerVariables[playerid][pMuted] == 0) {
+		iRetStr[playerid] = strfind(text, "(", true, 0); 
+
+		if(iRetStr[playerid] < 4 && iRetStr[playerid] != -1 && playerVariables[playerid][pAdminDuty] == 0) { 
+			nearByMessage(playerid, COLOR_WHITE, 12.0, "%s says: (( %s ))", getName(playerid), text);
+
+			return true;
+		}
+
+		if(playerVariables[playerid][pPhoneCall] != -1) {
+			gString[0] = (EOS);
+			format(gString, sizeof(gString), "(cellphone) \"%s\"", text);
+			SetPlayerChatBubble(playerid, gString, COLOR_CHATBUBBLE, 10.0, 10000);
+
+			nearByMessage(playerid, COLOR_WHITE, 12.0, "(cellphone) %s says: %s", getName(playerid), text);
+
+			switch (playerVariables[playerid][pPhoneCall]) {
+				case 911: {
+					if(!strcmp(text, "LSPD", true) || !strcmp(text, "police", true)) {
+						SendClientMessage(playerid, COLOR_WHITE, "(cellphone) 911: You have reached the Los Santos Police emergency hotline; can you describe the crime?");
+						playerVariables[playerid][pPhoneCall] = 912;
+					}
+					else if(!strcmp(text, "LSFMD", true) || !strcmp(text, "medic", true) || !strcmp(text, "ambulance", true)) {
+						SendClientMessage(playerid, COLOR_WHITE, "(cellphone) 911: This is the Los Santos Fire & Medic Department emergency hotline; describe the emergency, please.");
+						playerVariables[playerid][pPhoneCall] = 914;
+					}
+					else SendClientMessage(playerid, COLOR_WHITE, "(cellphone) 911: Sorry, I didn't quite understand that... speak again?");
+				}
+				case 912: {
+					if(strlen(text) > 1) {
+						new location[MAX_ZONE_NAME];
+
+						GetPlayer2DZone(playerid, location, MAX_ZONE_NAME); 
+						SendToGroup(1, COLOR_RADIOCHAT, "Dispatch: %s has reported: '%s' (10-20 %s)", getName(playerid), text, location);
+						SendClientMessage(playerid, COLOR_WHITE, "(cellphone) 911: Thank you for reporting this incident; a patrol unit is now on its way.");
+						SendClientMessage(playerid, COLOR_WHITE, "Your call has been terminated by the other party.");
+
+						if(GetPlayerSpecialAction(playerid) == SPECIAL_ACTION_USECELLPHONE) {
+							SetPlayerSpecialAction(playerid, SPECIAL_ACTION_STOPUSECELLPHONE);
+						}
+						playerVariables[playerid][pPhoneCall] = -1;
+					}
+				}
+				case 914: {
+					if(strlen(text) > 1) {
+						new location[MAX_ZONE_NAME];
+
+						GetPlayer2DZone(playerid, location, MAX_ZONE_NAME);
+						SendToGroupType(4, COLOR_RED, "Dispatch: %s has reported '%s' (10-20 %s)", getName(playerid), text, location);
+						SendClientMessage(playerid, COLOR_WHITE, "(cellphone) 911: Thank you for reporting this incident; we are on our way.");
+						SendClientMessage(playerid, COLOR_WHITE, "Your call has been terminated by the other party.");
+
+						if(GetPlayerSpecialAction(playerid) == SPECIAL_ACTION_USECELLPHONE)
+							SetPlayerSpecialAction(playerid, SPECIAL_ACTION_STOPUSECELLPHONE);
+
+						playerVariables[playerid][pPhoneCall] = -1;
+					}
+				}
+				default: { // If they're calling a player, this code is executed.
+					va_SendClientMessage(playerVariables[playerid][pPhoneCall], COLOR_GREY, "(cellphone) %s says: %s", getName(playerid), text);
+					// mysql_real_escape_string(szMessage, szMessage);
+					// format(szLargeString, sizeof(szLargeString), "INSERT INTO chatlogs (value, playerinternalid) VALUES('%s', '%d')", szMessage, playerVariables[playerid][pInternalID]);
+					// mysql_query(szLargeString);
+				}
+			}
+		}
+
+		else {
+		    if(playerVariables[playerid][pAdminDuty] >= 1) nearByMessage(playerid, COLOR_GREY, 12.0, "%s says: (( %s ))", getName(playerid), text);
+			else nearByMessage(playerid, COLOR_GREY, 12.0, "{FFFFFF}%s says: %s", getName(playerid), text);
+
+			// mysql_real_escape_string(szMessage, szMessage);
+			// format(szLargeString, sizeof(szLargeString), "INSERT INTO chatlogs (value, playerinternalid) VALUES('%s', '%d')", szMessage, playerVariables[playerid][pInternalID]);
+			// mysql_query(szLargeString);
+
+			gString[0] = (EOS);
+			format(gString, sizeof(gString), "\"%s\"", text);
+			SetPlayerChatBubble(playerid, gString, COLOR_CHATBUBBLE, 10.0, 10000);
+		}
+
+		playerVariables[playerid][pSpamCount]++;
+	}
+	return false;
+}
+
+public OnVehicleSpawn(vehicleid) {
+	#if defined DEBUG
+	    printf("OnVehicleSpawn(%d) has been called", vehicleid);
+	#endif
+	
+	switch(GetVehicleModel(vehicleid)) {
+		case 427, 428, 432, 601, 528: SetVehicleHealth(vehicleid, 5000.0); // Enforcer, Securicar, Rhino, SWAT Tank, FBI truck - this is the armour plating dream come true.
+	}
+
+	return true;
+}
+
+public OnPlayerRequestSpawn(playerid) {
+	if(playerVariables[playerid][pFirstLogin] >= 1)
+	    return false;
+
+	return true;
+}
+
+public OnPlayerSpawn(playerid) {
+	#if defined DEBUG
+	    printf("OnPlayerSpawn(%d) has been called", playerid);
+	#endif
+
+	PreloadAnimLib(playerid,"BOMBER");
+	PreloadAnimLib(playerid,"RAPPING");
+	PreloadAnimLib(playerid,"SHOP");
+	PreloadAnimLib(playerid,"BEACH");
+	PreloadAnimLib(playerid,"SMOKING");
+	PreloadAnimLib(playerid,"ON_LOOKERS");
+	PreloadAnimLib(playerid,"DEALER");
+	PreloadAnimLib(playerid,"CRACK");
+	PreloadAnimLib(playerid,"CARRY");
+	PreloadAnimLib(playerid,"COP_AMBIENT");
+	PreloadAnimLib(playerid,"PARK");
+	PreloadAnimLib(playerid,"INT_HOUSE");
+	PreloadAnimLib(playerid,"FOOD");
+	PreloadAnimLib(playerid,"GANGS");
+	PreloadAnimLib(playerid,"PED");
+	PreloadAnimLib(playerid,"FAT"); 
+
+	SetPlayerColor(playerid, COLOR_WHITE);
+	SetPlayerFightingStyle(playerid, playerVariables[playerid][pFightStyle]);
+
+    SetPlayerSkillLevel(playerid, WEAPONSKILL_PISTOL, 998);
+    SetPlayerSkillLevel(playerid, WEAPONSKILL_MICRO_UZI, 998); // Skilled, but not dual-wield.
+
+	if(playerVariables[playerid][pHospitalized] >= 1)
+	    return initiateHospital(playerid);
+	
+	if(playerVariables[playerid][pPrisonTime] >= 1) {
+	    switch(playerVariables[playerid][pPrisonID]) {
+			case 1: {
+			    SetPlayerPos(playerid, -26.8721, 2320.9290, 24.3034);
+				SetPlayerInterior(playerid, 0);
+				SetPlayerVirtualWorld(playerid, 0);
+			}
+			case 2: {
+				SetPlayerPos(playerid, 264.58, 77.38, 1001.04);
+				SetPlayerInterior(playerid, 6);
+				SetPlayerVirtualWorld(playerid, 0);
+			}
+			case 3: {
+
+				SetPlayerInterior(playerid, 10);
+				SetPlayerVirtualWorld(playerid, GROUP_VIRTUAL_WORLD+1);
+
+				new spawn = random(sizeof(JailSpawns));
+
+				SetPlayerPos(playerid, JailSpawns[spawn][0], JailSpawns[spawn][1], JailSpawns[spawn][2]);
+				SetPlayerFacingAngle(playerid, 0);
+			}
+		}
+		return 1;
+	}  
+
+	SetPlayerSkin(playerid, playerVariables[playerid][pSkin]);
+	SetPlayerPos(playerid, playerVariables[playerid][pPos][0], playerVariables[playerid][pPos][1], playerVariables[playerid][pPos][2]);
+	SetPlayerInterior(playerid, playerVariables[playerid][pInterior]);
+	SetPlayerVirtualWorld(playerid, playerVariables[playerid][pVirtualWorld]);
+	SetCameraBehindPlayer(playerid);
+
+	playerVariables[playerid][pSkinSet] = 1;
+
+	ResetPlayerWeapons(playerid);
+	givePlayerWeapons(playerid);
+
+	if(playerVariables[playerid][pEvent] >= 1)
+		playerVariables[playerid][pEvent] = 0;
+
+	if(playerVariables[playerid][pAdminDuty] == 1) {
+		SetPlayerHealth(playerid, 500000.0);
+	}
+	else {
+		SetPlayerHealth(playerid, playerVariables[playerid][pHealth]);
+		SetPlayerArmour(playerid, playerVariables[playerid][pArmour]);
+	} 
+	TogglePlayerControllable(playerid, true);
+
+	return true;
+}
+
+public OnPlayerShootPlayer(Shooter,Target,Float:HealthLost,Float:ArmourLost) {
+	if(playerVariables[Shooter][pTazer] == 1 && groupVariables[playerVariables[Shooter][pGroup]][gGroupType] == 1 && playerVariables[Shooter][pGroup] != 0 && GetPlayerWeapon(Shooter) == 22) {
+	    if(IsPlayerInAnyVehicle(Target) || IsPlayerInAnyVehicle(Shooter))
+	        return 1;
+
+		if(groupVariables[playerVariables[Target][pGroup]][gGroupType] == 1 && playerVariables[Target][pGroup] != 0)
+		    return 1; 
+
+		TogglePlayerControllable(Target, 0);
+		GameTextForPlayer(Target, "~n~~r~ Tazed!",4000, 4);
+
+		playerVariables[Target][pFreezeTime] = 15;
+		playerVariables[Target][pFreezeType] = 1;
+ 
+		nearByMessage(Shooter, COLOR_PURPLE, 12.0, "* %s fires their tazer at %s, stunning them.", getName(Shooter), getName(Target)); 
+		va_SendClientMessage(Shooter, COLOR_NICESKY, "You have successfully stunned %s.", getName(Target));
+
+		ApplyAnimation(Target,"CRACK","crckdeth2",4.1,0,1,1,1,1,1);
+	}
+	return true;
+}
+
+public OnVehicleRespray(playerid, vehicleid, color1, color2) {
+	#if defined DEBUG
+	    printf("[debug] OnVehicleRespray(%d, %d, %d, %d)", playerid, vehicleid, color1, color2);
+	#endif
+
+	/* With modifications, we don't need to do this as there's already a GetVehicleComponentInSlot function.
+	However, this will save paint if a player who doesn't own the car is driving. */
+	SetPVarInt(playerid, "pC", 1);
+	foreach(Player, v) {
+		if(GetPlayerVehicleID(playerid) == playerVariables[v][pCarID]) {
+			playerVariables[v][pCarColour][0] = color1;
+			playerVariables[v][pCarColour][1] = color2;
+		}
+	}
+}
+
+public OnVehiclePaintjob(playerid, vehicleid, paintjobid) { // No need to deduct money; thanks to SA:MP, OnVehicleRespray is called when a paint job has been applied.
+	#if defined DEBUG
+	    printf("[debug] OnVehiclePaintjob(%d, %d, %d)", playerid, vehicleid, paintjobid);
+	#endif
+	
+	SetPVarInt(playerid, "pC", 1);
+	foreach(Player, v) {
+		if(GetPlayerVehicleID(playerid) == playerVariables[v][pCarID]) {
+			playerVariables[v][pCarPaintjob] = paintjobid;
+		}
+	}
+}
+
+public OnEnterExitModShop(playerid, enterexit, interiorid) {
+	#if defined DEBUG
+	    printf("[debug] OnEnterExitModShop(%d, %d, %d)", playerid, enterexit, interiorid);
+	#endif
+
+	if(enterexit == 0) {
+		if(GetPVarInt(playerid, "pC") == 1) {
+			playerVariables[playerid][pMoney] -= 500;
+			DeletePVar(playerid, "pC");
+		}
+		foreach(Player, v) {
+			if(GetPlayerVehicleID(playerid) == playerVariables[v][pCarID]) {
+				for(new i = 0; i < 13; i++) {
+					playerVariables[v][pCarMods][i] = GetVehicleComponentInSlot(playerVariables[v][pCarID], i);
+				}
+			}
+		}
+	}
+}
+
+public OnVehicleMod(playerid, vehicleid, componentid) {
+	#if defined DEBUG
+	    printf("[debug] OnVehicleMod(%d, %d, %d)", playerid, vehicleid, componentid);
+	#endif
+	
+	if(GetPlayerInterior(playerid) < 1 && GetPlayerInterior(playerid) > 3 && playerVariables[playerid][pAdminLevel] < 3) { 
+		submitToAdmins(COLOR_HOTORANGE, "AdmWarn: {FFFFFF}%s may possibly be hacking vehicle mods (added component %d to their %s).", getName(playerid), componentid, VehicleNames[GetVehicleModel(vehicleid) - 400]);
+	}
+
+	else if(GetPlayerInterior(playerid) >= 1 && GetPlayerInterior(playerid) <= 3) {
+
+		switch(componentid) { // Get the price for the vehicle component, only if they're in a mod garage.
+
+			case 1024:												playerVariables[playerid][pMoney] -= 50;
+			case 1006:  											playerVariables[playerid][pMoney] -= 80;
+			case 1004, 1145, 1013, 1091, 1086:						playerVariables[playerid][pMoney] -= 100;
+			case 1005, 1143, 1022, 1035, 1088:						playerVariables[playerid][pMoney] -= 150;
+			case 1021, 1009, 1002, 1016, 1068, 1153:				playerVariables[playerid][pMoney] -= 200;
+			case 1011:												playerVariables[playerid][pMoney] -= 220;
+			case 1012, 1020, 1003, 1067:							playerVariables[playerid][pMoney] -= 250;
+			case 1019:												playerVariables[playerid][pMoney] -= 300;
+			case 1018, 1023, 1093:									playerVariables[playerid][pMoney] -= 350;
+			case 1014, 1000:										playerVariables[playerid][pMoney] -= 400;
+			case 1163, 1090, 1070:									playerVariables[playerid][pMoney] -= 450;
+			case 1008, 1007, 1017, 1015, 1044, 1043, 1036:		   	playerVariables[playerid][pMoney] -= 500;
+			case 1045:												playerVariables[playerid][pMoney] -= 510;
+			case 1001, 1158, 1069, 1164:							playerVariables[playerid][pMoney] -= 550;
+			case 1050, 1058, 1097:									playerVariables[playerid][pMoney] -= 620;
+			case 1162, 1089:										playerVariables[playerid][pMoney] -= 650;
+			case 1028, 1085:										playerVariables[playerid][pMoney] -= 770;
+			case 1122, 1106, 1108, 1118:							playerVariables[playerid][pMoney] -= 780;
+			case 1134:												playerVariables[playerid][pMoney] -= 800;
+			case 1082:												playerVariables[playerid][pMoney] -= 820;
+			case 1064, 1133:										playerVariables[playerid][pMoney] -= 830;
+			case 1165, 1167, 1065:									playerVariables[playerid][pMoney] -= 850;
+			case 1175, 1177, 1172, 1080:							playerVariables[playerid][pMoney] -= 900;
+			case 1100, 1119, 1192:									playerVariables[playerid][pMoney] -= 940;
+			case 1173, 1161, 1166, 1168:							playerVariables[playerid][pMoney] -= 950;
+			case 1010, 1149, 1176, 1042, 1136, 1025, 1096, 1174:   	playerVariables[playerid][pMoney] -= 1000;
+			case 1155, 1154:										playerVariables[playerid][pMoney] -= 1030;
+			case 1160, 1159:										playerVariables[playerid][pMoney] -= 1050;
+			case 1150:												playerVariables[playerid][pMoney] -= 1090;
+			case 1193, 1073:										playerVariables[playerid][pMoney] -= 1100;
+			case 1190, 1078:										playerVariables[playerid][pMoney] -= 1200;
+			case 1135, 1087:										playerVariables[playerid][pMoney] -= 1500;
+			case 1083, 1076:										playerVariables[playerid][pMoney] -= 1560;
+			case 1179, 1184:										playerVariables[playerid][pMoney] -= 2150;
+			case 1046:												playerVariables[playerid][pMoney] -= 710;
+			case 1152:												playerVariables[playerid][pMoney] -= 910;
+			case 1151:												playerVariables[playerid][pMoney] -= 840;
+			case 1054:												playerVariables[playerid][pMoney] -= 210;
+			case 1053:												playerVariables[playerid][pMoney] -= 130;
+			case 1049:												playerVariables[playerid][pMoney] -= 810;
+			case 1047:												playerVariables[playerid][pMoney] -= 670;
+			case 1048:												playerVariables[playerid][pMoney] -= 530;
+			case 1066:												playerVariables[playerid][pMoney] -= 750;
+			case 1034:												playerVariables[playerid][pMoney] -= 790;
+			case 1037:												playerVariables[playerid][pMoney] -= 690;
+			case 1171:												playerVariables[playerid][pMoney] -= 990;
+			case 1148:												playerVariables[playerid][pMoney] -= 890;
+			case 1038:												playerVariables[playerid][pMoney] -= 190;
+			case 1146:												playerVariables[playerid][pMoney] -= 490;
+			case 1039:												playerVariables[playerid][pMoney] -= 390;
+			case 1059:												playerVariables[playerid][pMoney] -= 720;
+			case 1157:												playerVariables[playerid][pMoney] -= 930;
+			case 1156:												playerVariables[playerid][pMoney] -= 920;
+			case 1055:												playerVariables[playerid][pMoney] -= 230;
+			case 1061:												playerVariables[playerid][pMoney] -= 180;
+			case 1060:												playerVariables[playerid][pMoney] -= 530;
+			case 1056:												playerVariables[playerid][pMoney] -= 520;
+			case 1057:												playerVariables[playerid][pMoney] -= 430;
+			case 1029:												playerVariables[playerid][pMoney] -= 680;
+			case 1169:												playerVariables[playerid][pMoney] -= 970;
+			case 1170:												playerVariables[playerid][pMoney] -= 880;
+			case 1141:												playerVariables[playerid][pMoney] -= 980;
+			case 1140:												playerVariables[playerid][pMoney] -= 870;
+			case 1032:												playerVariables[playerid][pMoney] -= 170;
+			case 1033:												playerVariables[playerid][pMoney] -= 120;
+			case 1138:												playerVariables[playerid][pMoney] -= 580;
+			case 1139:												playerVariables[playerid][pMoney] -= 470;
+			case 1026:												playerVariables[playerid][pMoney] -= 480;
+			case 1031:												playerVariables[playerid][pMoney] -= 370;
+			case 1092:												playerVariables[playerid][pMoney] -= 750;
+			case 1128:												playerVariables[playerid][pMoney] -= 3340;
+			case 1103:												playerVariables[playerid][pMoney] -= 3250;
+			case 1183:												playerVariables[playerid][pMoney] -= 2040;
+			case 1182:												playerVariables[playerid][pMoney] -= 2130;
+			case 1181:												playerVariables[playerid][pMoney] -= 2050;
+			case 1104:												playerVariables[playerid][pMoney] -= 1610;
+			case 1105:												playerVariables[playerid][pMoney] -= 1540;
+			case 1126:												playerVariables[playerid][pMoney] -= 3340;
+			case 1127:												playerVariables[playerid][pMoney] -= 3250;
+			case 1185:												playerVariables[playerid][pMoney] -= 2040;
+			case 1180:												playerVariables[playerid][pMoney] -= 2130;
+			case 1178:												playerVariables[playerid][pMoney] -= 2050;
+			case 1123:												playerVariables[playerid][pMoney] -= 860;
+			case 1125:												playerVariables[playerid][pMoney] -= 1120;
+			case 1130:												playerVariables[playerid][pMoney] -= 3380;
+			case 1131:												playerVariables[playerid][pMoney] -= 3290;
+			case 1189:												playerVariables[playerid][pMoney] -= 2200;
+			case 1188:												playerVariables[playerid][pMoney] -= 2080;
+			case 1187:												playerVariables[playerid][pMoney] -= 2175;
+			case 1186:												playerVariables[playerid][pMoney] -= 2095;
+			case 1129:												playerVariables[playerid][pMoney] -= 1650;
+			case 1132:												playerVariables[playerid][pMoney] -= 1590;
+			case 1113:												playerVariables[playerid][pMoney] -= 3340;
+			case 1114:												playerVariables[playerid][pMoney] -= 3250;
+			case 1117:												playerVariables[playerid][pMoney] -= 2040;
+			case 1115:												playerVariables[playerid][pMoney] -= 2130;
+			case 1116:												playerVariables[playerid][pMoney] -= 2050;
+			case 1109:												playerVariables[playerid][pMoney] -= 1610;
+			case 1110:												playerVariables[playerid][pMoney] -= 1540;
+			case 1191:												playerVariables[playerid][pMoney] -= 1040;
+			case 1079:												playerVariables[playerid][pMoney] -= 1030;
+			case 1075:												playerVariables[playerid][pMoney] -= 980;
+			case 1077:												playerVariables[playerid][pMoney] -= 1620;
+			case 1074:												playerVariables[playerid][pMoney] -= 1030;
+			case 1081:												playerVariables[playerid][pMoney] -= 1230;
+			case 1084:												playerVariables[playerid][pMoney] -= 1350;
+			case 1098:												playerVariables[playerid][pMoney] -= 1140;
+		}
+	}
+	return 1;
+}
+
+public OnPlayerExitVehicle(playerid, vehicleid) {
+	#if defined DEBUG
+	    printf("[debug] OnPlayerExitVehicle(%d, %d)", playerid, vehicleid);
+	#endif
+	
+	return SetPlayerArmedWeapon(playerid, 0);
+}
+
+public OnVehicleStreamIn(vehicleid, forplayerid) {
+	#if defined DEBUG
+	    printf("[debug] OnVehicleStreamIn(%d, %d)", vehicleid, forplayerid);
+	#endif
+	
+	foreach(Player, x) {
+	    if(playerVariables[x][pCarID] == vehicleid && playerVariables[x][pCarLock] == 1) {
+			SetVehicleParamsForPlayer(vehicleid, forplayerid, 0, 1);
+	    }
+	}
+	return 1;
+}  
+
+public OnPlayerDeath(playerid, killerid, reason) {
+	#if defined DEBUG
+	    printf("[debug] OnPlayerDeath(%d, %d, %d)", playerid, killerid, reason);
+	#endif 
+  
+	if(playerVariables[playerid][pAdminDuty] == 1) {
+		GetPlayerPos(playerid, playerVariables[playerid][pPos][0], playerVariables[playerid][pPos][1], playerVariables[playerid][pPos][2]);
+	}
+	else playerVariables[playerid][pHospitalized] = 1;
+	
+	return true;
+}  
+
+public OnPlayerKeyStateChange(playerid, newkeys, oldkeys) {
+	#if defined DEBUG
+	    printf("[debug] OnPlayerKeyStateChange(%d, %d, %d)", playerid, newkeys, oldkeys);
+	#endif  
+	
+	if(IsKeyJustDown(KEY_SUBMISSION, newkeys, oldkeys)) {
+	    if(GetVehicleModel(GetPlayerVehicleID(playerid)) == 525) { // For impounding cars.
+
+	        new
+				playerTowTruck = GetPlayerVehicleID(playerid);
+
+	        if(!IsTrailerAttachedToVehicle(playerTowTruck)) {
+				new
+					targetVehicle = GetClosestVehicle(playerid, playerTowTruck); // Exempt the player's own vehicle from the loop.
+
+				if(!IsAPlane(targetVehicle) && IsPlayerInRangeOfVehicle(playerid, targetVehicle, 10.0)) {
+					AttachTrailerToVehicle(targetVehicle, playerTowTruck);
+				}
+	        }
+	        else DetachTrailerFromVehicle(playerTowTruck);
+	    }
+	}
+	if(IsKeyJustDown(KEY_FIRE, newkeys, oldkeys)) {
+		if(GetPlayerWeapon(playerid) == 17 && !IsPlayerInAnyVehicle(playerid) && playerVariables[playerid][pFreezeType] == 0) {
+			foreach(Player, i) {
+				if(playerid != i && !IsPlayerInAnyVehicle(i) && playerVariables[i][pFreezeType] == 0 && GetPlayerSkin(i) != 285) {
+					if(IsPlayerAimingAtPlayer(playerid, i)) {
+
+						playerVariables[i][pFreezeType] = 5; // Using 5 on FreezeType makes more sense
+						playerVariables[i][pFreezeTime] = 10;
+						TogglePlayerControllable(i, false);
+						SetPlayerDrunkLevel(i, 50000);
+						ApplyAnimation(i, "FAT", "IDLE_TIRED", 4.1, 1, 1, 1, 1, 0, 1);
+					}
+				}
+			}
+		}
+	}
+    
+	if(IsKeyJustDown(KEY_SECONDARY_ATTACK, newkeys, oldkeys)) { 
+		if(IsPlayerInRangeOfPoint(playerid,1.0,237.9,115.6,1010.2)) {
+			SetPlayerPos(playerid,237.9,115.6,1010.2);
+			SetPlayerFacingAngle(playerid, 270);
+			ApplyAnimation(playerid, "VENDING", "VEND_Use", 1, 0, 0, 0, 0, 4000);
+			SetTimerEx("VendDrink", 2500, false, "d", playerid);
+		}
+	}
+	if(IsKeyJustDown(KEY_CROUCH, newkeys, oldkeys)) {  
+		if(IsPlayerInRangeOfPoint(playerid, 2.0, 595.5443,-1250.3405,18.2836)) {
+			SetPlayerPos(playerid, 2306.8481,-16.0682,26.7496);
+			SetPlayerVirtualWorld(playerid, 2);
+		}
+		else if(IsPlayerInRangeOfPoint(playerid, 2.0, 2306.8481,-16.0682,26.7496)) {
+			SetPlayerPos(playerid, 595.5443,-1250.3405,18.2836);
+			SetPlayerVirtualWorld(playerid, 0);
+		}  
+	}
+	return 1;
+}
+
+public OnPlayerEnterCheckpoint(playerid) {
+	#if defined DEBUG
+	    printf("[debug] OnPlayerEnterCheckpoint(%d)", playerid);
+	#endif
+	
+	switch(playerVariables[playerid][pCheckpoint]) {
+	    case 1: {
+	        SendClientMessage(playerid, COLOR_WHITE, "You have reached your destination.");
+	        DisablePlayerCheckpoint(playerid);
+
+	        playerVariables[playerid][pCheckpoint] = 0;
+	    }
+		case 2: {
+		    if(playerVariables[playerid][pMatrunTime] < 30) {
+		        GetPlayerName(playerid, szPlayerName, MAX_PLAYER_NAME);
+
+		        format(szMessage, sizeof(szMessage), "AdmWarn: {FFFFFF}%s may possibly be teleport matrunning (reached checkpoint in %d seconds).", szPlayerName, playerVariables[playerid][pMatrunTime]);
+				submitToAdmins(szMessage, COLOR_HOTORANGE);
+			}
+		    else {
+		        SendClientMessage(playerid, COLOR_WHITE, "You have collected 100 materials!");
+		        DisablePlayerCheckpoint(playerid);
+
+		        playerVariables[playerid][pCheckpoint] = 0;
+		        playerVariables[playerid][pMaterials] += 100;
+		        playerVariables[playerid][pMatrunTime] = 0;
+	        }
+	    }
+	    case 3: {
+			if(!IsPlayerInAnyVehicle(playerid))
+				return SendClientMessage(playerid, COLOR_GREY, "You aren't in a vehicle; please get a vehicle to drop off at the crane.");
+
+			else if(playerVariables[playerid][pCarID] == GetPlayerVehicleID(playerid)) return SendClientMessage(playerid, COLOR_GREY, "You can't sell your own vehicle here.");
+
+			foreach(Player, v) {
+				if(playerVariables[v][pCarID] == GetPlayerVehicleID(playerid)) {
+					DestroyVehicle(GetPlayerVehicleID(playerid)); // If an owned car is destroyed... it'll be manually despawned...
+
+					playerVariables[v][pCarPos][0] = 2157.5559; // ...moved to the LS junk yard...
+					playerVariables[v][pCarPos][1] = -1977.6494;
+					playerVariables[v][pCarPos][2] = 13.3835;
+					playerVariables[v][pCarPos][3] = 177.3687; // have its Z angle set
+
+					SpawnPlayerVehicle(v); // And spawned.
+
+					SetVehicleHealth(playerVariables[v][pCarID], 400.0); // A wrecked car is a wrecked car.
+				}
+				else SetVehicleToRespawn(GetPlayerVehicleID(playerid));
+			}
+
+			new
+				string[61],
+				rand;
+
+			switch(GetVehicleModel(GetPlayerVehicleID(playerid))) { // Thanks to Danny for these, lol
+				case 405: rand = random(2000) + 2500;
+				case 561: rand = random(2000) + 2750;
+				case 535: rand = random(2000) + 2250;
+				case 463: rand = random(2000) + 2000;
+				case 461: rand = random(2000) + 2500;
+				case 429: rand = random(2000) + 4500;
+				case 451: rand = random(2000) + 4750;
+				case 491: rand = random(2000) + 1800;
+				case 492: rand = random(2000) + 1500;
+				case 603: rand = random(2000) + 3800;
+				case 502: rand = random(2000) + 5000;
+				case 558: rand = random(2000) + 2500;
+				case 554: rand = random(2000) + 1900;
+				case 588: rand = random(2000) + 2300;
+				case 518: rand = random(2000) + 2250;
+				case 475: rand = random(2000) + 2300;
+				case 542: rand = random(2000) + 2000;
+				case 466: rand = random(2000) + 2400;
+				case 462: rand = random(2000) + 500;
+				case 596: rand = random(2000) + 3000;
+				case 427: rand = random(2000) + 4500;
+				case 528: rand = random(2000) + 4250;
+				case 601: rand = random(2000) + 5000;
+				case 523: rand = random(2000) + 3000;
+				case 600: rand = random(2000) + 2250;
+				case 468: rand = random(2000) + 2000;
+				case 418: rand = random(2000) + 2100;
+				case 482: rand = random(2000) + 2750;
+				case 440: rand = random(2000) + 2250;
+				case 587: rand = random(2000) + 3800;
+				case 412: rand = random(2000) + 2500;
+				case 534: rand = random(2000) + 2700;
+				case 536: rand = random(2000) + 2600;
+				case 567: rand = random(2000) + 2650;
+				case 448: rand = random(2000) + 550;
+				case 602: rand = random(2000) + 3100;
+				case 586: rand = random(2000) + 2200;
+				case 421: rand = random(2000) + 2900;
+				case 581: rand = random(2000) + 2250;
+				case 521: rand = random(2000) + 2750;
+				case 598: rand = random(2000) + 3250;
+				case 574: rand = random(2000) + 750;
+				case 500: rand = random(2000) + 2700;
+				case 579: rand = random(2000) + 3100;
+				case 467: rand = random(2000) + 2000;
+				case 426: rand = random(2000) + 2600;
+				case 555: rand = random(2000) + 3250;
+				case 437: rand = random(2000) + 4800;
+				case 428: rand = random(2000) + 4750;
+				case 442: rand = random(2000) + 2200;
+				case 458: rand = random(2000) + 2000;
+				case 527: rand = random(2000) + 1950;
+				case 496: rand = random(2000) + 2100;
+				case 400: rand = random(2000) + 3000;
+				case 605: rand = random(2000) + 900;
+				case 604: rand = random(2000) + 900;
+				case 522: rand = random(2000) + 5000;
+				case 438: rand = random(2000) + 2750;
+				case 420: rand = random(2000) + 2600;
+				case 404: rand = random(2000) + 1250;
+				case 585: rand = random(2000) + 2400;
+				case 543: rand = random(2000) + 2000;
+				case 515: rand = random(2000) + 4500;
+				case 560: rand = random(2000) + 3900;
+				case 409: rand = random(2000) + 2950;
+				case 402: rand = random(2000) + 3250;
+				default: rand = random(2000) + 1000;
+			}
+
+			playerVariables[playerid][pDropCarTimeout] = 1800;
+            playerVariables[playerid][pCheckpoint] = 0;
+            DisablePlayerCheckpoint(playerid);
+			playerVariables[playerid][pMoney] += rand;
+
+			format(string, sizeof(string), "You have dropped your vehicle at the crane and earned $%d!", rand);
+            SendClientMessage(playerid, COLOR_WHITE, string);
+		}
+		case 4: {
+
+	        SendClientMessage(playerid, COLOR_WHITE, "You have reached your vehicle.");
+	        DisablePlayerCheckpoint(playerid);
+
+	        playerVariables[playerid][pCheckpoint] = 0;
+
+		}
+		case 5: {
+			if(playerVariables[playerid][pBackup] != -1) {
+
+				SendClientMessage(playerid, COLOR_WHITE, "You have reached the backup checkpoint.");
+				DisablePlayerCheckpoint(playerid);
+
+				playerVariables[playerid][pCheckpoint] = 0;
+				playerVariables[playerid][pBackup] = -1;
+			}
+		}
+    	default: {
+			DisablePlayerCheckpoint(playerid);
+			playerVariables[playerid][pCheckpoint] = 0;
+		}
+    }
+	return 1;
+}
+
+public OnPlayerUpdate(playerid)
+{
+
+	if(playerVariables[playerid][pOnRequest] != INVALID_PLAYER_ID) {
+	    new
+			Keys,
+			ud,
+			lr;
+
+	    GetPlayerKeys(playerid, Keys, ud, lr);
+
+	    if(lr > 0) {
+	        GetPlayerPos(playerVariables[playerid][pOnRequest], playerVariables[playerVariables[playerid][pOnRequest]][pPos][0], playerVariables[playerVariables[playerid][pOnRequest]][pPos][1], playerVariables[playerVariables[playerid][pOnRequest]][pPos][2]);
+
+	        SetPlayerPos(playerid, playerVariables[playerVariables[playerid][pOnRequest]][pPos][0], playerVariables[playerVariables[playerid][pOnRequest]][pPos][1], playerVariables[playerVariables[playerid][pOnRequest]][pPos][2]);
+			TextDrawHideForPlayer(playerid, textdrawVariables[1]);
+
+			SendClientMessage(playerid, COLOR_WHITE, "You have teleported to the player who has requested help.");
+
+			playerVariables[playerid][pOnRequest] = INVALID_PLAYER_ID;
+		}
+	    else if(lr < 0) {
+			TextDrawHideForPlayer(playerid, textdrawVariables[1]);
+			playerVariables[playerid][pOnRequest] = INVALID_PLAYER_ID;
+		}
+	}
+
+	if(playerVariables[playerid][pTabbed] == 1) {
+		playerVariables[playerid][pTabbed] = 0;
+		DestroyDynamic3DTextLabel(playerVariables[playerid][pAFKLabel]);
+		if(playerVariables[playerid][pOutstandingWeaponRemovalSlot] >= 1) {
+		    if(playerVariables[playerid][pOutstandingWeaponRemovalSlot] == 40) {
+		        ResetPlayerWeapons(playerid);
+		    }
+		    else {
+			    ResetPlayerWeapons(playerid);
+				playerVariables[playerid][pWeapons][playerVariables[playerid][pOutstandingWeaponRemovalSlot]] = 0;
+				givePlayerWeapons(playerid);
+			}
+			playerVariables[playerid][pAnticheatExemption] = 6;
+		}
+	} 
+	playerVariables[playerid][pConnectedSeconds] = gettime();
+	return 1;
+} 
+
+function VendDrink(playerid) {
+    new
+		Float:health;
+
+	ApplyAnimation(playerid, "VENDING", "VEND_Drink_P", 1, 0, 0, 0, 0, 1750);
+	GetPlayerHealth(playerid,health);
+	if(health > 65.0) SetPlayerHealth(playerid,100.0); // This limits player health to 100 (as values over 100.0 could otherwise be achieved, which isn't good).
+	else SetPlayerHealth(playerid,health+35.0); // A Sprunk machine gives exactly 35.0 HP per hit.
+	return 1;
+} 
 
 function bullshit() {
 	CreateDynamic3DTextLabel("Materials Pickup!\n\nType /getmats as an Arms Dealer \nto collect materials!", COLOR_YELLOW, 1423.9871, -1319.2954, 13.5547, 100, INVALID_PLAYER_ID, INVALID_VEHICLE_ID, 0, -1, -1, -1, 10.0);

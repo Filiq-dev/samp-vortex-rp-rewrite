@@ -6,8 +6,8 @@
 #define MAX_TEXTDRAWS           (10)
 #define INTERIOR_WEATHER_ID	    (1) // Outdoor weather is used inside interiors too, blame San Andreas.
 #define MAX_WEATHER_POINTS      (9)
-
-#define HOUSE_VIRTUAL_WORLD     (10000)
+#define HOUSE_VIRTUAL_WORLD     (10000) 
+#define SYNTAX_MESSAGE          "Syntax: {FFFFFF}"
 
 #define function%0(%1) forward%0(%1); public%0(%1)
 

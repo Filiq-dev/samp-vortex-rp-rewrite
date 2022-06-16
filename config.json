@@ -44,7 +44,7 @@
     "on_foot_rate": 30,
     "password": "",
     "pawn": {
-        "legacy_plugins": ["mysql", "wp"],
+        "legacy_plugins": ["mysql", "wp", "streamer"],
         "main_scripts": [
             "main 1"
         ],

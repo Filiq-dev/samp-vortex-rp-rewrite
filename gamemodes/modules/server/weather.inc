@@ -65,14 +65,14 @@ function updateWorldTime(playerid) {
 		if(weatherVariables[1] >= MAX_WEATHER_POINTS) {
 			weatherVariables[0] = validWeatherIDs[random(sizeof(validWeatherIDs))];
             
-            if(!GetPlayerInterior(playerid)) {
-                SetPlayerWeather(playerid, weatherVariables[0]);
-            }
+            if(!GetPlayerInterior(playerid)) SetPlayerWeather(playerid, weatherVariables[0]);
             else SetPlayerWeather(playerid, INTERIOR_WEATHER_ID);
                 
 			weatherVariables[1] = 0;
 		}
 	}
+
+	if(gTime[2] >= 59) syncPlayerTime(playerid);
 }
 
 stock syncPlayerTime(playerid) {
