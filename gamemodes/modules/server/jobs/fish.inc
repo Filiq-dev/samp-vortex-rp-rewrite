@@ -46,7 +46,7 @@ YCMD:fish(playerid, params[], help) {
 }
 
 stock getFishName(fish) {
-    // if(fish < 0 && fish > 4) return -1;
+    if(fish < 0 && fish > 4) return -1;
 
     return fishNames[fish];
 }

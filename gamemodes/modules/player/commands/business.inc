@@ -1,363 +1,145 @@
-CMD:bbalance(playerid, params[]) {
-	if(getPlayerBusinessID(playerid) >= 1) {
-	    new
-	        businessID = getPlayerBusinessID(playerid);
+#define noBizz(%0) SendClientMessage(%0, COLOR_GREY, "You don't own a business.");
 
-	    format(szMessage, sizeof(szMessage), "Business Vault Balance: $%d.", businessVariables[businessID][bVault]);
-	    SendClientMessage(playerid, COLOR_WHITE, szMessage);
-	}
-	return 1;
+YCMD:bbalance(playerid, params[], help) {
+	if(!getPlayerBusinessID(playerid)) return noBizz(playerid);
+    
+    va_SendClientMessage(playerid, COLOR_WHITE, "Business Vault Balance: $%d.", businessVariables[getPlayerBusinessID(playerid)][bVault]);
+    
+	return true;
 }
 
-CMD:business(playerid, params[]) {
+YCMD:business(playerid, params[], help) {
 
-	new
-		business = getPlayerBusinessID(playerid);
+	new business = getPlayerBusinessID(playerid);
 
-	if(business >= 1) {
-		if(playerVariables[playerid][pCheckpoint] >= 1) {
-			new string[96];
-			format(string, sizeof(string), "You already have an active checkpoint (%s), reach it first, or /killcheckpoint.", getPlayerCheckpointReason(playerid));
-			return SendClientMessage(playerid, COLOR_GREY,string);
-		}
-		SetPlayerCheckpoint(playerid, businessVariables[business][bExteriorPos][0], businessVariables[business][bExteriorPos][1], businessVariables[business][bExteriorPos][2], 5.0);
-		SendClientMessage(playerid, COLOR_WHITE, "A checkpoint has been set to your business.");
-		playerVariables[playerid][pCheckpoint] = 6;
-	}
-	else SendClientMessage(playerid, COLOR_GREY, "You don't own a business.");
-	return 1;
+	if(business == 0) return noBizz(playerid);
+    if(playerVariables[playerid][pCheckpoint] != 0) va_SendClientMessage(playerid, COLOR_GREY,"You already have an active checkpoint (%s), reach it first, or /killcheckpoint.", getPlayerCheckpointReason(playerid));
+    
+    SetPlayerCheckpoint(playerid, businessVariables[business][bExteriorPos][0], businessVariables[business][bExteriorPos][1], businessVariables[business][bExteriorPos][2], 5.0);
+    SendClientMessage(playerid, COLOR_WHITE, "A checkpoint has been set to your business.");
+    playerVariables[playerid][pCheckpoint] = 6;
+    
+	return true;
 }
 
-CMD:sellbusiness(playerid, params[]) {
-	if(playerVariables[playerid][pStatus] >= 1) {
-	    new
-	        businessID = getPlayerBusinessID(playerid);
+YCMD:sellbusiness(playerid, params[], help) {
+	if(playerVariables[playerid][pStatus] == 0) return true;
 
-	    if(businessID < 1)
-	        return 1;
+    new businessID = getPlayerBusinessID(playerid);
 
-	    new
-	    	labelString[96];
+    if(businessID < 1) return noBizz(playerid); 
 
-		playerVariables[playerid][pMoney] += businessVariables[businessID][bPrice];
+    playerVariables[playerid][pMoney] += businessVariables[businessID][bPrice];
 
-        format(businessVariables[businessID][bOwner], MAX_PLAYER_NAME, "Nobody");
-        format(labelString, sizeof(labelString), "%s\n(Business %d - un-owned)\nPrice: $%d (/buybusiness)\n\nPress ~k~~PED_DUCK~ to enter", businessVariables[businessID][bName], businessID, businessVariables[businessID][bPrice]);
+    gString[0] = (EOS);
+    format(businessVariables[businessID][bOwner], MAX_PLAYER_NAME, "Nobody");
+    format(gString, sizeof(gString), "%s\n(Business %d - un-owned)\nPrice: $%d (/buybusiness)\n\nPress ~k~~PED_DUCK~ to enter", businessVariables[businessID][bName], businessID, businessVariables[businessID][bPrice]);
 
-        DestroyDynamicPickup(businessVariables[businessID][bPickupID]);
-        DestroyDynamic3DTextLabel(businessVariables[businessID][bLabelID]);
+    DestroyDynamicPickup(businessVariables[businessID][bPickupID]);
+    DestroyDynamic3DTextLabel(businessVariables[businessID][bLabelID]);
 
-		businessVariables[businessID][bLabelID] = CreateDynamic3DTextLabel(labelString, COLOR_YELLOW, businessVariables[businessID][bExteriorPos][0], businessVariables[businessID][bExteriorPos][1], businessVariables[businessID][bExteriorPos][2], 100, INVALID_PLAYER_ID, INVALID_VEHICLE_ID, 0, -1, -1, -1, 10.0);
-		businessVariables[businessID][bPickupID] = CreateDynamicPickup(1239, 23, businessVariables[businessID][bExteriorPos][0], businessVariables[businessID][bExteriorPos][1], businessVariables[businessID][bExteriorPos][2], 0, 0, -1, 250);
+    businessVariables[businessID][bLabelID] = CreateDynamic3DTextLabel(gString, COLOR_YELLOW, businessVariables[businessID][bExteriorPos][0], businessVariables[businessID][bExteriorPos][1], businessVariables[businessID][bExteriorPos][2], 100, INVALID_PLAYER_ID, INVALID_VEHICLE_ID, 0, -1, -1, -1, 10.0);
+    businessVariables[businessID][bPickupID] = CreateDynamicPickup(1239, 23, businessVariables[businessID][bExteriorPos][0], businessVariables[businessID][bExteriorPos][1], businessVariables[businessID][bExteriorPos][2], 0, 0, -1, 250);
 
-		businessVariables[businessID][bLocked] = 1;
+    businessVariables[businessID][bLocked] = 1; 
 
-		format(labelString, sizeof(labelString), "Business sold! You have been given back $%d for the business.", businessVariables[businessID][bPrice]);
-		SendClientMessage(playerid, COLOR_WHITE, labelString);
+    va_SendClientMessage(playerid, COLOR_WHITE, "Business sold! You have been given back $%d for the business.", businessVariables[businessID][bPrice]);
 
-		saveBusiness(businessID);
-	}
-	return 1;
+    saveBusiness(businessID); 
+
+	return true;
 }
 
-CMD:bwithdraw(playerid, params[]) {
-	if(getPlayerBusinessID(playerid) >= 1) {
-	    if(!isnull(params)) {
-			new
-			    amount = strval(params),
-			    businessID = getPlayerBusinessID(playerid);
+YCMD:bwithdraw(playerid, params[], help) {
+	if(getPlayerBusinessID(playerid) == 0) return noBizz(playerid)
+    if(!isnull(params)) return SendClientMessage(playerid, COLOR_GREY, SYNTAX_MESSAGE"/bwithdraw [amount]");
 
-        	if(amount < 1 || amount >= 5000000)
-				return SendClientMessage(playerid, COLOR_GREY, "Withdrawal attempt failed.");
+    new
+        amount = strval(params),
+        businessID = getPlayerBusinessID(playerid);
 
-			if(businessVariables[businessID][bVault] >= amount) {
-				format(szMessage, sizeof(szMessage), "You have withdrawn $%d from your business.", amount);
-				SendClientMessage(playerid, COLOR_WHITE, szMessage);
+    if(amount < 1 || amount >= 5000000) return SendClientMessage(playerid, COLOR_GREY, "Withdrawal attempt failed.");
 
-				businessVariables[businessID][bVault] -= amount;
-				playerVariables[playerid][pMoney] += amount;
-			}
-		}
-		else {
-			return SendClientMessage(playerid, COLOR_GREY, SYNTAX_MESSAGE"/bwithdraw [amount]");
-		}
-	}
-	return 1;
+    if(businessVariables[businessID][bVault] >= amount) {
+        va_SendClientMessage(playerid, COLOR_WHITE, "You have withdrawn $%d from your business.", amount);
+
+        businessVariables[businessID][bVault] -= amount;
+        playerVariables[playerid][pMoney] += amount;
+    }
+    
+	return true;
 }
 
-CMD:buyclothes(playerid, params[]) {
+YCMD:buyclothes(playerid, params[], help) {
+	if(!(GetPlayerVirtualWorld(playerid)-BUSINESS_VIRTUAL_WORLD >= 1)) return true;
+
+    new
+        skinID,
+        slotID,
+        iPrice,
+        houseID = getPlayerHouseID(playerid),
+        businessID = GetPlayerVirtualWorld(playerid) - BUSINESS_VIRTUAL_WORLD; 
+
+    if(businessVariables[businessID][bType] != 2) return true;
+    if(houseID >= 1) {
+        if(sscanf(params, "dd", skinID, slotID)) return SendClientMessage(playerid, COLOR_GREY, SYNTAX_MESSAGE"/buyclothes [skinid] [house slot]");
+        else if(slotID < 1 || slotID > 5) return SendClientMessage(playerid, COLOR_GREY, "Invalid slot specified.");
+            
+        houseVariables[houseID][hWardrobe][slotID - 1] = skinID;
+    }
+    else if(!isnull(params)) {
+        skinID = strval(params);
+    }
+    else { 
+        SendClientMessage(playerid, COLOR_GREY, "Skins here cost $500");
+        SendClientMessage(playerid, COLOR_GREY, SYNTAX_MESSAGE"/buyclothes [skinid] (Skins cost $500.)");
+    }
+
+    
+    if(!IsValidSkin(skinID)) return SendClientMessage(playerid, COLOR_GREY, "Invalid skin ID.");
+    else if(!IsPublicSkin(skinID) && playerVariables[playerid][pGroup] != 1) return SendClientMessage(playerid, COLOR_GREY, "You can't purchase this skin.");
+    else if(playerVariables[playerid][pMoney] < 500) return SendClientMessage(playerid, COLOR_GREY, "You don't have $500 available.");
+
+    playerVariables[playerid][pMoney] -= 500;
+    businessVariables[businessID][bVault] += 500;
+    playerVariables[playerid][pSkin] = skinID;
+
+    SetPlayerSkin(playerid, skinID); 
+        
+	return true;
+}
+
+YCMD:buy(playerid, params[], help) {
 	if(GetPlayerVirtualWorld(playerid)-BUSINESS_VIRTUAL_WORLD >= 1) {
+	    new businessID = GetPlayerVirtualWorld(playerid)-BUSINESS_VIRTUAL_WORLD;
 
-		new
-			skinID,
-			slotID,
-			iPrice,
-			houseID = getPlayerHouseID(playerid),
-			businessID = GetPlayerVirtualWorld(playerid) - BUSINESS_VIRTUAL_WORLD;
-			
-		if(businessID > 0) {
-			for(new i = 0; i < MAX_BUSINESS_ITEMS; i++) {
-				if(businessItems[i][bItemType] == 18 && businessItems[i][bItemBusiness] == businessID)
-				    iPrice = businessItems[i][bItemPrice];
-			}
-		}
-
-		if(businessVariables[businessID][bType] == 2) {
-			if(houseID >= 1) {
-				if(sscanf(params, "dd", skinID, slotID)) {
-					return SendClientMessage(playerid, COLOR_GREY, SYNTAX_MESSAGE"/buyclothes [skinid] [house slot]");
-				}
-				else if(!IsValidSkin(skinID)) {
-					return SendClientMessage(playerid, COLOR_GREY, "Invalid skin ID.");
-				}
-				else if(!IsPublicSkin(skinID) && playerVariables[playerid][pGroup] != 1) {
-					return SendClientMessage(playerid, COLOR_GREY, "You can't purchase this skin.");
-				}
-				else if(slotID < 1 || slotID > 5) {
-					return SendClientMessage(playerid, COLOR_GREY, "Invalid slot specified.");
-				}
-				else if(playerVariables[playerid][pMoney] >= 500) {
-					playerVariables[playerid][pMoney] -= 500;
-					businessVariables[businessID][bVault] += 500;
-					playerVariables[playerid][pSkin] = skinID;
-					houseVariables[houseID][hWardrobe][slotID - 1] = skinID;
-					return SetPlayerSkin(playerid, skinID);
-				}
-				else {
-				    format(szMessage, sizeof(szMessage), "You don't have $%d available.", iPrice);
-					SendClientMessage(playerid, COLOR_GREY, szMessage);
-				}
-			}
-			else if(!isnull(params)) {
-				skinID = strval(params);
-
-				if(!IsValidSkin(skinID)) {
-					return SendClientMessage(playerid, COLOR_GREY, "Invalid skin ID.");
-				}
-				else if(!IsPublicSkin(skinID) && playerVariables[playerid][pGroup] != 1) {
-					return SendClientMessage(playerid, COLOR_GREY, "You can't purchase this skin.");
-				}
-				else {
-				    if(playerVariables[playerid][pMoney] >= iPrice) {
-						playerVariables[playerid][pMoney] -= iPrice;
-						businessVariables[businessID][bVault] += iPrice;
-						playerVariables[playerid][pSkin] = skinID;
-						return SetPlayerSkin(playerid, skinID);
-					} else {
-					    format(szMessage, sizeof(szMessage), "You don't have $%d available.", iPrice);
-						SendClientMessage(playerid, COLOR_GREY, szMessage);
-					}
-				}
-			}
-			else {
-   				format(szMessage, sizeof(szMessage), "Skins here cost $%d", iPrice);
-				SendClientMessage(playerid, COLOR_GREY, szMessage);
-				SendClientMessage(playerid, COLOR_GREY, SYNTAX_MESSAGE"/buyclothes [skinid] (Skins cost $500.)");
-			}
-		}
-	}
-	return 1;
-}
-
-CMD:buy(playerid, params[]) {
-	if(GetPlayerVirtualWorld(playerid)-BUSINESS_VIRTUAL_WORLD >= 1) {
-	    new
-	        businessID = GetPlayerVirtualWorld(playerid)-BUSINESS_VIRTUAL_WORLD;
-
-	    if(businessVariables[businessID][bType] == 0)
-	        return 1;
-	        
-		format(result, sizeof(result), "");
-		
-		new
-		    iCount;
-
-	    for(new i = 0; i < MAX_BUSINESS_ITEMS; i++) {
-	    	if(businessItems[i][bItemBusiness] == businessID) {
-	    	    format(szSmallString, sizeof(szSmallString), "menuItem%d", iCount);
-	    	    SetPVarInt(playerid, szSmallString, i);
-	    	    
-	    	    if(businessItems[i][bItemType] == 4)
-	        		format(result, sizeof(result), "%s\n$%d phone credit voucher", result, businessItems[i][bItemPrice]);
-	        	else
-	        		format(result, sizeof(result), "%s\n%s ($%d)", result, businessItems[i][bItemName], businessItems[i][bItemPrice]);
-
-				iCount++;
-      		}
-	    }
+	    if(businessVariables[businessID][bType] == 0) return true; 
 
 		switch(businessVariables[businessID][bType]) {
-			case 1: Dialog_Open(playerid, DIALOG_TWENTYFOURSEVEN, DIALOG_STYLE_LIST, "SERVER: 24/7", result, "Select", "Exit");
-			case 3: Dialog_Open(playerid, DIALOG_BAR, DIALOG_STYLE_LIST, "SERVER: Bar", result, "Select", "Exit");
-			case 4: Dialog_Open(playerid, DIALOG_SEX_SHOP, DIALOG_STYLE_LIST, "SERVER: Sex Shop", result, "Select", "Exit");
-			case 7: Dialog_Open(playerid, DIALOG_FOOD, DIALOG_STYLE_LIST, "SERVER: Restaurant", result, "Select", "Exit");
+			case 1: Dialog_Show(playerid, DIALOG_TWENTYFOURSEVEN, DIALOG_STYLE_LIST, "SERVER: 24/7", "Rope ($5)\nWalkie Talkie ($750)\nPhone Book ($75)\nPhone Credit ($25)\nCellphone ($100)", "Select", "Exit");
+			case 3: Dialog_Show(playerid, DIALOG_BAR, DIALOG_STYLE_LIST, "SERVER: Bar", "Stock Bar Cigars ($2)\nSprunk ($3)\nBeer ($5)\nWine ($10)", "Select", "Exit");
+			case 4: Dialog_Show(playerid, DIALOG_SEX_SHOP, DIALOG_STYLE_LIST, "SERVER: Sex Shop", "Purple Dildo ($5)\nSmall White Vibrator ($8)\nSilver Vibrator ($10)\nLarge White Vibrator ($12)\nFlowers ($14), "Select", "Exit");
+			case 7: {
+                if(playerVariables[playerid][pMoney] < 250) return SendClientMessage(playerid, COLOR_GREY, "You don't have enough money to purchase this product.");
+                GetPlayerHealth(playerid, playerVariables[playerid][pHealth]);
+
+                if(playerVariables[playerid][pHealth] > 70.0) return SendClientMessage(playerid, COLOR_GREY, "You are unable to consume this product.");
+
+                playerVariables[playerid][pMoney] -= 250;
+                businessVariables[businessID][bVault] += 250;
+
+                SetPlayerHealth(playerid, playerVariables[playerid][pHealth]+30);
+
+                SendClientMessage(playerid, COLOR_WHITE, "You've purchased and consumed the 250, which has increased your health by 30 percent.");
+            }
 		}
 	}
-	return 1;
-}
 
-Dialog:DIALOG_SEX_SHOP(playerid, response, listitem, inputtext[]) {
-    if(!response) return true;
-
-    listitem += 1;
-
-    new
-        i,
-        b,
-        businessID = GetPlayerVirtualWorld(playerid)-BUSINESS_VIRTUAL_WORLD;
-
-    foreach(new x : bizzItems) {
-        b++;
-        gString[0] = (EOS)
-        format(gString, 20, "menuItem%d", x);
-        if(GetPVarType(playerid, gString) != 0)
-            i = GetPVarInt(playerid, gString);
-
-        if(b == listitem) {
-            foreach(new f : bizzItems) {
-                gString[0] = (EOS)
-                format(gString, 20, "menuItem%d", xf);
-                if(GetPVarType(playerid, gString) != 0)
-                    DeletePVar(playerid, gString);
-                else
-                    break;
-            }
-
-            break;
-        }
-    }
-
-    switch(businessItems[i][bItemType]) {
-        case 9: {
-            if(playerVariables[playerid][pMoney] >= businessItems[i][bItemPrice]) {
-                playerVariables[playerid][pMoney] -= businessItems[i][bItemPrice];
-                businessVariables[businessID][bVault] += businessItems[i][bItemPrice]; 
-                 
-            } else return SendClientMessage(playerid, COLOR_GREY, "You don't have enough money to purchase this product.");
-        }
-        case 10: {
-            if(playerVariables[playerid][pMoney] >= businessItems[i][bItemPrice]) {
-                playerVariables[playerid][pMoney] -= businessItems[i][bItemPrice];
-                businessVariables[businessID][bVault] += businessItems[i][bItemPrice]; 
-                
-            } else return SendClientMessage(playerid, COLOR_GREY, "You don't have enough money to purchase this product.");
-        }
-        case 11: {
-            if(playerVariables[playerid][pMoney] >= businessItems[i][bItemPrice]) {
-                playerVariables[playerid][pMoney] -= businessItems[i][bItemPrice];
-                businessVariables[businessID][bVault] += businessItems[i][bItemPrice]; 
-                
-            } else return SendClientMessage(playerid, COLOR_GREY, "You don't have enough money to purchase this product.");
-        }
-        case 12: {
-            if(playerVariables[playerid][pMoney] >= businessItems[i][bItemPrice]) {
-                playerVariables[playerid][pMoney] -= businessItems[i][bItemPrice];
-                businessVariables[businessID][bVault] += businessItems[i][bItemPrice]; 
-                
-            } else return SendClientMessage(playerid, COLOR_GREY, "You don't have enough money to purchase this product.");
-        }
-        case 13: {
-            if(playerVariables[playerid][pMoney] >= businessItems[i][bItemPrice]) {
-                playerVariables[playerid][pMoney] -= businessItems[i][bItemPrice];
-                businessVariables[businessID][bVault] += businessItems[i][bItemPrice];
-                
-            } else return SendClientMessage(playerid, COLOR_GREY, "You don't have enough money to purchase this product.");
-        }
-    }
-
-    givePlayerValidWeapon(playerid, businessItems[i][bItemType]+1); 
-
-    switch(random(4)) {
-        case 0: va_SendClientMessage(playerid, COLOR_WHITE, "You've purchased the %s. Don't get too wild.", businessItems[i][bItemName]);
-        case 1: va_SendClientMessage(playerid, COLOR_WHITE, "You've purchased the %s. Don't blame us if you get it stuck up there!", businessItems[i][bItemName]);
-        case 2: va_SendClientMessage(playerid, COLOR_WHITE, "You've purchased the %s. There's no warranty for this product!", businessItems[i][bItemName]);
-        case 3: va_SendClientMessage(playerid, COLOR_WHITE, "You've purchased the %s. Justin Bieber approves of this.", businessItems[i][bItemName]);
-    }
-}
-
-Dialog:DIALOG_BAR(playerid, response, listitem, inputtext[]) { 
-    if(!response)
-        return 1;
-
-    listitem += 1;
-
-    new
-        i,
-        b,
-        businessID = GetPlayerVirtualWorld(playerid)-BUSINESS_VIRTUAL_WORLD;
-
-    for(new x = 0; x < MAX_BUSINESS_ITEMS; x++) {
-        b++;
-        format(szSmallString, sizeof(szSmallString), "menuItem%d", x);
-        if(GetPVarType(playerid, szSmallString) != 0)
-            i = GetPVarInt(playerid, szSmallString);
-
-        if(b == listitem) {
-            for(new xf = 0; xf < MAX_BUSINESS_ITEMS; xf++) {
-                format(szSmallString, sizeof(szSmallString), "menuItem%d", xf);
-                if(GetPVarType(playerid, szSmallString) != 0)
-                    DeletePVar(playerid, szSmallString);
-                else
-                    break;
-            }
-
-            break;
-        }
-    }
-
-    switch(businessItems[i][bItemType]) {
-        case 14: {
-            if(playerVariables[playerid][pMoney] >= businessItems[i][bItemPrice]) {
-                playerVariables[playerid][pMoney] -= businessItems[i][bItemPrice];
-                businessVariables[businessID][bVault] += businessItems[i][bItemPrice];
-
-                SetPlayerSpecialAction(playerid, SPECIAL_ACTION_SMOKE_CIGGY);
-
-                format(szMessage, sizeof(szMessage), "You've purchased %s.", businessItems[i][bItemName]);
-                SendClientMessage(playerid, COLOR_WHITE, szMessage);
-                return 1;
-            } else return SendClientMessage(playerid, COLOR_GREY, "You don't have enough money to purchase this product.");
-        }
-        case 15: {
-            if(playerVariables[playerid][pMoney] >= businessItems[i][bItemPrice]) {
-                playerVariables[playerid][pMoney] -= businessItems[i][bItemPrice];
-                businessVariables[businessID][bVault] += businessItems[i][bItemPrice];
-
-                SetPlayerSpecialAction(playerid, SPECIAL_ACTION_DRINK_SPRUNK);
-
-                format(szMessage, sizeof(szMessage), "You've purchased %s.", businessItems[i][bItemName]);
-                SendClientMessage(playerid, COLOR_WHITE, szMessage);
-                return 1;
-            } else return SendClientMessage(playerid, COLOR_GREY, "You don't have enough money to purchase this product.");
-        }
-        case 16: {
-            if(playerVariables[playerid][pMoney] >= businessItems[i][bItemPrice]) {
-                playerVariables[playerid][pMoney] -= businessItems[i][bItemPrice];
-                businessVariables[businessID][bVault] += businessItems[i][bItemPrice];
-
-                SetPlayerSpecialAction(playerid, SPECIAL_ACTION_DRINK_BEER);
-
-                format(szMessage, sizeof(szMessage), "You've purchased %s.", businessItems[i][bItemName]);
-                SendClientMessage(playerid, COLOR_WHITE, szMessage);
-                return 1;
-            } else return SendClientMessage(playerid, COLOR_GREY, "You don't have enough money to purchase this product.");
-        }
-        case 17: {
-            if(playerVariables[playerid][pMoney] >= businessItems[i][bItemPrice]) {
-                playerVariables[playerid][pMoney] -= businessItems[i][bItemPrice];
-                businessVariables[businessID][bVault] += businessItems[i][bItemPrice];
-
-                SetPlayerSpecialAction(playerid, SPECIAL_ACTION_DRINK_WINE);
-
-                format(szMessage, sizeof(szMessage), "You've purchased %s.", businessItems[i][bItemName]);
-                SendClientMessage(playerid, COLOR_WHITE, szMessage);
-                return 1;
-            } else return SendClientMessage(playerid, COLOR_GREY, "You don't have enough money to purchase this product.");
-        }
-    }
-}
-
-CMD:buyvehicle(playerid, params[]) {
+	return true;
+}  
+/*
+rewrite all vehicle systems
+YCMD:buyvehicle(playerid, params[], help) {
 	if(GetPlayerVirtualWorld(playerid)-BUSINESS_VIRTUAL_WORLD >= 1) {
 	    new
 	        businessID = GetPlayerVirtualWorld(playerid) - BUSINESS_VIRTUAL_WORLD;
@@ -373,8 +155,8 @@ CMD:buyvehicle(playerid, params[]) {
 	}
 	return 1;
 }
-
-CMD:buyfightstyle(playerid, params[]) {
+*/
+YCMD:buyfightstyle(playerid, params[], help) {
 	if(GetPlayerVirtualWorld(playerid)-BUSINESS_VIRTUAL_WORLD >= 1) {
 	    new businessID = GetPlayerVirtualWorld(playerid) - BUSINESS_VIRTUAL_WORLD;
 
@@ -382,193 +164,7 @@ CMD:buyfightstyle(playerid, params[]) {
             Dialog_Open(playerid, DIALOG_FIGHTSTYLE, DIALOG_STYLE_LIST, "SERVER: Fighting Styles", "Boxing ($10,000)\nKung Fu ($25,000)\nKnee Head ($15,000)\nGrab & Kick ($12,000)\nElbow ($10,000)\nGhetto ($5,000)", "Select", "Cancel");
 	}
 	return 1;
-}
-
-Dialog:DIALOG_FOOD(playerid, response, listitem, inputtext[]) {
-    if(!response)
-        return 1;
-
-    listitem += 1;
-
-    new
-        i,
-        b,
-        businessID = GetPlayerVirtualWorld(playerid)-BUSINESS_VIRTUAL_WORLD;
-
-    for(new x = 0; x < MAX_BUSINESS_ITEMS; x++) {
-        b++;
-        format(szSmallString, sizeof(szSmallString), "menuItem%d", x);
-        if(GetPVarType(playerid, szSmallString) != 0)
-            i = GetPVarInt(playerid, szSmallString);
-
-        if(b == listitem) {
-            for(new xf = 0; xf < MAX_BUSINESS_ITEMS; xf++) {
-                format(szSmallString, sizeof(szSmallString), "menuItem%d", xf);
-                if(GetPVarType(playerid, szSmallString) != 0)
-                    DeletePVar(playerid, szSmallString);
-                else
-                    break;
-            }
-
-            break;
-        }
-    }
-
-    switch(businessItems[i][bItemType]) {
-        case 6: {
-            if(playerVariables[playerid][pMoney] >= businessItems[i][bItemPrice]) {
-                GetPlayerHealth(playerid, playerVariables[playerid][pHealth]);
-                
-                if(playerVariables[playerid][pHealth] > 95.0)
-                    return SendClientMessage(playerid, COLOR_GREY, "You are unable to consume this product.");
-
-                playerVariables[playerid][pMoney] -= businessItems[i][bItemPrice];
-                businessVariables[businessID][bVault] += businessItems[i][bItemPrice];
-
-                SetPlayerHealth(playerid, playerVariables[playerid][pHealth]+5);
-
-                format(szMessage, sizeof(szMessage), "You've purchased and consumed the %s, which has increased your health by 5 percent.", businessItems[i][bItemName]);
-                SendClientMessage(playerid, COLOR_WHITE, szMessage);
-                return 1;
-            } else return SendClientMessage(playerid, COLOR_GREY, "You don't have enough money to purchase this product.");
-        }
-        case 7: {
-            if(playerVariables[playerid][pMoney] >= businessItems[i][bItemPrice]) {
-                GetPlayerHealth(playerid, playerVariables[playerid][pHealth]);
-
-                if(playerVariables[playerid][pHealth] > 90.0)
-                    return SendClientMessage(playerid, COLOR_GREY, "You are unable to consume this product.");
-
-                playerVariables[playerid][pMoney] -= businessItems[i][bItemPrice];
-                businessVariables[businessID][bVault] += businessItems[i][bItemPrice];
-
-                SetPlayerHealth(playerid, playerVariables[playerid][pHealth]+10);
-
-                format(szMessage, sizeof(szMessage), "You've purchased and consumed the %s, which has increased your health by 10 percent.", businessItems[i][bItemName]);
-                SendClientMessage(playerid, COLOR_WHITE, szMessage);
-                return 1;
-            } else return SendClientMessage(playerid, COLOR_GREY, "You don't have enough money to purchase this product.");
-        }
-        case 8: {
-            if(playerVariables[playerid][pMoney] >= businessItems[i][bItemPrice]) {
-                GetPlayerHealth(playerid, playerVariables[playerid][pHealth]);
-
-                if(playerVariables[playerid][pHealth] > 70.0)
-                    return SendClientMessage(playerid, COLOR_GREY, "You are unable to consume this product.");
-
-                playerVariables[playerid][pMoney] -= businessItems[i][bItemPrice];
-                businessVariables[businessID][bVault] += businessItems[i][bItemPrice];
-
-                SetPlayerHealth(playerid, playerVariables[playerid][pHealth]+30);
-
-                format(szMessage, sizeof(szMessage), "You've purchased and consumed the %s, which has increased your health by 30 percent.", businessItems[i][bItemName]);
-                SendClientMessage(playerid, COLOR_WHITE, szMessage);
-                return 1;
-            } else return SendClientMessage(playerid, COLOR_GREY, "You don't have enough money to purchase this product.");
-        }
-    }
-}
-Dialog:DIALOG_TWENTYFOURSEVEN(playerid, response, listitem, inputtext[]) {
-    if(!response)
-        return 1;
-        
-    listitem += 1;
-
-    new
-        i,
-        b,
-        businessID = GetPlayerVirtualWorld(playerid)-BUSINESS_VIRTUAL_WORLD;
-        
-    for(new x = 0; x < MAX_BUSINESS_ITEMS; x++) {
-        b++;
-        format(szSmallString, sizeof(szSmallString), "menuItem%d", x);
-        if(GetPVarType(playerid, szSmallString) != 0)
-            i = GetPVarInt(playerid, szSmallString);
-
-        if(b == listitem) {
-            for(new xf = 0; xf < MAX_BUSINESS_ITEMS; xf++) {
-                format(szSmallString, sizeof(szSmallString), "menuItem%d", xf);
-                if(GetPVarType(playerid, szSmallString) != 0)
-                    DeletePVar(playerid, szSmallString);
-                else
-                    break;
-            }
-            
-            break;
-        }
-    }
-    
-    switch(businessItems[i][bItemType]) {
-        case 1: {
-            if(playerVariables[playerid][pMoney] >= businessItems[i][bItemPrice]) {
-                if(playerVariables[playerid][pRope] >= 30)
-                    return SendClientMessage(playerid, COLOR_GREY, "You are unable to purchase any more rope.");
-
-                playerVariables[playerid][pMoney] -= businessItems[i][bItemPrice];
-                            
-                businessVariables[businessID][bVault] += businessItems[i][bItemPrice];
-                playerVariables[playerid][pRope]++;
-
-                SendClientMessage(playerid, COLOR_WHITE, "You have purchased 1 line of Rope!");
-                return 1;
-            } else return SendClientMessage(playerid, COLOR_GREY, "You don't have enough money to purchase this product.");
-        }
-        case 2: {
-            if(playerVariables[playerid][pMoney] >= businessItems[i][bItemPrice]) {
-                if(playerVariables[playerid][pWalkieTalkie] != -1)
-                    return SendClientMessage(playerid, COLOR_GREY, "You are unable to purchase another walkie talkie.");
-
-                playerVariables[playerid][pMoney] -= businessItems[i][bItemPrice];
-                businessVariables[businessID][bVault] += businessItems[i][bItemPrice];
-                playerVariables[playerid][pWalkieTalkie] = 0;
-
-                SendClientMessage(playerid, COLOR_WHITE, "You have purchased a walkie talkie - use /setfrequency to tune it, and /wt to speak.");
-                return 1;
-            } else return SendClientMessage(playerid, COLOR_GREY, "You don't have enough money to purchase this product.");
-        }
-        case 3: {
-            if(playerVariables[playerid][pMoney] >= businessItems[i][bItemPrice]) {
-                if(playerVariables[playerid][pPhoneBook] != 1)
-                    return SendClientMessage(playerid, COLOR_GREY, "You are unable to purchase another phonebook.");
-
-                playerVariables[playerid][pMoney] -= businessItems[i][bItemPrice];
-                businessVariables[businessID][bVault] += businessItems[i][bItemPrice];
-                playerVariables[playerid][pPhoneBook] = 1;
-
-                SendClientMessage(playerid, COLOR_WHITE, "You have purchased a phonebook. Use /number to trace a number down!");
-                return 1;
-            } else return SendClientMessage(playerid, COLOR_GREY, "You don't have enough money to purchase this product.");
-        }
-        case 4: {
-            if(playerVariables[playerid][pPhoneNumber] == -1)
-                return SendClientMessage(playerid, COLOR_GREY, "You do not have a phone.");
-
-            if(playerVariables[playerid][pMoney] >= businessItems[i][bItemPrice]) {
-                playerVariables[playerid][pMoney] -= businessItems[i][bItemPrice];
-                businessVariables[businessID][bVault] += businessItems[i][bItemPrice];
-                playerVariables[playerid][pPhoneCredit] += businessItems[i][bItemPrice]*60;
-
-                format(szMessage, sizeof(szMessage), "You have purchased a $%d credit voucher for your mobile phone which has been automatically applied.", businessItems[i][bItemPrice]);
-                SendClientMessage(playerid, COLOR_WHITE, szMessage);
-                return 1;
-            } else return SendClientMessage(playerid, COLOR_GREY, "You don't have enough money to purchase this product.");
-        }
-        case 5: {
-            if(playerVariables[playerid][pPhoneNumber] != -1)
-                SendClientMessage(playerid, COLOR_GREY, "You already had a phone, your phone will be replaced and your number will be changed.");
-
-            if(playerVariables[playerid][pMoney] >= businessItems[i][bItemPrice]) {
-                playerVariables[playerid][pMoney] -= businessItems[i][bItemPrice];
-                businessVariables[businessID][bVault] += businessItems[i][bItemPrice];
-                playerVariables[playerid][pPhoneNumber] = random(89999999)+10000000; // Random eight digit phone number (which won't get crazy ones like 0, etc)
-
-                format(szMessage, sizeof(szMessage), "You have purchased a %s! Your number is %d.", businessItems[i][bItemName], playerVariables[playerid][pPhoneNumber]);
-                SendClientMessage(playerid, COLOR_WHITE, szMessage);
-                return 1;
-            } else return SendClientMessage(playerid, COLOR_GREY, "You don't have enough money to purchase this product.");
-        }
-    }
-}
+}  
 
 Dialog:DIALOG_FIGHTSTYLE(playerid, response, listitem, inputtext[]) {
     if(!response) return true;
@@ -630,7 +226,7 @@ Dialog:DIALOG_FIGHTSTYLE(playerid, response, listitem, inputtext[]) {
     } 
 }
 
-CMD:businessname(playerid, params[]) {
+YCMD:businessname(playerid, params[], help) {
 	if(getPlayerBusinessID(playerid) >= 1) {
 	    if(isnull(params))
 			 return SendClientMessage(playerid, COLOR_GREY, SYNTAX_MESSAGE"/businessname [businessname]");
@@ -661,7 +257,7 @@ CMD:businessname(playerid, params[]) {
 	return 1;
 }
 
-CMD:bspawnpos(playerid, params[]) {
+YCMD:bspawnpos(playerid, params[], help) {
 
 	if(getPlayerBusinessID(playerid) >= 1) {
 
@@ -681,7 +277,7 @@ CMD:bspawnpos(playerid, params[]) {
 }
 
 
-CMD:lockbusiness(playerid, params[]) {
+YCMD:lockbusiness(playerid, params[], help) {
 	if(getPlayerBusinessID(playerid) >= 1) {
 	    new
 	        x = getPlayerBusinessID(playerid);
@@ -706,7 +302,7 @@ CMD:lockbusiness(playerid, params[]) {
 	return 1;
 }
 
-CMD:buybusiness(playerid, params[]) {
+YCMD:buybusiness(playerid, params[], help) {
     if(playerVariables[playerid][pStatus] >= 1) {
         for(new x = 0; x < MAX_BUSINESSES; x++) {
 			if(IsPlayerInRangeOfPoint(playerid, 5, businessVariables[x][bExteriorPos][0], businessVariables[x][bExteriorPos][1], businessVariables[x][bExteriorPos][2])) {
@@ -745,4 +341,151 @@ CMD:buybusiness(playerid, params[]) {
 		}
     }
 	return 1;
+} 
+
+Dialog:DIALOG_TWENTYFOURSEVEN(playerid, response, listitem, inputtext[]) {
+    if(!response) return true;
+
+    new businessID = GetPlayerVirtualWorld(playerid)-BUSINESS_VIRTUAL_WORLD; 
+
+    switch(listitem+1) {
+        case 1: {
+            if(playerVariables[playerid][pMoney] < 5) return SendClientMessage(playerid, COLOR_GREY, "You don't have enough money to purchase this product.");
+            if(playerVariables[playerid][pRope] >= 30) return SendClientMessage(playerid, COLOR_GREY, "You are unable to purchase any more rope.");
+
+            playerVariables[playerid][pMoney] -= 5;
+            playerVariables[playerid][pRope]++;
+            businessVariables[businessID][bVault] += 5;
+
+            SendClientMessage(playerid, COLOR_WHITE, "You have purchased 1 line of Rope!");  
+        }
+        case 2: {
+            if(playerVariables[playerid][pMoney] < 750) return SendClientMessage(playerid, COLOR_GREY, "You don't have enough money to purchase this product.");
+            if(playerVariables[playerid][pWalkieTalkie] != -1) return SendClientMessage(playerid, COLOR_GREY, "You are unable to purchase another walkie talkie.");
+
+            playerVariables[playerid][pMoney] -= 750;
+            businessVariables[businessID][bVault] += 750;
+            playerVariables[playerid][pWalkieTalkie] = 0;
+
+            SendClientMessage(playerid, COLOR_WHITE, "You have purchased a walkie talkie - use /setfrequency to tune it, and /wt to speak."); 
+        }
+        case 3: {
+            if(playerVariables[playerid][pMoney] < 75) return SendClientMessage(playerid, COLOR_GREY, "You don't have enough money to purchase this product.");
+            if(playerVariables[playerid][pPhoneBook] != 1) return SendClientMessage(playerid, COLOR_GREY, "You are unable to purchase another phonebook.");
+
+            playerVariables[playerid][pMoney] -= 75;
+            businessVariables[businessID][bVault] += 75;
+            playerVariables[playerid][pPhoneBook] = 1;
+
+            SendClientMessage(playerid, COLOR_WHITE, "You have purchased a phonebook. Use /number to trace a number down!");
+        }
+        case 4: {
+            if(playerVariables[playerid][pPhoneNumber] == -1) return SendClientMessage(playerid, COLOR_GREY, "You do not have a phone.");
+            if(playerVariables[playerid][pMoney] < 25) return SendClientMessage(playerid, COLOR_GREY, "You don't have enough money to purchase this product.");
+           
+            playerVariables[playerid][pMoney] -= 25;
+            businessVariables[businessID][bVault] += 25;
+            playerVariables[playerid][pPhoneCredit] += 25*60; 
+
+            SendClientMessage(playerid, COLOR_WHITE, "You have purchased a $25 credit voucher for your mobile phone which has been automatically applied."); 
+        }
+        case 5: {
+            if(playerVariables[playerid][pMoney] < 100) return SendClientMessage(playerid, COLOR_GREY, "You don't have enough money to purchase this product.");
+            if(playerVariables[playerid][pPhoneNumber] != -1) SendClientMessage(playerid, COLOR_GREY, "You already had a phone, your phone will be replaced and your number will be changed.");
+ 
+            playerVariables[playerid][pMoney] -= 100;
+            businessVariables[businessID][bVault] += 100;
+            playerVariables[playerid][pPhoneNumber] = random(89999999)+10000000; // Random eight digit phone number (which won't get crazy ones like 0, etc)
+ 
+            va_SendClientMessage(playerid, COLOR_WHITE, "You have purchased a Phone! Your number is %d.", playerVariables[playerid][pPhoneNumber]);
+        }
+    }
+
+    return true;
+}
+
+Dialog:DIALOG_SEX_SHOP(playerid, response, listitem, inputtext[]) {
+    if(!response) return true; 
+
+    new 
+        businessID = GetPlayerVirtualWorld(playerid)-BUSINESS_VIRTUAL_WORLD;
+
+    switch(listitem) {
+        case 0: { // Purple Dildo
+            if(playerVariables[playerid][pMoney] < 5) return SendClientMessage(playerid, COLOR_GREY, "You don't have enough money to pay for this product."); 
+
+            playerVariables[playerid][pMoney] -= 5;
+            businessVariables[businessID][bVault] += 5;
+            givePlayerValidWeapon(playerid, 10);
+        }
+        case 1: { // Small White Vibrator
+            if(playerVariables[playerid][pMoney] < 8) return SendClientMessage(playerid, COLOR_GREY, "You don't have enough money to pay for this product.");
+
+            playerVariables[playerid][pMoney] -= 8;
+            businessVariables[businessID][bVault] += 8;
+            givePlayerValidWeapon(playerid, 11);
+        }
+        case 2: { // Silver Vibrator
+            if(playerVariables[playerid][pMoney] < 10) return SendClientMessage(playerid, COLOR_GREY, "You don't have enough money to pay for this product.");
+
+            playerVariables[playerid][pMoney] -= 10;
+            businessVariables[businessID][bVault] += 10;
+            givePlayerValidWeapon(playerid, 13);
+        }
+        case 3: { // Large White Vibrator
+            if(playerVariables[playerid][pMoney] < 12) return SendClientMessage(playerid, COLOR_GREY, "You don't have enough money to pay for this product.");
+
+            playerVariables[playerid][pMoney] -= 12;
+            businessVariables[businessID][bVault] += 12;
+            givePlayerValidWeapon(playerid, 12);
+        }
+        case 4: { // Flowers
+            if(playerVariables[playerid][pMoney] < 14) return SendClientMessage(playerid, COLOR_GREY, "You don't have enough money to pay for this product.");
+
+            playerVariables[playerid][pMoney] -= 14;
+            businessVariables[businessID][bVault] += 14;
+            givePlayerValidWeapon(playerid, 14);
+        }
+    }
+}
+
+Dialog:DIALOG_BAR(playerid, response, listitem, inputtext[]) { 
+    if(!response) return true;
+
+    new businessID = GetPlayerVirtualWorld(playerid)-BUSINESS_VIRTUAL_WORLD;
+
+    switch(listitem) {
+        case 0: { // Stock Bar Cigars
+            if(playerVariables[playerid][pMoney] < 2) return SendClientMessage(playerid, COLOR_GREY, "You don't have enough money to pay for this product.");
+            
+            playerVariables[playerid][pMoney] -= 2;
+            businessVariables[businessID][bVault] += 2;
+
+            SetPlayerSpecialAction(playerid, SPECIAL_ACTION_SMOKE_CIGGY);  
+        }
+        case 1: { // Sprunk
+            if(playerVariables[playerid][pMoney] < 2) return SendClientMessage(playerid, COLOR_GREY, "You don't have enough money to pay for this product.");
+            
+            playerVariables[playerid][pMoney] -= 3;
+            businessVariables[businessID][bVault] += 3;
+           
+            SetPlayerSpecialAction(playerid, SPECIAL_ACTION_DRINK_SPRUNK); 
+        }
+        case 3: { // Beer
+            if(playerVariables[playerid][pMoney] < 2) return SendClientMessage(playerid, COLOR_GREY, "You don't have enough money to pay for this product.");
+           
+            playerVariables[playerid][pMoney] -= 5;
+            businessVariables[businessID][bVault] += 5;
+            
+            SetPlayerSpecialAction(playerid, SPECIAL_ACTION_DRINK_BEER); 
+        }
+        case 4: { // Wine
+            if(playerVariables[playerid][pMoney] < 2) return SendClientMessage(playerid, COLOR_GREY, "You don't have enough money to pay for this product.");
+            
+            playerVariables[playerid][pMoney] -= 10;
+            businessVariables[businessID][bVault] += 10;
+
+            SetPlayerSpecialAction(playerid, SPECIAL_ACTION_DRINK_WINE); 
+        }
+    }
 } 

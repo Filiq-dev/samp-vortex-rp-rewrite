@@ -1,7 +1,6 @@
 #include <YSI_Coding/y_hooks>
 
 #define MAX_BUSINESSES          (50)
-#define MAX_BUSINESS_ITEMS      (MAX_BUSINESSES*6)
 #define BUSINESS_VIRTUAL_WORLD  (30000)
 
 enum businessE {
@@ -17,32 +16,23 @@ enum businessE {
 	Text3D: bLabelID,
 	bPickupID,
 	bPrice,
-}
-
-enum businessItemsE {
-	bItemBusiness,
-	bItemType,
-	bItemName[32],
-	bItemPrice,
-}
+} 
 
 new 
-    businessVariables[MAX_BUSINESSES][businessE],
-    businessItems[MAX_BUSINESS_ITEMS][businessItemsE],
-    Iterator:bizz<MAX_BUSINESSES>,
-    Iterator:bizzItems<MAX_BUSINESS_ITEMS>;
+    businessVariables[MAX_BUSINESSES][businessE], 
+    Iterator:bizz<MAX_BUSINESSES>;
 
 hook OnGameModeInit() {
     #if defined DEBUG
-        print("hook OnGameModeInit()_businesses has been called");
+        print("hook OnGameModeInit()_business has been called");
     #endif
 
-    mysql_tquery(gSQL, "SELECT * FROM businessitems", "loadItems", "");
     mysql_tquery(gSQL, "SELECT * FROM businesses", "loadBusinesses", "");
 
     return true;
 } 
 
+// find a more optimization code for enter in bizz
 hook OnPlayerKeyStateChange(playerid, newkeys, oldkeys) {
     #if defined DEBUG
         printf("hook OnPlayerKeyStateChange(%d, %d, %d)_business has been called", playerid, newkeys, oldkeys);
@@ -120,51 +110,6 @@ function loadBusinesses() {
     } 
 
     printf("[SQL] Businesses loaded: %d", Iter_Count(bizz)); 
-} 
-
-function loadItems() { 
-    #if defined DEBUG
-        print("function loadItems()_groups has been called");
-    #endif 
-
-    new x = 0;
-    for ( new i, j = cache_num_rows(); i != j; ++i ) {
-	    cache_get_value_int(i, "itemBusinessId", businessItems[x][bItemBusiness]);
-	    cache_get_value_int(i, "itemTypeId", businessItems[x][bItemType]);
-	    cache_get_value_int(i, "itemPrice", businessItems[x][bItemPrice]);
-
-	    cache_get_value_name(i, "itemName", businessItems[x][bItemName], 32);
-    
-        
-        Iter_Add(bizzItems, x);
-    } 
-    printf("[SQL] Businesses items loaded: %d", Iter_Count(bizzItems)); 
-}
-
-function createRelevantItems(businessid) {
-    #if defined DEBUG
-        print("function createRelevantItems()_business has been called");
-    #endif 
-
-    gLargeQuery[0] = (EOS);
-	switch(businessVariables[businessid][bType]) {
-		case 1: {
-			mysql_format(gSQL, gLargeQuery, sizeof(gLargeQuery), "INSERT INTO `businessitems` (`itemBusinessId`, `itemTypeId`, `itemPrice`, `itemName`) VALUES (%d, 1, 5, 'Rope'), (%d, 2, 15, 'Walkie Talkie'), (%d, 3, 10, 'Phone Book'),", businessid, businessid, businessid);
-			mysql_format(gSQL, gLargeQuery, sizeof(gLargeQuery), "%s(%d, 4, 10, 'Phone Credit'), (%d, 5, 10, 'Mobile Phone');", gLargeQuery, businessid, businessid);
-		}
-		case 2: mysql_format(gSQL, gLargeQuery, sizeof(gLargeQuery), "INSERT INTO `businessitems` (`itemBusinessId`, `itemTypeId`, `itemPrice`, `itemName`) VALUES (%d, 18, 50, 'All Skins');", businessid);
-		case 3: mysql_format(gSQL, gLargeQuery, sizeof(gLargeQuery), "INSERT INTO `businessitems` (`itemBusinessId`, `itemTypeId`, `itemPrice`, `itemName`) VALUES (%d, 14, 4, 'Cigar'), (%d, 15, 1, 'Sprunk'), (%d, 16, 10, 'Wine'), (%d, 17, 3, 'Beer');", businessid, businessid, businessid, businessid);
-		case 4: {
- 			mysql_format(gSQL, gLargeQuery, sizeof(gLargeQuery), "INSERT INTO `businessitems` (`itemBusinessId`, `itemTypeId`, `itemPrice`, `itemName`) VALUES (%d, 9, 10, 'Purple Dildo'), (%d, 10, 15, 'Small White Vibrator'), (%d, 11, 20, 'Large White Vibrator'),", businessid, businessid, businessid);
-			mysql_format(gSQL, gLargeQuery, sizeof(gLargeQuery), "%s(%d, 12, 15, 'Silver Vibrator'), (%d, 13, 10, 'Flowers');", gLargeQuery, businessid, businessid);
-		}
-		case 7: mysql_format(gSQL, gLargeQuery, sizeof(gLargeQuery), "INSERT INTO `businessitems` (`itemBusinessId`, `itemTypeId`, `itemPrice`, `itemName`) VALUES (%d, 6, 5, 'Box Meal 1'), (%d, 7, 10, 'Box Meal 2'), (%d, 8, 20, 'Box Meal 3');", businessid, businessid, businessid);
-	
-	}
-    mysql_tquery(gSQL, gLargeQuery, "", "");
-	mysql_tquery(gSQL, "SELECT * FROM businessitems", "loadItems", "");
-
-	return true;
 }
 
 function saveBusiness(id) {
