@@ -1,14 +1,6 @@
-#include <YSI_Coding/y_hooks>
+#include <YSI_Coding/y_hooks> 
 
-#define MAX_ASSETS 10
-
-enum assetsE {
-	aAssetName[32],
-	aAssetValue,
-}
-
-new 
-    assetVariables[MAX_ASSETS][assetsE],
+new
     Iterator:assets<MAX_ASSETS>;
 
 hook OnGameModeInit() {
@@ -64,13 +56,4 @@ function saveAsset(id) {
 	}
 
 	return true;
-} 
-
-YCMD:listassets(playerid, params[], help) { // de bagat in admin cmds cand o fi
-    if(playerVariables[playerid][pAdminLevel] >= 5)
-        foreach(new i : assets)
-			if(strlen(assetVariables[i][aAssetName]) >= 1)
-				va_SendClientMessage(playerid, COLOR_WHITE, "Asset Name: %s | Asset ID: %d | Value: %d", assetVariables[i][aAssetName], i, assetVariables[i][aAssetValue]);
-
-	return true;
-}
+}  

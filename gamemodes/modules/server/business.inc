@@ -41,7 +41,7 @@ hook OnGameModeInit() {
     mysql_tquery(gSQL, "SELECT * FROM businesses", "loadBusinesses", "");
 
     return true;
-}
+} 
 
 hook OnPlayerKeyStateChange(playerid, newkeys, oldkeys) {
     #if defined DEBUG
@@ -54,30 +54,27 @@ hook OnPlayerKeyStateChange(playerid, newkeys, oldkeys) {
 				if(businessVariables[x][bLocked] == 1) {
 					SendClientMessage(playerid, COLOR_GREY, "This business is locked.");
 
-					if(playerVariables[playerid][pAdminLevel] >= 1 && playerVariables[playerid][pAdminDuty] >= 1) {
-					    SetPVarInt(playerid, "bE", x); // I'd create a variable for this, but seeing as we'll only ever use this for one thing, this will be better for optimization.
-					    // Dialog_Open(playerid, DIALOG_BUSINESS_ENTER, DIALOG_STYLE_MSGBOX, "SERVER: Businesses", "{FFFFFF}This business is locked.\r\nAs an "EMBED_GREY"administrator{FFFFFF}, you can breach this lock and enter. Would you like to do so?", "Yes", "No");
-					}
-					else if(groupVariables[playerVariables[playerid][pGroup]][gGroupType] == 1 && playerVariables[playerid][pGroup] != 0) {
-					    SetPVarInt(playerid, "bE", x);
-					    // Dialog_Open(playerid, DIALOG_BUSINESS_ENTER, DIALOG_STYLE_MSGBOX, "SERVER: Businesses", "{FFFFFF}This business is locked.\r\nAs a "EMBED_GREY"law enforcement officer{FFFFFF}, you can breach this lock and enter. Would you like to do so?", "Yes", "No");
-					}
-				}
-				else {
-					businessTypeMessages(x, playerid);
+					if((playerVariables[playerid][pAdminLevel] >= 1 && playerVariables[playerid][pAdminDuty] >= 1) || (groupVariables[playerVariables[playerid][pGroup]][gGroupType] == 1 && playerVariables[playerid][pGroup] != 0)) {
+						SetPVarInt(playerid, "bE", x); // I'd create a variable for this, but seeing as we'll only ever use this for one thing, this will be better for optimization.
+						Dialog_Show(playerid, DIALOG_SHOW_ENTER, DIALOG_STYLE_MSGBOX, "SERVER: Businesses", "{FFFFFF}This business is locked.\r\nYou can breach this lock and enter. Would you like to do so?", "Yes", "No");
+					}  
+					return true;
+				} 
 
-					SetPlayerPos(playerid, businessVariables[x][bInteriorPos][0], businessVariables[x][bInteriorPos][1], businessVariables[x][bInteriorPos][2]);
-					SetPlayerInterior(playerid, businessVariables[x][bInterior]);
-					SetPlayerVirtualWorld(playerid, BUSINESS_VIRTUAL_WORLD+x);
-				}
-				return 1;
+				businessTypeMessages(x, playerid); 
+				SetPlayerPos(playerid, businessVariables[x][bInteriorPos][0], businessVariables[x][bInteriorPos][1], businessVariables[x][bInteriorPos][2]);
+				SetPlayerInterior(playerid, businessVariables[x][bInterior]);
+				SetPlayerVirtualWorld(playerid, BUSINESS_VIRTUAL_WORLD+x);
+				
+				return true;
 			}
 			if(IsPlayerInRangeOfPoint(playerid, 2.0, businessVariables[x][bInteriorPos][0], businessVariables[x][bInteriorPos][1], businessVariables[x][bInteriorPos][2]) && GetPlayerVirtualWorld(playerid) == BUSINESS_VIRTUAL_WORLD+x) {
 				SetPlayerPos(playerid, businessVariables[x][bExteriorPos][0], businessVariables[x][bExteriorPos][1], businessVariables[x][bExteriorPos][2]);
 				SetPlayerInterior(playerid, 0);
 				SetPlayerVirtualWorld(playerid, 0);
-				return 1;
-			}
+
+				return true;
+			} 
 		}
     }
 
@@ -86,7 +83,7 @@ hook OnPlayerKeyStateChange(playerid, newkeys, oldkeys) {
 
 function loadBusinesses() { 
     #if defined DEBUG
-        print("function loadBusinesses()_groups has been called");
+        print("function loadBusinesses()_business has been called");
     #endif 
 
     new x = 0;
@@ -113,27 +110,9 @@ function loadBusinesses() {
 	    cache_get_value_float(i, "businessMiscZ", businessVariables[x][bMiscPos][2]);	 
 
         gString[0] = (EOS);
-        switch(businessVariables[x][bLocked]) {
-            case 1: {
-                if(!strcmp(businessVariables[x][bOwner], "Nobody", true)) {
-                    format(gString, sizeof(gString), "%s\n(Business %d - un-owned)\nPrice: $%d (/buybusiness)\n\n(locked)", businessVariables[x][bName], x, businessVariables[x][bPrice]);
-                }
-                else {
-                    format(gString, sizeof(gString), "%s\n(Business %d - owned by %s)\n\n(locked)", businessVariables[x][bName], x, businessVariables[x][bOwner]);
-                }
-            }
-            case 0: {
-                if(!strcmp(businessVariables[x][bOwner], "Nobody", true)) {
-                    format(gString, sizeof(gString), "%s\n(Business %d - un-owned)\nPrice: $%d (/buybusiness)\n\nPress ~k~~PED_DUCK~ to enter", businessVariables[x][bName], x, businessVariables[x][bPrice]);
-                }
-                else {
-                    format(gString, sizeof(gString), "%s\n(Business %d - owned by %s)\n\nPress ~k~~PED_DUCK~ to enter", businessVariables[x][bName], x, businessVariables[x][bOwner]);
-                }
-            }
-        } 
+		if(!strcmp(businessVariables[x][bOwner], "Nobody", true)) format(gString, sizeof(gString), "%s\n(Business %d - un-owned)\nPrice: $%d (/buybusiness)\n\n%s", businessVariables[x][bName], x, businessVariables[x][bPrice], (businessVariables[x][bLocked] == 1 ? "(locked)" : "Press ~k~~PED_DUCK~ to enter"));
+		else format(gString, sizeof(gString), "%s\n(Business %d - owned by %s)\n\n%s", businessVariables[x][bName], x, businessVariables[x][bOwner], (businessVariables[x][bLocked] == 1 ? "(locked)" : "Press ~k~~PED_DUCK~ to enter"));
 
-        // format(gString, sizeof(gString), "%s\n(Business %d - %s%s)\nPrice: $%d (/buybusiness)\n\n(locked)", businessVariables[x][bName], x, (strcmp(businessVariables[x][bOwner], "Nobody", true) != 1 ? "owned by" : "un-owned"), (strcmp(businessVariables[x][bOwner], "Nobody", true) != 1 ? businessVariables[x][bOwner] : ""))
-        
         businessVariables[x][bLabelID] = CreateDynamic3DTextLabel(gString, COLOR_YELLOW, businessVariables[x][bExteriorPos][0], businessVariables[x][bExteriorPos][1], businessVariables[x][bExteriorPos][2], 100, INVALID_PLAYER_ID, INVALID_VEHICLE_ID, 0, -1, -1, -1, 10.0);
         businessVariables[x][bPickupID] = CreateDynamicPickup(1239, 23, businessVariables[x][bExteriorPos][0], businessVariables[x][bExteriorPos][1], businessVariables[x][bExteriorPos][2], 0, 0, -1, 250);
 
@@ -189,17 +168,13 @@ function createRelevantItems(businessid) {
 }
 
 function saveBusiness(id) {
-	if(strlen(businessVariables[id][bOwner]) >= 1) {
-		new queryString[1424];
+	if(strlen(businessVariables[id][bOwner]) < 1) return false;
 
-		mysql_format(gSQL, queryString, sizeof(queryString), "UPDATE businesses SET businessExteriorX = '%f', businessExteriorY = '%f', businessExteriorZ = '%f', businessInteriorX = '%f', businessInteriorY = '%f', businessInteriorZ = '%f', businessInterior = '%d', businessType = '%d', businessName = '%s', businessOwner = '%s', businessPrice = '%d', businessVault = '%d', businessLock = '%d', businessMiscX = '%f', businessMiscY = '%f', businessMiscZ = '%f' WHERE businessID = '%d'", businessVariables[id][bExteriorPos][0],
-		businessVariables[id][bExteriorPos][1],	businessVariables[id][bExteriorPos][2],	businessVariables[id][bInteriorPos][0], businessVariables[id][bInteriorPos][1],	businessVariables[id][bInteriorPos][2],	businessVariables[id][bInterior], businessVariables[id][bType], businessVariables[id][bName], businessVariables[id][bOwner], businessVariables[id][bPrice], businessVariables[id][bVault], businessVariables[id][bLocked], businessVariables[id][bMiscPos][0],
-		businessVariables[id][bMiscPos][1], businessVariables[id][bMiscPos][2], id);
-		mysql_tquery(gSQL, queryString, "", "");
-	}
-	else {
-	    return false;
-	}
+	new count = GetTickCount();
+
+	gLargeQuery[0] = (EOS);
+	mysql_format(gSQL, gLargeQuery, sizeof(gLargeQuery), "UPDATE businesses SET businessExteriorX = '%f', businessExteriorY = '%f', businessExteriorZ = '%f', businessInteriorX = '%f', businessInteriorY = '%f', businessInteriorZ = '%f', businessInterior = '%d', businessType = '%d', businessName = '%s', businessOwner = '%s', businessPrice = '%d', businessVault = '%d', businessLock = '%d', businessMiscX = '%f', businessMiscY = '%f', businessMiscZ = '%f' WHERE businessID = '%d'", businessVariables[id][bExteriorPos][0], businessVariables[id][bExteriorPos][1],	businessVariables[id][bExteriorPos][2],	businessVariables[id][bInteriorPos][0], businessVariables[id][bInteriorPos][1],	businessVariables[id][bInteriorPos][2],	businessVariables[id][bInterior], businessVariables[id][bType], businessVariables[id][bName], businessVariables[id][bOwner], businessVariables[id][bPrice], businessVariables[id][bVault], businessVariables[id][bLocked], businessVariables[id][bMiscPos][0], businessVariables[id][bMiscPos][1], businessVariables[id][bMiscPos][2], id);
+	mysql_tquery(gSQL, gLargeQuery, "finishQuery", "ddd", id, FINISH_SAVE_BUSINESS, count);
 
 	return true;
 }
@@ -224,76 +199,35 @@ stock businessTypeMessages(businessid, playerid) {
 		case 1: {
 			SendClientMessage(playerid, COLOR_WHITE, "Welcome! The commands of this business are as follows: /buy");
 			if(playerVariables[playerid][pFish] != -1) {
-				switch(playerVariables[playerid][pFish]) {
-				    case 0: {
-				        // Dialog_Open(playerid, DIALOG_SELL_FISH, DIALOG_STYLE_MSGBOX, "SERVER: Fishing", "You are currently carrying $1000 worth of fish.\n\nWould you like to sell your fish to this store for $1000?", "Yes", "No");
-				    }
-				    case 1: {
-				        // Dialog_Open(playerid, DIALOG_SELL_FISH, DIALOG_STYLE_MSGBOX, "SERVER: Fishing", "You are currently carrying $750 worth of fish.\n\nWould you like to sell your fish to this store for $750?", "Yes", "No");
-				    }
-				    case 2: {
-            			// Dialog_Open(playerid, DIALOG_SELL_FISH, DIALOG_STYLE_MSGBOX, "SERVER: Fishing", "You are currently carrying $250 worth of fish.\n\nWould you like to sell your fish to this store for $250?", "Yes", "No");
-				    }
-				    case 3: {
-				        // Dialog_Open(playerid, DIALOG_SELL_FISH, DIALOG_STYLE_MSGBOX, "SERVER: Fishing", "You are currently carrying $900 worth of fish.\n\nWould you like to sell your fish to this store for $900?", "Yes", "No");
-				    }
-				    case 4: {
-				        // Dialog_Open(playerid, DIALOG_SELL_FISH, DIALOG_STYLE_MSGBOX, "SERVER: Fishing", "You are currently carrying $500 worth of fish.\n\nWould you like to sell your fish to this store for $500?", "Yes", "No");
-				    }
-				}
+				gString[0] = (EOS);
+				format(gString, 125, "You are currently carrying $%d worth of fish.\n\nWould you like to sell your fish to this store for $%d?", getFishMoney(playerVariables[playerid][pFish]), getFishMoney(playerVariables[playerid][pFish]));
+				Dialog_Show(playerid, DIALOG_SELL_FISH, DIALOG_STYLE_MSGBOX, "SERVER: Fishing", gString, "Yes", "No");
 			}
 		}
-		case 2: {
-			SendClientMessage(playerid, COLOR_WHITE, "Welcome! The commands of this business are as follows: /buyclothes");
-		}
-		case 3, 4, 7: {
-			SendClientMessage(playerid, COLOR_WHITE, "Welcome! The commands of this business are as follows: /buy");
-		}
-		case 5: {
-			SendClientMessage(playerid, COLOR_WHITE, "Welcome! The commands of this business are as follows: /buyvehicle");
-		}
-		case 6: {
-			SendClientMessage(playerid, COLOR_WHITE, "Welcome! The commands of this business are as follows: /buyfightstyle");
-		}
+		case 2: SendClientMessage(playerid, COLOR_WHITE, "Welcome! The commands of this business are as follows: /buyclothes");
+		case 3, 4, 7: SendClientMessage(playerid, COLOR_WHITE, "Welcome! The commands of this business are as follows: /buy");
+		case 5: SendClientMessage(playerid, COLOR_WHITE, "Welcome! The commands of this business are as follows: /buyvehicle");
+		case 6: SendClientMessage(playerid, COLOR_WHITE, "Welcome! The commands of this business are as follows: /buyfightstyle");
 	}
 	
 	return 1;
 }
-
-Dialog:DIALOG_SELL_FISH(playerid, response, itemlist, inputtext[]) {
+ 
+Dialog:DIALOG_SELL_FISH(playerid, response, listitem, inputtext[]) {
     if(!response) return true;
 
-    switch(playerVariables[playerid][pFish]) {
-        case 0: {
-            playerVariables[playerid][pMoney] += 1000;
-            SendClientMessage(playerid, COLOR_WHITE, "Congratulations, you have sold your collected fish for $1000.");
-        }
-        case 1: {
-            playerVariables[playerid][pMoney] += 750;
-            SendClientMessage(playerid, COLOR_WHITE, "Congratulations, you have sold your collected fish for $750.");
-        }
-        case 2: {
-            playerVariables[playerid][pMoney] += 250;
-            SendClientMessage(playerid, COLOR_WHITE, "Congratulations, you have sold your collected fish for $250.");
-        }
-        case 3: {
-            playerVariables[playerid][pMoney] += 900;
-            SendClientMessage(playerid, COLOR_WHITE, "Congratulations, you have sold your collected fish for $900.");
-        }
-        case 4: {
-            playerVariables[playerid][pMoney] += 500;
-            SendClientMessage(playerid, COLOR_WHITE, "Congratulations, you have sold your collected fish for $500.");
-        }
-    }
+	new fish = playerVariables[playerid][pFish];
 
+	va_SendClientMessage(playerid, COLOR_WHITE, "Congratulations, you have sold your collected fish for $%d.", getFishMoney(fish));
+	playerVariables[playerid][pMoney] += getFishMoney(fish);
     playerVariables[playerid][pFish] = -1; 
 
     return true;
 }
 
-Dialog:DIALOG_BUSINESS_ENTER(playerid, response, itemlist, inputtext[]) {
+Dialog:DIALOG_SHOW_ENTER(playerid, response, itemlist, inputtext[]) {
     if(response == 1) {
-        new x = GetPVarInt(playerid, "bE"); // So we don't have to access it each and every time.
+        new x = GetPVarInt(playerid, "bE"); 
         DeletePVar(playerid, "bE"); 
 
         nearByMessage(playerid, COLOR_PURPLE, 12.0,"* %s breaks down the door and enters the business.", getName(playerid));
@@ -303,7 +237,7 @@ Dialog:DIALOG_BUSINESS_ENTER(playerid, response, itemlist, inputtext[]) {
             
             gString[0] = (EOS);
             if(!strcmp(businessVariables[x][bOwner], "Nobody"))
-                format(gString, sizeof(gString), "%s\n(Business %d - un-owned)\nPrice: $%d (/buybusiness)\n\n(locked)", businessVariables[x][bName], x, businessVariables[x][bPrice]);
+                format(gString, sizeof(gString), "%s\n(Business %d - un-owned)\nPrice: $%d (/buybusiness)\n\nPress ~k~~PED_DUCK~ to enter", businessVariables[x][bName], x, businessVariables[x][bPrice]);
             else
                 format(gString, sizeof(gString), "%s\n(Business %d - owned by %s)\n\nPress ~k~~PED_DUCK~ to enter", businessVariables[x][bName], x, businessVariables[x][bOwner]);
             

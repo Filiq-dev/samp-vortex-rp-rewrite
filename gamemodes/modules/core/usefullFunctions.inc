@@ -120,7 +120,7 @@ function validResetPlayerWeapons(playerid) {
 function givePlayerValidWeapon(playerid, weapon) {
 	switch(weapon) {
 		case 0, 1: playerVariables[playerid][pWeapons][0] = weapon;
-	    case 2, 3, 4, 5, 6, 7, 8, 9: playerVariable[playerid][pWeapons][1] = weapon;
+	    case 2, 3, 4, 5, 6, 7, 8, 9: playerVariables[playerid][pWeapons][1] = weapon;
 	    case 22, 23, 24: playerVariables[playerid][pWeapons][2] = weapon;
 	    case 25, 26, 27: playerVariables[playerid][pWeapons][3] = weapon;
 	    case 28, 29, 32: playerVariables[playerid][pWeapons][4] = weapon;
@@ -129,7 +129,7 @@ function givePlayerValidWeapon(playerid, weapon) {
 	    case 35, 36, 37, 38: playerVariables[playerid][pWeapons][7] = weapon;
 	    case 16, 17, 18, 39: playerVariables[playerid][pWeapons][8] = weapon;
 	    case 41, 42, 43: playerVariables[playerid][pWeapons][9] = weapon;
-	    case 10, 11, 12, 13, 14, 15: playerVariable[playerid][pWeapons][10] = weapon;
+	    case 10, 11, 12, 13, 14, 15: playerVariables[playerid][pWeapons][10] = weapon;
 	    case 44, 45, 46: playerVariables[playerid][pWeapons][11] = weapon;
 	    case 40: playerVariables[playerid][pWeapons][12] = weapon; 
 	}
@@ -287,7 +287,7 @@ function ShutUp(slot) { // One function for eight doors. A WINRAR IS YOU!
 	}
 	return 1;
 }
-
+/*
 stock GetWeaponSlot(weaponid) {
 	switch(weaponid) {
 		case 0, 1: return 0;
@@ -305,7 +305,7 @@ stock GetWeaponSlot(weaponid) {
 	}
 	return -1;
 } 
-
+*/
 stock GetClosestVehicle(playerid, exception = INVALID_VEHICLE_ID) {
     new
 		Float:Distance,
@@ -320,8 +320,20 @@ stock GetClosestVehicle(playerid, exception = INVALID_VEHICLE_ID) {
     return target;
 }
 
+stock GetDistancePlayerVeh(playerid, veh) {
+
+	new
+	    Float:Floats[7];
+
+	GetPlayerPos(playerid, Floats[0], Floats[1], Floats[2]);
+	GetVehiclePos(veh, Floats[3], Floats[4], Floats[5]);
+	Floats[6] = floatsqroot((Floats[3]-Floats[0])*(Floats[3]-Floats[0])+(Floats[4]-Floats[1])*(Floats[4]-Floats[1])+(Floats[5]-Floats[2])*(Floats[5]-Floats[2]));
+
+	return floatround(Floats[6]);
+}
+
 function checkVehicleSeat(vehicleid, seatid) {
-	foreach(Player, x) {
+	foreach(new x : Player) {
 	    if(GetPlayerVehicleID(x) == vehicleid && GetPlayerVehicleSeat(x) == seatid) return 1;
 	}
 	return 0;
@@ -562,8 +574,8 @@ function IsACopCar(vehicleid) {
 	return 0;
 }
 
-stock PreloadAnimLib(playerid, animlib[]) {
-	return ApplyAnimation(playerid,animlib,"null",0.0,0,0,0,0,0);
+stock PreloadAnimLib(playerid, const animlib[]) {
+	return ApplyAnimation(playerid, animlib, "null", 0.0, false, false, false, false, false) ;
 } 
 
 function doesVehicleExist(const vehicleid) {
@@ -573,8 +585,11 @@ function doesVehicleExist(const vehicleid) {
 	return 0;
 }
 
-function adminLog(string[]) {
+function adminLog(const string[], {Float, _}:...) {
+	gString[0] = (EOS);
+	va_format(gString, sizeof (gString), string, va_start<1>);
+
 	gQuery[0] = (EOS);  
-	mysql_format(gSQL, gQuery, sizeof(gQuery), "INSERT INTO adminlog (value, tickcount) VALUES('%s', '%d')", string, GetTickCount());
-	mysql_query(gSQL, gQuery, "", "");
-}
+	mysql_format(gSQL, gQuery, sizeof(gQuery), "INSERT INTO adminlog (value, tickcount) VALUES('%s', '%d')", gString, GetTickCount());
+	mysql_tquery(gSQL, gQuery, "", ""); // de facut finishQuery
+} 

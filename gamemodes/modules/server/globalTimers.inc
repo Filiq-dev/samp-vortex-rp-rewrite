@@ -11,7 +11,7 @@ ptask oneSecound[1000](playerid) {
 
     if(playerVariables[playerid][pConnectedSeconds] < gettime()-1 && playerVariables[playerid][pTabbed] != 1 && playerVariables[playerid][pConnectedSeconds] >= 5 && GetPlayerState(playerid) != 9 && GetPlayerState(playerid) != 0 && GetPlayerState(playerid) != 7) {
         playerVariables[playerid][pTabbed] = 1;
-        playerVariables[playerid][pAFKLabel] = CreateDynamic3DTextLabel("Paused.", COLOR_RED, 0, 0, 0, 7.5, x, _, 1, _, _, _, 7.5);
+        playerVariables[playerid][pAFKLabel] = CreateDynamic3DTextLabel("Paused.", COLOR_RED, 0, 0, 0, 7.5, playerid, _, 1, _, _, _, 7.5);
     }
 
     if(playerVariables[playerid][pStatus] == 1) {
@@ -20,24 +20,16 @@ ptask oneSecound[1000](playerid) {
         if(!Iter_Contains(Admin, playerid)) {
             if(GetPlayerSpecialAction(playerid) == SPECIAL_ACTION_USEJETPACK && playerVariables[playerid][pJetpack] == 0 && playerVariables[playerid][pAdminLevel] == 0)
 			{
-				scriptBan(i, "Hacking (jetpack)");
+				scriptBan(playerid, "Hacking (jetpack)");
 			}
 			else if(playerVariables[playerid][pEvent] == 0 && playerVariables[playerid][pAnticheatExemption] == 0)
 			{
-				temp = GetPlayerWeapon(playerid);
+				new temp = GetPlayerWeapon(playerid);
 				if(temp > 0 && GetPlayerState(playerid) == 1)
 				{
 					if(playerVariables[playerid][pWeapons][GetWeaponSlot(temp)] != temp)
 						hackerTrigger(playerid);
-				}
-				else if(eventVariables[eEventStat] != 0) // Event anticheat - check 5 event weapon slots, checks if the weapon is valid (in case of a bug).
-				{
-					// Valid weapon check (in case someone has admin weapons)
-					if(eventVariables[eEventWeapons][0] != temp && eventVariables[eEventWeapons][1] != temp && eventVariables[eEventWeapons][2] != temp && eventVariables[eEventWeapons][3] != temp && eventVariables[eEventWeapons][4] != temp) 
-					{ 
-						 if(playerVariables[playerid][pWeapons][GetWeaponSlot(temp)] != temp) hackerTrigger(playerid);
-					}
-				}
+				} 
 			}
         }
 
@@ -84,35 +76,7 @@ ptask oneSecound[1000](playerid) {
                 }
                 playerVariables[playerid][pPhoneCall] = -1;
             }
-        }
-
-        if(playerVariables[playerid][pFishing] >= 1) {
-            playerVariables[playerid][pFishing]++;
-            /*SetProgressBarValue(playerVariables[playerid][pFishingBar], GetProgressBarValue(playerVariables[playerid][pFishingBar])+10);
-            UpdateProgressBar(playerVariables[playerid][pFishingBar], playerid);*/
-
-            if(playerVariables[playerid][pFishing] == 10) {
-                /*HideProgressBarForPlayer(playerid, playerVariables[playerid][pFishingBar]); // Refer to /fish for reason why this is commented out
-                DestroyProgressBar(playerVariables[playerid][pFishingBar]);*/
-
-                new randFish = random(5);
-
-                playerVariables[playerid][pFish] = randFish;
-
-                switch(randFish) {
-                    case 0: randFish = 1000;
-                    case 1: randFish = 750;
-                    case 2: randFish = 250;
-                    case 3: randFish = 900;
-                    case 4: randFish = 500;
-                }
-
-                va_SendClientMessage(playerid, COLOR_WHITE, "You have reeled in a %s.", fishNames[randFish]);
-                va_SendClientMessage(playerid, COLOR_WHITE, "The fish that you collected is worth $%d. To sell your fish, please visit a 24/7.", randFish);
-
-                playerVariables[playerid][pJobDelay] = 900;
-            }
-        }
+        } 
 
         if(playerVariables[playerid][pSpectating] != INVALID_PLAYER_ID) { // OnPlayerInteriorChange doesn't work properly when spectating.
             if(GetPlayerInterior(playerid) != GetPlayerInterior(playerVariables[playerid][pSpectating]))

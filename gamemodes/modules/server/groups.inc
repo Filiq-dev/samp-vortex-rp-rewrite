@@ -1,30 +1,4 @@
-#include <YSI_Coding/y_hooks>
-
-#define MAX_GROUPS          (20)
-#define GROUP_VIRTUAL_WORLD (20000)
-enum groupE {
-	gGroupName[64],
-	gGroupType,
-	Float: gGroupExteriorPos[3],
-	Float: gGroupInteriorPos[3],
-	gGroupHQInteriorID,
-	gGroupPickupID,
-	Float: gSafePos[3],
-	gSafePickupID,
-	Text3D: gSafeLabelID,
-	Text3D: gGroupLabelID,
-	gGroupHQLockStatus,
-	gSafe[2], // 0-1: Money, mats. pot, cocaine out for now
-	gswatInv,
-	gGroupMOTD[128],
-	gGroupRankName1[32], // 4d arrays aren't supported in pawn, so I'll have to continue it like this...
-	gGroupRankName2[32],
-	gGroupRankName3[32],
-	gGroupRankName4[32],
-	gGroupRankName5[32],
-	gGroupRankName6[32],
-}
-new groupVariables[MAX_GROUPS][groupE];
+#include <YSI_Coding/y_hooks> 
 
 new Iterator:groups<MAX_GROUPS>;
 

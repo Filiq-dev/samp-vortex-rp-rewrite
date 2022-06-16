@@ -319,28 +319,4 @@ YCMD:quitjob(playerid, params[], help) {
 	playerVariables[playerid][pJobDelay] = 0;
 	
 	return true;
-}
-/*
-YCMD:fish(playerid, params[], help) {
-	if(playerVariables[playerid][pJob] == 4 && IsPlayerInAnyVehicle(playerid) && playerVariables[playerid][pFishing] == 0) {
-		if(playerVariables[playerid][pJobDelay] > 0) {
-
-			new
-				string[57];
-
-			format(string, sizeof(string), "You must wait %d minutes (%d seconds) until you can go fishing again.", playerVariables[playerid][pJobDelay] / 60, playerVariables[playerid][pJobDelay]);
-			return SendClientMessage(playerid, COLOR_GREY, string);
-		}
-		else if(IsABoat(GetPlayerVehicleID(playerid))) {
-            playerVariables[playerid][pFishing] = 1;
-			playerVariables[playerid][pFishingBar] = CreateProgressBar(258.00, 137.00, 131.50, 3.19, COLOR_LIGHT, 100.0); // There's a bug people have noticed which I've not been able to fix; other players often see the textdraws when people are fishing
-			ShowProgressBarForPlayer(playerid, playerVariables[playerid][pFishingBar]);
-			SendClientMessage(playerid, COLOR_WHITE, "You're now fishing. It will take a few seconds to reel your fish in.");
-		}
-		else SendClientMessage(playerid, COLOR_GREY, "This vehicle cannot be used for fishing.");
-    } else {
-		SendClientMessage(playerid, COLOR_GREY, "You're required to be in a boat, have the fisherman's job and not to actively be fishing.");
-	}
-	return 1;
-}
-*/
+} 

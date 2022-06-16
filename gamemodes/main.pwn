@@ -197,7 +197,7 @@ public OnPlayerDisconnect(playerid, reason) {
 	} 
 	if(playerVariables[playerid][pCarModel] >= 1) {
 		DestroyVehicle(playerVariables[playerid][pCarID]);
-		systemVariables[vehicleCounts][1]--;
+		// systemVariables[vehicleCounts][1]--; to do on iterators
 		playerVariables[playerid][pCarID] = -1;
 	}
 }
@@ -210,6 +210,59 @@ public OnPlayerKeyStateChange(playerid, newkeys, oldkeys) {
 
 	if(playerVariables[playerid][pFreezeType] != 0 && playerVariables[playerid][pFreezeTime] != 0)
 	    return false;
+
+	if(IsKeyJustDown(KEY_SUBMISSION, newkeys, oldkeys)) {
+	    if(GetVehicleModel(GetPlayerVehicleID(playerid)) == 525) { // For impounding cars.
+
+	        new
+				playerTowTruck = GetPlayerVehicleID(playerid);
+
+	        if(!IsTrailerAttachedToVehicle(playerTowTruck)) {
+				new
+					targetVehicle = GetClosestVehicle(playerid, playerTowTruck); // Exempt the player's own vehicle from the loop.
+
+				if(!IsAPlane(targetVehicle) && IsPlayerInRangeOfVehicle(playerid, targetVehicle, 10.0)) {
+					AttachTrailerToVehicle(targetVehicle, playerTowTruck);
+				}
+	        }
+	        else DetachTrailerFromVehicle(playerTowTruck);
+	    }
+	}
+	if(IsKeyJustDown(KEY_FIRE, newkeys, oldkeys)) {
+		if(GetPlayerWeapon(playerid) == 17 && !IsPlayerInAnyVehicle(playerid) && playerVariables[playerid][pFreezeType] == 0) {
+			foreach(new i : Player) {
+				if(playerid != i && !IsPlayerInAnyVehicle(i) && playerVariables[i][pFreezeType] == 0 && GetPlayerSkin(i) != 285) {
+					if(IsPlayerAimingAtPlayer(playerid, i)) {
+
+						playerVariables[i][pFreezeType] = 5; // Using 5 on FreezeType makes more sense
+						playerVariables[i][pFreezeTime] = 10;
+						TogglePlayerControllable(i, false);
+						SetPlayerDrunkLevel(i, 50000);
+						ApplyAnimation(i, "FAT", "IDLE_TIRED", 4.1, true, true, true, true, false, true);
+					}
+				}
+			}
+		}
+	}
+    
+	if(IsKeyJustDown(KEY_SECONDARY_ATTACK, newkeys, oldkeys)) { 
+		if(IsPlayerInRangeOfPoint(playerid,1.0,237.9,115.6,1010.2)) {
+			SetPlayerPos(playerid,237.9,115.6,1010.2);
+			SetPlayerFacingAngle(playerid, 270);
+			ApplyAnimation(playerid, "VENDING", "VEND_Use", 1.0, false, false, false, false, 4000);
+			SetTimerEx("VendDrink", 2500, false, "d", playerid);
+		}
+	}
+	if(IsKeyJustDown(KEY_CROUCH, newkeys, oldkeys)) {  
+		if(IsPlayerInRangeOfPoint(playerid, 2.0, 595.5443,-1250.3405,18.2836)) {
+			SetPlayerPos(playerid, 2306.8481,-16.0682,26.7496);
+			SetPlayerVirtualWorld(playerid, 2);
+		}
+		else if(IsPlayerInRangeOfPoint(playerid, 2.0, 2306.8481,-16.0682,26.7496)) {
+			SetPlayerPos(playerid, 595.5443,-1250.3405,18.2836);
+			SetPlayerVirtualWorld(playerid, 0);
+		}  
+	}
 	
 	return true;
 }
@@ -232,7 +285,7 @@ public OnPlayerStateChange(playerid, newstate, oldstate) {
 		if(IsAPlane(GetPlayerVehicleID(playerid))) {
 			givePlayerValidWeapon(playerid, 46);
 		}
-
+/*
 		for(new i = 0; i < MAX_VEHICLES; i++) {
 		    if(vehicleVariables[i][vVehicleScriptID] == GetPlayerVehicleID(playerid) && vehicleVariables[i][vVehicleGroup] != 0 && vehicleVariables[i][vVehicleGroup] != playerVariables[playerid][pGroup]) {
 
@@ -248,17 +301,18 @@ public OnPlayerStateChange(playerid, newstate, oldstate) {
 				}
 			}
         }
-		foreach(Player, x) {
+		remake system
+*/ 
+		foreach(new x : Player) {
 			if(playerVariables[x][pCarID] == GetPlayerVehicleID(playerid)) {
-				if(playerVariables[playerid][pAdminLevel] >= 1 && playerVariables[playerid][pAdminDuty] >= 1) {
-
-					GetPlayerName(x, szPlayerName, MAX_PLAYER_NAME);
-					format(szMessage, sizeof(szMessage), "This %s (model %d, ID %d) is owned by %s.", VehicleNames[playerVariables[x][pCarModel] - 400], playerVariables[x][pCarModel], playerVariables[x][pCarID], szPlayerName);
-					SendClientMessage(playerid, COLOR_GREY, szMessage);
+				if(playerVariables[playerid][pAdminLevel] >= 1 && playerVariables[playerid][pAdminDuty] >= 1) { 
+					va_SendClientMessage(playerid, COLOR_GREY, "This %s (model %d, ID %d) is owned by %s.", VehicleNames[playerVariables[x][pCarModel] - 400], playerVariables[x][pCarModel], playerVariables[x][pCarID], getName(x));
+					break;
 				}
 				else if(playerVariables[x][pCarLock] == 1) {
 					RemovePlayerFromVehicle(playerid);
 					SendClientMessage(playerid, COLOR_GREY, "This vehicle is locked.");
+					break;
 				}
 			}
 		}
@@ -269,7 +323,7 @@ public OnPlayerStateChange(playerid, newstate, oldstate) {
   			RemovePlayerFromVehicle(playerid);
     }
 
-	foreach(Player, x) {
+	foreach(new x : Player) {
 		if(playerVariables[x][pSpectating] != INVALID_PLAYER_ID && playerVariables[x][pSpectating] == playerid) {
 			if(newstate == 2 && oldstate == 1 || newstate == 3 && oldstate == 1) {
 				PlayerSpectateVehicle(x, GetPlayerVehicleID(playerid));
@@ -505,7 +559,8 @@ public OnPlayerSpawn(playerid) {
 
 	return true;
 }
-
+/*
+??
 public OnPlayerShootPlayer(Shooter,Target,Float:HealthLost,Float:ArmourLost) {
 	if(playerVariables[Shooter][pTazer] == 1 && groupVariables[playerVariables[Shooter][pGroup]][gGroupType] == 1 && playerVariables[Shooter][pGroup] != 0 && GetPlayerWeapon(Shooter) == 22) {
 	    if(IsPlayerInAnyVehicle(Target) || IsPlayerInAnyVehicle(Shooter))
@@ -527,7 +582,7 @@ public OnPlayerShootPlayer(Shooter,Target,Float:HealthLost,Float:ArmourLost) {
 	}
 	return true;
 }
-
+*/
 public OnVehicleRespray(playerid, vehicleid, color1, color2) {
 	#if defined DEBUG
 	    printf("[debug] OnVehicleRespray(%d, %d, %d, %d)", playerid, vehicleid, color1, color2);
@@ -536,7 +591,7 @@ public OnVehicleRespray(playerid, vehicleid, color1, color2) {
 	/* With modifications, we don't need to do this as there's already a GetVehicleComponentInSlot function.
 	However, this will save paint if a player who doesn't own the car is driving. */
 	SetPVarInt(playerid, "pC", 1);
-	foreach(Player, v) {
+	foreach(new v : Player) {
 		if(GetPlayerVehicleID(playerid) == playerVariables[v][pCarID]) {
 			playerVariables[v][pCarColour][0] = color1;
 			playerVariables[v][pCarColour][1] = color2;
@@ -550,7 +605,7 @@ public OnVehiclePaintjob(playerid, vehicleid, paintjobid) { // No need to deduct
 	#endif
 	
 	SetPVarInt(playerid, "pC", 1);
-	foreach(Player, v) {
+	foreach(new v : Player) {
 		if(GetPlayerVehicleID(playerid) == playerVariables[v][pCarID]) {
 			playerVariables[v][pCarPaintjob] = paintjobid;
 		}
@@ -567,7 +622,7 @@ public OnEnterExitModShop(playerid, enterexit, interiorid) {
 			playerVariables[playerid][pMoney] -= 500;
 			DeletePVar(playerid, "pC");
 		}
-		foreach(Player, v) {
+		foreach(new v : Player) {
 			if(GetPlayerVehicleID(playerid) == playerVariables[v][pCarID]) {
 				for(new i = 0; i < 13; i++) {
 					playerVariables[v][pCarMods][i] = GetVehicleComponentInSlot(playerVariables[v][pCarID], i);
@@ -715,7 +770,7 @@ public OnVehicleStreamIn(vehicleid, forplayerid) {
 	    printf("[debug] OnVehicleStreamIn(%d, %d)", vehicleid, forplayerid);
 	#endif
 	
-	foreach(Player, x) {
+	foreach(new x : Player) {
 	    if(playerVariables[x][pCarID] == vehicleid && playerVariables[x][pCarLock] == 1) {
 			SetVehicleParamsForPlayer(vehicleid, forplayerid, 0, 1);
 	    }
@@ -734,67 +789,7 @@ public OnPlayerDeath(playerid, killerid, reason) {
 	else playerVariables[playerid][pHospitalized] = 1;
 	
 	return true;
-}  
-
-public OnPlayerKeyStateChange(playerid, newkeys, oldkeys) {
-	#if defined DEBUG
-	    printf("[debug] OnPlayerKeyStateChange(%d, %d, %d)", playerid, newkeys, oldkeys);
-	#endif  
-	
-	if(IsKeyJustDown(KEY_SUBMISSION, newkeys, oldkeys)) {
-	    if(GetVehicleModel(GetPlayerVehicleID(playerid)) == 525) { // For impounding cars.
-
-	        new
-				playerTowTruck = GetPlayerVehicleID(playerid);
-
-	        if(!IsTrailerAttachedToVehicle(playerTowTruck)) {
-				new
-					targetVehicle = GetClosestVehicle(playerid, playerTowTruck); // Exempt the player's own vehicle from the loop.
-
-				if(!IsAPlane(targetVehicle) && IsPlayerInRangeOfVehicle(playerid, targetVehicle, 10.0)) {
-					AttachTrailerToVehicle(targetVehicle, playerTowTruck);
-				}
-	        }
-	        else DetachTrailerFromVehicle(playerTowTruck);
-	    }
-	}
-	if(IsKeyJustDown(KEY_FIRE, newkeys, oldkeys)) {
-		if(GetPlayerWeapon(playerid) == 17 && !IsPlayerInAnyVehicle(playerid) && playerVariables[playerid][pFreezeType] == 0) {
-			foreach(Player, i) {
-				if(playerid != i && !IsPlayerInAnyVehicle(i) && playerVariables[i][pFreezeType] == 0 && GetPlayerSkin(i) != 285) {
-					if(IsPlayerAimingAtPlayer(playerid, i)) {
-
-						playerVariables[i][pFreezeType] = 5; // Using 5 on FreezeType makes more sense
-						playerVariables[i][pFreezeTime] = 10;
-						TogglePlayerControllable(i, false);
-						SetPlayerDrunkLevel(i, 50000);
-						ApplyAnimation(i, "FAT", "IDLE_TIRED", 4.1, 1, 1, 1, 1, 0, 1);
-					}
-				}
-			}
-		}
-	}
-    
-	if(IsKeyJustDown(KEY_SECONDARY_ATTACK, newkeys, oldkeys)) { 
-		if(IsPlayerInRangeOfPoint(playerid,1.0,237.9,115.6,1010.2)) {
-			SetPlayerPos(playerid,237.9,115.6,1010.2);
-			SetPlayerFacingAngle(playerid, 270);
-			ApplyAnimation(playerid, "VENDING", "VEND_Use", 1, 0, 0, 0, 0, 4000);
-			SetTimerEx("VendDrink", 2500, false, "d", playerid);
-		}
-	}
-	if(IsKeyJustDown(KEY_CROUCH, newkeys, oldkeys)) {  
-		if(IsPlayerInRangeOfPoint(playerid, 2.0, 595.5443,-1250.3405,18.2836)) {
-			SetPlayerPos(playerid, 2306.8481,-16.0682,26.7496);
-			SetPlayerVirtualWorld(playerid, 2);
-		}
-		else if(IsPlayerInRangeOfPoint(playerid, 2.0, 2306.8481,-16.0682,26.7496)) {
-			SetPlayerPos(playerid, 595.5443,-1250.3405,18.2836);
-			SetPlayerVirtualWorld(playerid, 0);
-		}  
-	}
-	return 1;
-}
+} 
 
 public OnPlayerEnterCheckpoint(playerid) {
 	#if defined DEBUG
@@ -809,11 +804,8 @@ public OnPlayerEnterCheckpoint(playerid) {
 	        playerVariables[playerid][pCheckpoint] = 0;
 	    }
 		case 2: {
-		    if(playerVariables[playerid][pMatrunTime] < 30) {
-		        GetPlayerName(playerid, szPlayerName, MAX_PLAYER_NAME);
-
-		        format(szMessage, sizeof(szMessage), "AdmWarn: {FFFFFF}%s may possibly be teleport matrunning (reached checkpoint in %d seconds).", szPlayerName, playerVariables[playerid][pMatrunTime]);
-				submitToAdmins(szMessage, COLOR_HOTORANGE);
+		    if(playerVariables[playerid][pMatrunTime] < 30) { // why is this check just here?
+				submitToAdmins(COLOR_HOTORANGE, "AdmWarn: {FFFFFF}%s may possibly be teleport matrunning (reached checkpoint in %d seconds).", getName(playerid), playerVariables[playerid][pMatrunTime]);
 			}
 		    else {
 		        SendClientMessage(playerid, COLOR_WHITE, "You have collected 100 materials!");
@@ -830,7 +822,7 @@ public OnPlayerEnterCheckpoint(playerid) {
 
 			else if(playerVariables[playerid][pCarID] == GetPlayerVehicleID(playerid)) return SendClientMessage(playerid, COLOR_GREY, "You can't sell your own vehicle here.");
 
-			foreach(Player, v) {
+			foreach(new v : Player) {
 				if(playerVariables[v][pCarID] == GetPlayerVehicleID(playerid)) {
 					DestroyVehicle(GetPlayerVehicleID(playerid)); // If an owned car is destroyed... it'll be manually despawned...
 
@@ -839,15 +831,14 @@ public OnPlayerEnterCheckpoint(playerid) {
 					playerVariables[v][pCarPos][2] = 13.3835;
 					playerVariables[v][pCarPos][3] = 177.3687; // have its Z angle set
 
-					SpawnPlayerVehicle(v); // And spawned.
+					// SpawnPlayerVehicle(v); // And spawned. vehicles.inc 
 
 					SetVehicleHealth(playerVariables[v][pCarID], 400.0); // A wrecked car is a wrecked car.
 				}
 				else SetVehicleToRespawn(GetPlayerVehicleID(playerid));
 			}
 
-			new
-				string[61],
+			new 
 				rand;
 
 			switch(GetVehicleModel(GetPlayerVehicleID(playerid))) { // Thanks to Danny for these, lol
@@ -924,9 +915,8 @@ public OnPlayerEnterCheckpoint(playerid) {
             playerVariables[playerid][pCheckpoint] = 0;
             DisablePlayerCheckpoint(playerid);
 			playerVariables[playerid][pMoney] += rand;
-
-			format(string, sizeof(string), "You have dropped your vehicle at the crane and earned $%d!", rand);
-            SendClientMessage(playerid, COLOR_WHITE, string);
+ 
+            va_SendClientMessage(playerid, COLOR_WHITE, "You have dropped your vehicle at the crane and earned $%d!", rand);
 		}
 		case 4: {
 
@@ -1004,7 +994,7 @@ function VendDrink(playerid) {
     new
 		Float:health;
 
-	ApplyAnimation(playerid, "VENDING", "VEND_Drink_P", 1, 0, 0, 0, 0, 1750);
+	ApplyAnimation(playerid, "VENDING", "VEND_Drink_P", 1.0, false, false, false, false, 1750);
 	GetPlayerHealth(playerid,health);
 	if(health > 65.0) SetPlayerHealth(playerid,100.0); // This limits player health to 100 (as values over 100.0 could otherwise be achieved, which isn't good).
 	else SetPlayerHealth(playerid,health+35.0); // A Sprunk machine gives exactly 35.0 HP per hit.

@@ -1,3 +1,11 @@
+YCMD:listassets(playerid, params[], help) { // de bagat in admin cmds cand o fi
+    if(playerVariables[playerid][pAdminLevel] >= 5)
+        foreach(new i : assets)
+			if(strlen(assetVariables[i][aAssetName]) >= 1)
+				va_SendClientMessage(playerid, COLOR_WHITE, "Asset Name: %s | Asset ID: %d | Value: %d", assetVariables[i][aAssetName], i, assetVariables[i][aAssetValue]);
+
+	return true;
+}
 CMD:unfreeze(playerid, params[]) {
 	return cmd_freeze(playerid, params);
 }

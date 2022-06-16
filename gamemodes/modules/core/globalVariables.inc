@@ -8,11 +8,7 @@ new
 	LSPDGates[2][2], // Boom gate, garage (1 = status, closed/open).
     adTick;
 
-#define					IsPlayerAuthed(%0)						(playerVariables[%0][pStatus] == 1)
-
-new fishNames[5][] = {
-	"Carp", "Bass", "Cod", "Plaice", "Tuna"
-};
+#define					IsPlayerAuthed(%0)						(playerVariables[%0][pStatus] == 1) 
 
 new VehicleNames[212][] = // Keeping unnecessary bits out (easily calculated integers, etc) for the win
 {
@@ -53,3 +49,41 @@ new WeaponNames[47][] = // As below
 	"Micro Uzi","MP5","AK-47","M4A1","TEC-9","rifle","sniper rifle","rocket launcher","heatseeker","flamethrower","minigun","satchel charge","detonator","spray can","fire extinguisher",
 	"camera","nightvision goggles", "thermal goggles","parachute"
 }; 
+
+#define MAX_ASSETS 10
+#define MAX_GROUPS          (20)
+#define GROUP_VIRTUAL_WORLD (20000)
+#define GOVERNMENT_GROUP_ID (4)
+enum groupE {
+	gGroupName[64],
+	gGroupType,
+	Float: gGroupExteriorPos[3],
+	Float: gGroupInteriorPos[3],
+	gGroupHQInteriorID,
+	gGroupPickupID,
+	Float: gSafePos[3],
+	gSafePickupID,
+	Text3D: gSafeLabelID,
+	Text3D: gGroupLabelID,
+	gGroupHQLockStatus,
+	gSafe[2], // 0-1: Money, mats. pot, cocaine out for now
+	gswatInv,
+	gGroupMOTD[128],
+	gGroupRankName1[32], // 4d arrays aren't supported in pawn, so I'll have to continue it like this...
+	gGroupRankName2[32],
+	gGroupRankName3[32],
+	gGroupRankName4[32],
+	gGroupRankName5[32],
+	gGroupRankName6[32],
+}
+
+enum assetsE {
+	aAssetName[32],
+	aAssetValue,
+}
+
+new 
+    assetVariables[MAX_ASSETS][assetsE];
+
+
+new groupVariables[MAX_GROUPS][groupE];
