@@ -113,6 +113,10 @@ function loadBusinesses() {
 }
 
 function saveBusiness(id) {
+    #if defined DEBUG
+        printf("function saveBusiness(%d)_business has been called", id);
+    #endif 
+	
 	if(strlen(businessVariables[id][bOwner]) < 1) return false;
 
 	new count = GetTickCount();
@@ -124,7 +128,23 @@ function saveBusiness(id) {
 	return true;
 }
 
+function updateBusiness(id) {
+    #if defined DEBUG
+        printf("function updateBusiness(%d)_business has been called", id);
+    #endif 
+
+    gString[0] = (EOS); 
+    if(!strcmp(businessVariables[id][bOwner], "Nobody", true)) format(gString, sizeof(gString), "%s\n(Business %d - un-owned)\nPrice: $%d (/buybusiness)\n\n%s", businessVariables[id][bName], id, businessVariables[id][bPrice], (businessVariables[id][bLocked] == 1 ? "(locked)" : "Press ~k~~PED_DUCK~ to enter"));
+    else format(gString, sizeof(gString), "%s\n(Business %d - owned by %s)\n\n%s", businessVariables[id][bName], id, businessVariables[id][bOwner], (businessVariables[id][bLocked] == 1 ? "(locked)" : "Press ~k~~PED_DUCK~ to enter"));
+    
+    UpdateDynamic3DTextLabelText(businessVariables[id][bLabelID], COLOR_YELLOW, gString);
+    saveBusiness(id);
+}
+
 stock getPlayerBusinessID(playerid) { 
+    #if defined DEBUG
+        printf("function getPlayerBusinessID(%d)_business has been called", playerid);
+    #endif 
 
     foreach(new x : bizz) {
 		if(strlen(businessVariables[x][bOwner]) < 1)

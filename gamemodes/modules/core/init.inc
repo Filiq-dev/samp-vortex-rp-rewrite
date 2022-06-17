@@ -43,6 +43,8 @@
 #include "modules/player/admin.inc"
 #include "modules/player/groups.inc"
 
+#include "modules/player/commands/admins/business.inc"
+
 #include "modules/player/commands/jobs.inc"
 #include "modules/player/commands/business.inc"
 // #include "modules/player/playerfunctions.inc"

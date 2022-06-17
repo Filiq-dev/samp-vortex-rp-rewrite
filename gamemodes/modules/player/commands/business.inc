@@ -1,7 +1,5 @@
-#define noBizz(%0) SendClientMessage(%0, COLOR_GREY, "You don't own a business.");
-
 YCMD:bbalance(playerid, params[], help) {
-	if(!getPlayerBusinessID(playerid)) return noBizz(playerid);
+	if(!getPlayerBusinessID(playerid)) return SendClientMessage(playerid, COLOR_GREY, "You don't own a business.");
     
     va_SendClientMessage(playerid, COLOR_WHITE, "Business Vault Balance: $%d.", businessVariables[getPlayerBusinessID(playerid)][bVault]);
     
@@ -12,7 +10,7 @@ YCMD:business(playerid, params[], help) {
 
 	new business = getPlayerBusinessID(playerid);
 
-	if(business == 0) return noBizz(playerid);
+	if(!business) return SendClientMessage(playerid, COLOR_GREY, "You don't own a business.");
     if(playerVariables[playerid][pCheckpoint] != 0) va_SendClientMessage(playerid, COLOR_GREY,"You already have an active checkpoint (%s), reach it first, or /killcheckpoint.", getPlayerCheckpointReason(playerid));
     
     SetPlayerCheckpoint(playerid, businessVariables[business][bExteriorPos][0], businessVariables[business][bExteriorPos][1], businessVariables[business][bExteriorPos][2], 5.0);
@@ -27,31 +25,22 @@ YCMD:sellbusiness(playerid, params[], help) {
 
     new businessID = getPlayerBusinessID(playerid);
 
-    if(businessID < 1) return noBizz(playerid); 
+    if(!businessID) return SendClientMessage(playerid, COLOR_GREY, "You don't own a business."); 
 
     playerVariables[playerid][pMoney] += businessVariables[businessID][bPrice];
 
-    gString[0] = (EOS);
     format(businessVariables[businessID][bOwner], MAX_PLAYER_NAME, "Nobody");
-    format(gString, sizeof(gString), "%s\n(Business %d - un-owned)\nPrice: $%d (/buybusiness)\n\nPress ~k~~PED_DUCK~ to enter", businessVariables[businessID][bName], businessID, businessVariables[businessID][bPrice]);
-
-    DestroyDynamicPickup(businessVariables[businessID][bPickupID]);
-    DestroyDynamic3DTextLabel(businessVariables[businessID][bLabelID]);
-
-    businessVariables[businessID][bLabelID] = CreateDynamic3DTextLabel(gString, COLOR_YELLOW, businessVariables[businessID][bExteriorPos][0], businessVariables[businessID][bExteriorPos][1], businessVariables[businessID][bExteriorPos][2], 100, INVALID_PLAYER_ID, INVALID_VEHICLE_ID, 0, -1, -1, -1, 10.0);
-    businessVariables[businessID][bPickupID] = CreateDynamicPickup(1239, 23, businessVariables[businessID][bExteriorPos][0], businessVariables[businessID][bExteriorPos][1], businessVariables[businessID][bExteriorPos][2], 0, 0, -1, 250);
-
     businessVariables[businessID][bLocked] = 1; 
 
-    va_SendClientMessage(playerid, COLOR_WHITE, "Business sold! You have been given back $%d for the business.", businessVariables[businessID][bPrice]);
+    updateBusiness(businessID);
 
-    saveBusiness(businessID); 
+    va_SendClientMessage(playerid, COLOR_WHITE, "Business sold! You have been given back $%d for the business.", businessVariables[businessID][bPrice]); 
 
 	return true;
-}
+} 
 
 YCMD:bwithdraw(playerid, params[], help) {
-	if(getPlayerBusinessID(playerid) == 0) return noBizz(playerid)
+	if(!getPlayerBusinessID(playerid)) return SendClientMessage(playerid, COLOR_GREY, "You don't own a business.");
     if(!isnull(params)) return SendClientMessage(playerid, COLOR_GREY, SYNTAX_MESSAGE"/bwithdraw [amount]");
 
     new
@@ -59,13 +48,12 @@ YCMD:bwithdraw(playerid, params[], help) {
         businessID = getPlayerBusinessID(playerid);
 
     if(amount < 1 || amount >= 5000000) return SendClientMessage(playerid, COLOR_GREY, "Withdrawal attempt failed.");
+    if(businessVariables[businessID][bVault] < amount) return true;
+    
+    va_SendClientMessage(playerid, COLOR_WHITE, "You have withdrawn $%d from your business.", amount);
 
-    if(businessVariables[businessID][bVault] >= amount) {
-        va_SendClientMessage(playerid, COLOR_WHITE, "You have withdrawn $%d from your business.", amount);
-
-        businessVariables[businessID][bVault] -= amount;
-        playerVariables[playerid][pMoney] += amount;
-    }
+    businessVariables[businessID][bVault] -= amount;
+    playerVariables[playerid][pMoney] += amount;
     
 	return true;
 }
@@ -75,8 +63,7 @@ YCMD:buyclothes(playerid, params[], help) {
 
     new
         skinID,
-        slotID,
-        iPrice,
+        slotID, 
         houseID = getPlayerHouseID(playerid),
         businessID = GetPlayerVirtualWorld(playerid) - BUSINESS_VIRTUAL_WORLD; 
 
@@ -118,7 +105,7 @@ YCMD:buy(playerid, params[], help) {
 		switch(businessVariables[businessID][bType]) {
 			case 1: Dialog_Show(playerid, DIALOG_TWENTYFOURSEVEN, DIALOG_STYLE_LIST, "SERVER: 24/7", "Rope ($5)\nWalkie Talkie ($750)\nPhone Book ($75)\nPhone Credit ($25)\nCellphone ($100)", "Select", "Exit");
 			case 3: Dialog_Show(playerid, DIALOG_BAR, DIALOG_STYLE_LIST, "SERVER: Bar", "Stock Bar Cigars ($2)\nSprunk ($3)\nBeer ($5)\nWine ($10)", "Select", "Exit");
-			case 4: Dialog_Show(playerid, DIALOG_SEX_SHOP, DIALOG_STYLE_LIST, "SERVER: Sex Shop", "Purple Dildo ($5)\nSmall White Vibrator ($8)\nSilver Vibrator ($10)\nLarge White Vibrator ($12)\nFlowers ($14), "Select", "Exit");
+			case 4: Dialog_Show(playerid, DIALOG_SEX_SHOP, DIALOG_STYLE_LIST, "SERVER: Sex Shop", "Purple Dildo ($5)\nSmall White Vibrator ($8)\nSilver Vibrator ($10)\nLarge White Vibrator ($12)\nFlowers ($14)", "Select", "Exit");
 			case 7: {
                 if(playerVariables[playerid][pMoney] < 250) return SendClientMessage(playerid, COLOR_GREY, "You don't have enough money to purchase this product.");
                 GetPlayerHealth(playerid, playerVariables[playerid][pHealth]);
@@ -157,191 +144,90 @@ YCMD:buyvehicle(playerid, params[], help) {
 }
 */
 YCMD:buyfightstyle(playerid, params[], help) {
-	if(GetPlayerVirtualWorld(playerid)-BUSINESS_VIRTUAL_WORLD >= 1) {
-	    new businessID = GetPlayerVirtualWorld(playerid) - BUSINESS_VIRTUAL_WORLD;
+	if(!(GetPlayerVirtualWorld(playerid)-BUSINESS_VIRTUAL_WORLD >= 1)) return true;
 
-	    if(businessVariables[businessID][bType] == 6) 
-            Dialog_Open(playerid, DIALOG_FIGHTSTYLE, DIALOG_STYLE_LIST, "SERVER: Fighting Styles", "Boxing ($10,000)\nKung Fu ($25,000)\nKnee Head ($15,000)\nGrab & Kick ($12,000)\nElbow ($10,000)\nGhetto ($5,000)", "Select", "Cancel");
-	}
-	return 1;
-}  
+    new businessID = GetPlayerVirtualWorld(playerid) - BUSINESS_VIRTUAL_WORLD;
 
-Dialog:DIALOG_FIGHTSTYLE(playerid, response, listitem, inputtext[]) {
-    if(!response) return true;
-
-    new business = GetPlayerVirtualWorld(playerid) - BUSINESS_VIRTUAL_WORLD;
-
-    switch(listitem) {
-        case 0: {
-            if(playerVariables[playerid][pFightStyle] == FIGHT_STYLE_BOXING) return (playerid, COLOR_GREY, "You are already using this style.");
-            if(playerVariables[playerid][pMoney] < 10000) return SendClientMessage(playerid, COLOR_GREY, "You do not have enough money to purchase this.");
-
-            playerVariables[playerid][pMoney] -= 10000;
-            businessVariables[business][bVault] += 10000;
-            playerVariables[playerid][pFightStyle] = FIGHT_STYLE_BOXING; 
-        }
-        case 1: {
-            if(playerVariables[playerid][pFightStyle] == FIGHT_STYLE_KUNGFU) return (playerid, COLOR_GREY, "You are already using this style.");
-            if(playerVariables[playerid][pMoney] < 25000) return SendClientMessage(playerid, COLOR_GREY, "You do not have enough money to purchase this.");
-
-            playerVariables[playerid][pMoney] -= 25000;
-            businessVariables[business][bVault] += 25000;
-            playerVariables[playerid][pFightStyle] = FIGHT_STYLE_KUNGFU;  
-        }
-        case 2: {
-            if(playerVariables[playerid][pFightStyle] == FIGHT_STYLE_KNEEHEAD) return (playerid, COLOR_GREY, "You are already using this style.");
-            if(playerVariables[playerid][pMoney] < 15000) return SendClientMessage(playerid, COLOR_GREY, "You do not have enough money to purchase this.");
-
-            playerVariables[playerid][pMoney] -= 15000;
-            businessVariables[business][bVault] += 15000;
-            playerVariables[playerid][pFightStyle] = FIGHT_STYLE_KNEEHEAD;  
-        }
-        case 3: {
-            if(playerVariables[playerid][pFightStyle] == FIGHT_STYLE_GRABKICK) return (playerid, COLOR_GREY, "You are already using this style.");
-            if(playerVariables[playerid][pMoney] < 15000) return SendClientMessage(playerid, COLOR_GREY, "You do not have enough money to purchase this.");
-
-            playerVariables[playerid][pMoney] -= 15000;
-            businessVariables[business][bVault] += 15000;
-            playerVariables[playerid][pFightStyle] = FIGHT_STYLE_GRABKICK;   
-        }
-        case 4: {
-            if(playerVariables[playerid][pFightStyle] == FIGHT_STYLE_ELBOW) return (playerid, COLOR_GREY, "You are already using this style.");
-            if(playerVariables[playerid][pMoney] < 10000) return SendClientMessage(playerid, COLOR_GREY, "You do not have enough money to purchase this.");
-
-            playerVariables[playerid][pMoney] -= 10000;
-            businessVariables[business][bVault] += 10000;
-            playerVariables[playerid][pFightStyle] = FIGHT_STYLE_ELBOW;    
-        }
-        case 5: {
-            if(playerVariables[playerid][pFightStyle] == FIGHT_STYLE_NORMAL) return (playerid, COLOR_GREY, "You are already using this style.");
-            if(playerVariables[playerid][pMoney] < 5000) return SendClientMessage(playerid, COLOR_GREY, "You do not have enough money to purchase this.");
-
-            playerVariables[playerid][pMoney] -= 5000;
-            businessVariables[business][bVault] += 5000;
-            playerVariables[playerid][pFightStyle] = FIGHT_STYLE_NORMAL;     
-        }
-
-        SendClientMessage(playerid, COLOR_WHITE, "You have successfully purchased this style of fighting.");
-        SetPlayerFightingStyle(playerid, playerVariables[playerid][pFightStyle]); 
-    } 
-}
+    if(businessVariables[businessID][bType] == 6) 
+        Dialog_Show(playerid, DIALOG_FIGHTSTYLE, DIALOG_STYLE_LIST, "SERVER: Fighting Styles", "Boxing ($10,000)\nKung Fu ($25,000)\nKnee Head ($15,000)\nGrab & Kick ($12,000)\nElbow ($10,000)\nGhetto ($5,000)", "Select", "Cancel");
+	
+	return true;
+}   
 
 YCMD:businessname(playerid, params[], help) {
-	if(getPlayerBusinessID(playerid) >= 1) {
-	    if(isnull(params))
-			 return SendClientMessage(playerid, COLOR_GREY, SYNTAX_MESSAGE"/businessname [businessname]");
+	if(!getPlayerBusinessID(playerid)) return SendClientMessage(playerid, COLOR_GREY, "You don't own a business.");
 
-	    if(strlen(params) >= 43 || strlen(params) < 1)
-			return SendClientMessage(playerid, COLOR_GREY, "Invalid name length (1-42).");
+    if(isnull(params)) return SendClientMessage(playerid, COLOR_GREY, SYNTAX_MESSAGE"/businessname [businessname]");
+    if(strlen(params) >= 31 || strlen(params) < 1) return SendClientMessage(playerid, COLOR_GREY, "Invalid name length (1-31).");
 
-	    new
-	        x = getPlayerBusinessID(playerid);
+    new
+        x = getPlayerBusinessID(playerid);
 
-	    format(result, sizeof(result), "You have changed the name of your business to '%s'.", params);
-	    SendClientMessage(playerid, COLOR_WHITE, result);
+    va_SendClientMessage(playerid, COLOR_WHITE, "You have changed the name of your business to '%s'.", params);
 
-		mysql_real_escape_string(params, params);
-		strcpy(businessVariables[x][bName], params, 20);
+    mysql_escape_string(params, params, 31);
+    strcpy(businessVariables[x][bName], params, 31);
 
-	    switch(businessVariables[x][bLocked]) {
-			case 1: {
-				format(result, sizeof(result), "%s\n(Business %d - owned by %s)\n\n(locked)", businessVariables[x][bName], x, businessVariables[x][bOwner]);
-			}
-			case 0: {
-				format(result, sizeof(result), "%s\n(Business %d - owned by %s)\n\nPress ~k~~PED_DUCK~ to enter", businessVariables[x][bName], x, businessVariables[x][bOwner]);
-			}
-		}
-
-		UpdateDynamic3DTextLabelText(businessVariables[x][bLabelID], COLOR_YELLOW, result);
-	}
-	return 1;
+    updateBusiness(x);
+	
+	return true;
 }
 
+//ds command, this need to be deleted after remake the ds & vehicle system
 YCMD:bspawnpos(playerid, params[], help) {
 
-	if(getPlayerBusinessID(playerid) >= 1) {
+	if(!getPlayerBusinessID(playerid)) return SendClientMessage(playerid, COLOR_GREY, "You don't own a business.");
 
-		new
-			businessID = getPlayerBusinessID(playerid);
+    new businessID = getPlayerBusinessID(playerid);
 
-		if(businessVariables[businessID][bType] == 5) {
-			if(IsPlayerInRangeOfPoint(playerid, 30.0, businessVariables[businessID][bExteriorPos][0], businessVariables[businessID][bExteriorPos][1], businessVariables[businessID][bExteriorPos][2])) {
-				GetPlayerPos(playerid, businessVariables[businessID][bMiscPos][0], businessVariables[businessID][bMiscPos][1], businessVariables[businessID][bMiscPos][2]);
-				SendClientMessage(playerid, COLOR_WHITE, "You have successfully altered the spawn position of your vehicle dealership business.");
-			}
-			else SendClientMessage(playerid, COLOR_GREY, "You must be within thirty metres of the exterior of your business.");
-		}
-		else SendClientMessage(playerid, COLOR_GREY, "You don't own a vehicle dealership.");
-	}
-	return 1;
+    if(businessVariables[businessID][bType] != 5) return SendClientMessage(playerid, COLOR_GREY, "You don't own a vehicle dealership.");
+    if(!IsPlayerInRangeOfPoint(playerid, 30.0, businessVariables[businessID][bExteriorPos][0], businessVariables[businessID][bExteriorPos][1], businessVariables[businessID][bExteriorPos][2])) return SendClientMessage(playerid, COLOR_GREY, "You must be within thirty metres of the exterior of your business.");
+
+    GetPlayerPos(playerid, businessVariables[businessID][bMiscPos][0], businessVariables[businessID][bMiscPos][1], businessVariables[businessID][bMiscPos][2]);
+    SendClientMessage(playerid, COLOR_WHITE, "You have successfully altered the spawn position of your vehicle dealership business."); 
+    
+	return true;
 }
-
-
+ 
 YCMD:lockbusiness(playerid, params[], help) {
-	if(getPlayerBusinessID(playerid) >= 1) {
-	    new
-	        x = getPlayerBusinessID(playerid);
+	if(!getPlayerBusinessID(playerid)) return SendClientMessage(playerid, COLOR_GREY, "You don't own a business.");
 
-	    switch(businessVariables[x][bLocked]) {
-			case 0: {
-				format(result, sizeof(result), "%s\n(Business %d - owned by %s)\n\n(locked)", businessVariables[x][bName], x, businessVariables[x][bOwner]);
+    new x = getPlayerBusinessID(playerid);
+    
+    businessVariables[x][bLocked] = (businessVariables[x][bLocked] == 1 ? 0 : 1);
+    va_SendClientMessage(playerid, COLOR_WHITE, "Business %s.", businessVariables[x][bLocked] == 1 ? "locked" : "unlocked");
+    
+    updateBusiness(x);
 
-				businessVariables[x][bLocked] = 1;
-				SendClientMessage(playerid, COLOR_WHITE, "Business locked.");
-			}
-			case 1: {
-				format(result, sizeof(result), "%s\n(Business %d - owned by %s)\n\nPress ~k~~PED_DUCK~ to enter", businessVariables[x][bName], x, businessVariables[x][bOwner]);
-
-			    businessVariables[x][bLocked] = 0;
-			    SendClientMessage(playerid, COLOR_WHITE, "Business unlocked.");
-			}
-		}
-		UpdateDynamic3DTextLabelText(businessVariables[x][bLabelID], COLOR_YELLOW, result);
-	}
-
-	return 1;
+	return true;
 }
 
 YCMD:buybusiness(playerid, params[], help) {
-    if(playerVariables[playerid][pStatus] >= 1) {
-        for(new x = 0; x < MAX_BUSINESSES; x++) {
-			if(IsPlayerInRangeOfPoint(playerid, 5, businessVariables[x][bExteriorPos][0], businessVariables[x][bExteriorPos][1], businessVariables[x][bExteriorPos][2])) {
-				if(!strcmp(businessVariables[x][bOwner], "Nobody", true)) {
-				    if(businessVariables[x][bPrice] == -1) return SendClientMessage(playerid, COLOR_GREY, "This business was blocked from being purchased by an administrator.");
-					if(getPlayerBusinessID(playerid) >= 1) return SendClientMessage(playerid, COLOR_GREY, "You already own a business.");
-					if(playerVariables[playerid][pMoney] >= businessVariables[x][bPrice]) {
-						playerVariables[playerid][pMoney] -= businessVariables[x][bPrice];
+    
+    new bizID = 0;
 
-						new
-						    labelString[96];
-
-						strcpy(businessVariables[x][bOwner], playerVariables[playerid][pNormalName], MAX_PLAYER_NAME);
-
-						DestroyDynamicPickup(businessVariables[x][bPickupID]);
-
-					    if(businessVariables[x][bLocked] == 1) {
-					    	format(labelString, sizeof(labelString), "%s\n(Business %d - owned by %s)\n\n(locked)", businessVariables[x][bName], x, businessVariables[x][bOwner]);
-					    }
-					    else {
-					        format(labelString, sizeof(labelString), "%s\n(Business %d - owned by %s)\n\nPress ~k~~PED_DUCK~ to enter", businessVariables[x][bName], x, businessVariables[x][bOwner]);
-					    }
-						UpdateDynamic3DTextLabelText(businessVariables[x][bLabelID], COLOR_YELLOW, labelString);
-						businessVariables[x][bPickupID] = CreateDynamicPickup(1239, 23, businessVariables[x][bExteriorPos][0], businessVariables[x][bExteriorPos][1], businessVariables[x][bExteriorPos][2], 0, 0, -1, 250);
-
-						SendClientMessage(playerid, COLOR_WHITE, "Congratulations on your purchase!");
-
-						saveBusiness(x);
-					}
-					else SendClientMessage(playerid, COLOR_GREY, "You don't have enough money to purchase this business.");
-				}
-				else {
-					return SendClientMessage(playerid, COLOR_GREY, "You can't purchase an owned business.");
-				}
-			}
-		}
+    foreach(new x : bizz) {
+        if(IsPlayerInRangeOfPoint(playerid, 5, businessVariables[x][bExteriorPos][0], businessVariables[x][bExteriorPos][1], businessVariables[x][bExteriorPos][2])) {
+            bizID = x;
+            break;
+        }
     }
-	return 1;
-} 
+
+    if(bizID == 0) return true;
+    if(strcmp(businessVariables[bizID][bOwner], "Nobody", true)) return SendClientMessage(playerid, COLOR_GREY, "You can't purchase an owned business.");
+    if(businessVariables[bizID][bPrice] == -1) return SendClientMessage(playerid, COLOR_GREY, "This business was blocked from being purchased by an administrator.");
+    if(getPlayerBusinessID(playerid) >= 1) return SendClientMessage(playerid, COLOR_GREY, "You already own a business.");
+    if(playerVariables[playerid][pMoney] < businessVariables[bizID][bPrice]) return SendClientMessage(playerid, COLOR_GREY, "You don't have enough money to purchase this business.");
+   
+    playerVariables[playerid][pMoney] -= businessVariables[bizID][bPrice];
+
+    strcpy(businessVariables[bizID][bOwner], playerVariables[playerid][pNormalName], MAX_PLAYER_NAME);
+    SendClientMessage(playerid, COLOR_WHITE, "Congratulations on your purchase!");
+
+    updateBusiness(bizID);
+
+	return true;
+}  
 
 Dialog:DIALOG_TWENTYFOURSEVEN(playerid, response, listitem, inputtext[]) {
     if(!response) return true;
@@ -447,6 +333,8 @@ Dialog:DIALOG_SEX_SHOP(playerid, response, listitem, inputtext[]) {
             givePlayerValidWeapon(playerid, 14);
         }
     }
+
+    return true;
 }
 
 Dialog:DIALOG_BAR(playerid, response, listitem, inputtext[]) { 
@@ -488,4 +376,67 @@ Dialog:DIALOG_BAR(playerid, response, listitem, inputtext[]) {
             SetPlayerSpecialAction(playerid, SPECIAL_ACTION_DRINK_WINE); 
         }
     }
+
+    return true;
 } 
+
+Dialog:DIALOG_FIGHTSTYLE(playerid, response, listitem, inputtext[]) {
+    if(!response) return true;
+
+    new business = GetPlayerVirtualWorld(playerid) - BUSINESS_VIRTUAL_WORLD;
+
+    switch(listitem) {
+        case 0: {
+            if(playerVariables[playerid][pFightStyle] == FIGHT_STYLE_BOXING) return SendClientMessage(playerid, COLOR_GREY, "You are already using this style.");
+            if(playerVariables[playerid][pMoney] < 10000) return SendClientMessage(playerid, COLOR_GREY, "You do not have enough money to purchase this.");
+
+            playerVariables[playerid][pMoney] -= 10000;
+            businessVariables[business][bVault] += 10000;
+            playerVariables[playerid][pFightStyle] = FIGHT_STYLE_BOXING; 
+        }
+        case 1: {
+            if(playerVariables[playerid][pFightStyle] == FIGHT_STYLE_KUNGFU) return SendClientMessage(playerid, COLOR_GREY, "You are already using this style.");
+            if(playerVariables[playerid][pMoney] < 25000) return SendClientMessage(playerid, COLOR_GREY, "You do not have enough money to purchase this.");
+
+            playerVariables[playerid][pMoney] -= 25000;
+            businessVariables[business][bVault] += 25000;
+            playerVariables[playerid][pFightStyle] = FIGHT_STYLE_KUNGFU;  
+        }
+        case 2: {
+            if(playerVariables[playerid][pFightStyle] == FIGHT_STYLE_KNEEHEAD) return SendClientMessage(playerid, COLOR_GREY, "You are already using this style.");
+            if(playerVariables[playerid][pMoney] < 15000) return SendClientMessage(playerid, COLOR_GREY, "You do not have enough money to purchase this.");
+
+            playerVariables[playerid][pMoney] -= 15000;
+            businessVariables[business][bVault] += 15000;
+            playerVariables[playerid][pFightStyle] = FIGHT_STYLE_KNEEHEAD;  
+        }
+        case 3: {
+            if(playerVariables[playerid][pFightStyle] == FIGHT_STYLE_GRABKICK) return SendClientMessage(playerid, COLOR_GREY, "You are already using this style.");
+            if(playerVariables[playerid][pMoney] < 15000) return SendClientMessage(playerid, COLOR_GREY, "You do not have enough money to purchase this.");
+
+            playerVariables[playerid][pMoney] -= 15000;
+            businessVariables[business][bVault] += 15000;
+            playerVariables[playerid][pFightStyle] = FIGHT_STYLE_GRABKICK;   
+        }
+        case 4: {
+            if(playerVariables[playerid][pFightStyle] == FIGHT_STYLE_ELBOW) return SendClientMessage(playerid, COLOR_GREY, "You are already using this style.");
+            if(playerVariables[playerid][pMoney] < 10000) return SendClientMessage(playerid, COLOR_GREY, "You do not have enough money to purchase this.");
+
+            playerVariables[playerid][pMoney] -= 10000;
+            businessVariables[business][bVault] += 10000;
+            playerVariables[playerid][pFightStyle] = FIGHT_STYLE_ELBOW;    
+        }
+        case 5: {
+            if(playerVariables[playerid][pFightStyle] == FIGHT_STYLE_NORMAL) return SendClientMessage(playerid, COLOR_GREY, "You are already using this style.");
+            if(playerVariables[playerid][pMoney] < 5000) return SendClientMessage(playerid, COLOR_GREY, "You do not have enough money to purchase this.");
+
+            playerVariables[playerid][pMoney] -= 5000;
+            businessVariables[business][bVault] += 5000;
+            playerVariables[playerid][pFightStyle] = FIGHT_STYLE_NORMAL;     
+        } 
+    } 
+    SendClientMessage(playerid, COLOR_WHITE, "You have successfully purchased this style of fighting.");
+    SetPlayerFightingStyle(playerid, playerVariables[playerid][pFightStyle]); 
+
+    return true;
+}
